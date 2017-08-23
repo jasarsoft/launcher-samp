@@ -7,7 +7,7 @@
     <ProjectGuid>{E565D657-322F-4385-9F85-092DA08B4DF9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Launcher</RootNamespace>
+    <RootNamespace>Jasarsoft.Launcher.SAMP</RootNamespace>
     <AssemblyName>Launcher</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -60,6 +60,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

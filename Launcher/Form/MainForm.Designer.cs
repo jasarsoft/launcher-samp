@@ -1,4 +1,4 @@
-﻿namespace Launcher
+﻿namespace Jasarsoft.Launcher.SAMP
 {
     partial class MainForm
     {

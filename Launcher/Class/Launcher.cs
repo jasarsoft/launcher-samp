@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Launcher
+namespace Jasarsoft.Launcher.SAMP
 {
-    static class Program
+    static class Launcher
     {
         /// <summary>
         /// The main entry point for the application.
