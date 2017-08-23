@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace Jasarsoft.Launcher.SAMP
 {
-    static class Launcher
+    static class MainClass
     {
         /// <summary>
         /// The main entry point for the application.
