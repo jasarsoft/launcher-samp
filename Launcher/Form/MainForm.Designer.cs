@@ -38,7 +38,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.components = new System.ComponentModel.Container();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonAdv1 = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.buttonLogin = new Syncfusion.Windows.Forms.ButtonAdv();
             this.textboxUser = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.labelUser = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -75,29 +75,32 @@ namespace Jasarsoft.Launcher.SAMP
             this.fileMenu.Size = new System.Drawing.Size(37, 20);
             this.fileMenu.Text = "&File";
             // 
-            // buttonAdv1
+            // buttonLogin
             // 
-            this.buttonAdv1.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
-            this.buttonAdv1.BackColor = System.Drawing.Color.DarkCyan;
-            this.buttonAdv1.BeforeTouchSize = new System.Drawing.Size(320, 59);
-            this.buttonAdv1.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.buttonAdv1.ForeColor = System.Drawing.Color.White;
-            this.buttonAdv1.IsBackStageButton = false;
-            this.buttonAdv1.Location = new System.Drawing.Point(12, 227);
-            this.buttonAdv1.MetroColor = System.Drawing.Color.DarkCyan;
-            this.buttonAdv1.Name = "buttonAdv1";
-            this.buttonAdv1.Size = new System.Drawing.Size(320, 59);
-            this.buttonAdv1.TabIndex = 6;
-            this.buttonAdv1.Text = "LOGIN";
+            this.buttonLogin.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.buttonLogin.BackColor = System.Drawing.Color.DarkCyan;
+            this.buttonLogin.BeforeTouchSize = new System.Drawing.Size(320, 59);
+            this.buttonLogin.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonLogin.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonLogin.IsBackStageButton = false;
+            this.buttonLogin.Location = new System.Drawing.Point(12, 227);
+            this.buttonLogin.MetroColor = System.Drawing.Color.DarkCyan;
+            this.buttonLogin.Name = "buttonLogin";
+            this.buttonLogin.Size = new System.Drawing.Size(320, 59);
+            this.buttonLogin.TabIndex = 6;
+            this.buttonLogin.Text = "LOGIN";
+            this.buttonLogin.UseVisualStyle = true;
+            this.buttonLogin.UseVisualStyleBackColor = false;
             // 
             // textboxUser
             // 
             this.textboxUser.BeforeTouchSize = new System.Drawing.Size(214, 22);
-            this.textboxUser.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.textboxUser.BorderColor = System.Drawing.Color.WhiteSmoke;
             this.textboxUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textboxUser.FocusBorderColor = System.Drawing.Color.DarkCyan;
             this.textboxUser.Location = new System.Drawing.Point(118, 138);
             this.textboxUser.MaxLength = 24;
-            this.textboxUser.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.textboxUser.Metrocolor = System.Drawing.Color.WhiteSmoke;
             this.textboxUser.Name = "textboxUser";
             this.textboxUser.Size = new System.Drawing.Size(214, 22);
             this.textboxUser.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Metro;
@@ -204,7 +207,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.Controls.Add(this.labelUser);
             this.Controls.Add(this.pictureLogo);
             this.Controls.Add(this.textboxUser);
-            this.Controls.Add(this.buttonAdv1);
+            this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.menuMain);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -230,7 +233,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private System.Windows.Forms.MenuStrip menuMain;
         private System.Windows.Forms.ToolStripMenuItem fileMenu;
-        private Syncfusion.Windows.Forms.ButtonAdv buttonAdv1;
+        private Syncfusion.Windows.Forms.ButtonAdv buttonLogin;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt textboxUser;
         private System.Windows.Forms.PictureBox pictureLogo;
         private Syncfusion.Windows.Forms.Tools.AutoLabel labelUser;
