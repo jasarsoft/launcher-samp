@@ -48,6 +48,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.editMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.serverMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.helpMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolsMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
@@ -60,6 +61,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.fileMenu,
             this.editMenu,
             this.serverMenu,
+            this.toolsMenu,
             this.helpMenu});
             this.menuMain.Location = new System.Drawing.Point(0, 0);
             this.menuMain.Name = "menuMain";
@@ -176,6 +178,12 @@ namespace Jasarsoft.Launcher.SAMP
             this.helpMenu.Size = new System.Drawing.Size(44, 20);
             this.helpMenu.Text = "&Help";
             // 
+            // toolsMenu
+            // 
+            this.toolsMenu.Name = "toolsMenu";
+            this.toolsMenu.Size = new System.Drawing.Size(47, 20);
+            this.toolsMenu.Text = "&Tools";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,5 +240,6 @@ namespace Jasarsoft.Launcher.SAMP
         private System.Windows.Forms.ToolStripMenuItem editMenu;
         private System.Windows.Forms.ToolStripMenuItem serverMenu;
         private System.Windows.Forms.ToolStripMenuItem helpMenu;
+        private System.Windows.Forms.ToolStripMenuItem toolsMenu;
     }
 }
