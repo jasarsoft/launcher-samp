@@ -58,7 +58,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelValid.Location = new System.Drawing.Point(12, 123);
             this.labelValid.Name = "labelValid";
             this.labelValid.Size = new System.Drawing.Size(320, 22);
-            this.labelValid.TabIndex = 6;
+            this.labelValid.TabIndex = 1;
             this.labelValid.Text = "File Name...";
             this.labelValid.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -88,7 +88,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.progressValid.SegmentWidth = 10;
             this.progressValid.Size = new System.Drawing.Size(320, 23);
             this.progressValid.Step = 1;
-            this.progressValid.TabIndex = 7;
+            this.progressValid.TabIndex = 2;
             this.progressValid.ThemesEnabled = false;
             this.progressValid.TubeEndColor = System.Drawing.Color.Teal;
             this.progressValid.TubeStartColor = System.Drawing.Color.Aqua;
@@ -109,6 +109,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.CaptionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CaptionForeColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(344, 183);
+            this.ControlBox = false;
             this.Controls.Add(this.progressValid);
             this.Controls.Add(this.labelValid);
             this.Controls.Add(this.pictureLogo);

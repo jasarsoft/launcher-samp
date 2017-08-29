@@ -68,7 +68,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.progressLoad.SegmentWidth = 10;
             this.progressLoad.Size = new System.Drawing.Size(320, 23);
             this.progressLoad.Step = 1;
-            this.progressLoad.TabIndex = 10;
+            this.progressLoad.TabIndex = 2;
             this.progressLoad.ThemesEnabled = false;
             this.progressLoad.TubeEndColor = System.Drawing.Color.Teal;
             this.progressLoad.TubeStartColor = System.Drawing.Color.Aqua;
@@ -81,7 +81,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelName.Location = new System.Drawing.Point(12, 123);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(320, 22);
-            this.labelName.TabIndex = 9;
+            this.labelName.TabIndex = 1;
             this.labelName.Text = "File Name...";
             this.labelName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 

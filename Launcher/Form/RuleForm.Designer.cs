@@ -68,7 +68,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.comboRule.Name = "comboRule";
             this.comboRule.Size = new System.Drawing.Size(320, 21);
             this.comboRule.Style = Syncfusion.Windows.Forms.VisualStyle.Metro;
-            this.comboRule.TabIndex = 0;
+            this.comboRule.TabIndex = 1;
             // 
             // textRule
             // 
@@ -87,7 +87,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.textRule.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textRule.Size = new System.Drawing.Size(320, 96);
             this.textRule.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Metro;
-            this.textRule.TabIndex = 1;
+            this.textRule.TabIndex = 2;
             // 
             // buttonClose
             // 
@@ -101,7 +101,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonClose.MetroColor = System.Drawing.Color.DarkCyan;
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(320, 59);
-            this.buttonClose.TabIndex = 2;
+            this.buttonClose.TabIndex = 3;
             this.buttonClose.Text = "CLOSE";
             this.buttonClose.UseVisualStyle = true;
             this.buttonClose.UseVisualStyleBackColor = false;
