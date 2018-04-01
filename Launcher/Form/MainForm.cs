@@ -22,5 +22,17 @@ namespace Jasarsoft.Launcher.SAMP
         {
             InitializeComponent();
         }
+
+        
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RuleForm rule = new RuleForm();
+            rule.ShowDialog();
+        }
     }
 }
