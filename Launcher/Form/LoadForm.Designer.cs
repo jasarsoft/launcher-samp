@@ -47,9 +47,9 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(320, 64);
             this.labelCopyright.TabIndex = 1;
-            this.labelCopyright.Text = "\r\nCopyright© 2004 GTA San Andreas™, Rockstar Games\r\nCopyright© 2015 San Andreas M" +
-    "ultiplayer, SAMP Team\r\nCopyright© 2017 SAMP Launcher, Edin Jašareviæ - Jasarsoft" +
-    "\r\n";
+            this.labelCopyright.Text = "Copyright© 2005 GTA San Andreas™ by Rockstar Games\r\nCopyright© 2015 San Andreas M" +
+    "ultiplayer by SAMP Team\r\nCopyright© 2018 SAMP Launcher by Edin (jasarsoft) Jašar" +
+    "eviæ";
             this.labelCopyright.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureLogo
