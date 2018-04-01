@@ -49,6 +49,16 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelPassword = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.textboxPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.autoLabel2 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.rolePlayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.launcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.forumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.websiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.youTubeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.facebookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.teamSpeakToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
@@ -83,6 +93,14 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             // serverMenu
             // 
+            this.serverMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.forumToolStripMenuItem,
+            this.websiteToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.youTubeToolStripMenuItem,
+            this.facebookToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.teamSpeakToolStripMenuItem});
             this.serverMenu.Name = "serverMenu";
             this.serverMenu.Size = new System.Drawing.Size(51, 20);
             this.serverMenu.Text = "&Server";
@@ -90,11 +108,15 @@ namespace Jasarsoft.Launcher.SAMP
             // toolsMenu
             // 
             this.toolsMenu.Name = "toolsMenu";
-            this.toolsMenu.Size = new System.Drawing.Size(47, 20);
+            this.toolsMenu.Size = new System.Drawing.Size(48, 20);
             this.toolsMenu.Text = "&Tools";
             // 
             // helpMenu
             // 
+            this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rolePlayToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.launcherToolStripMenuItem});
             this.helpMenu.Name = "helpMenu";
             this.helpMenu.Size = new System.Drawing.Size(44, 20);
             this.helpMenu.Text = "&Help";
@@ -121,6 +143,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.textboxUser.BackColor = System.Drawing.Color.White;
             this.textboxUser.BeforeTouchSize = new System.Drawing.Size(214, 22);
             this.textboxUser.BorderColor = System.Drawing.Color.Gainsboro;
+            this.textboxUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxUser.FocusBorderColor = System.Drawing.Color.DarkCyan;
             this.textboxUser.ForeColor = System.Drawing.Color.Black;
             this.textboxUser.Location = new System.Drawing.Point(118, 138);
@@ -167,6 +190,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.textboxPassword.BackColor = System.Drawing.Color.White;
             this.textboxPassword.BeforeTouchSize = new System.Drawing.Size(214, 22);
             this.textboxPassword.BorderColor = System.Drawing.Color.Gainsboro;
+            this.textboxPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxPassword.FocusBorderColor = System.Drawing.Color.DarkCyan;
             this.textboxPassword.ForeColor = System.Drawing.Color.Black;
             this.textboxPassword.Location = new System.Drawing.Point(118, 175);
@@ -189,6 +213,64 @@ namespace Jasarsoft.Launcher.SAMP
             this.autoLabel2.Size = new System.Drawing.Size(320, 2);
             this.autoLabel2.TabIndex = 6;
             this.autoLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // rolePlayToolStripMenuItem
+            // 
+            this.rolePlayToolStripMenuItem.Name = "rolePlayToolStripMenuItem";
+            this.rolePlayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rolePlayToolStripMenuItem.Text = "&RolePlay";
+            this.rolePlayToolStripMenuItem.Click += new System.EventHandler(this.rolePlayToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // launcherToolStripMenuItem
+            // 
+            this.launcherToolStripMenuItem.Name = "launcherToolStripMenuItem";
+            this.launcherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.launcherToolStripMenuItem.Text = "&Launcher";
+            // 
+            // forumToolStripMenuItem
+            // 
+            this.forumToolStripMenuItem.Name = "forumToolStripMenuItem";
+            this.forumToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.forumToolStripMenuItem.Text = "&Forum";
+            // 
+            // websiteToolStripMenuItem
+            // 
+            this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.websiteToolStripMenuItem.Text = "&Website";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            // 
+            // youTubeToolStripMenuItem
+            // 
+            this.youTubeToolStripMenuItem.Name = "youTubeToolStripMenuItem";
+            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.youTubeToolStripMenuItem.Text = "&YouTube";
+            // 
+            // facebookToolStripMenuItem
+            // 
+            this.facebookToolStripMenuItem.Name = "facebookToolStripMenuItem";
+            this.facebookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.facebookToolStripMenuItem.Text = "Face&book";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            // 
+            // teamSpeakToolStripMenuItem
+            // 
+            this.teamSpeakToolStripMenuItem.Name = "teamSpeakToolStripMenuItem";
+            this.teamSpeakToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.teamSpeakToolStripMenuItem.Text = "&Team Speak";
             // 
             // MainForm
             // 
@@ -222,6 +304,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.ShowMaximizeBox = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SAMP Launcher | Login";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).EndInit();
@@ -247,5 +330,15 @@ namespace Jasarsoft.Launcher.SAMP
         private System.Windows.Forms.ToolStripMenuItem serverMenu;
         private System.Windows.Forms.ToolStripMenuItem helpMenu;
         private System.Windows.Forms.ToolStripMenuItem toolsMenu;
+        private System.Windows.Forms.ToolStripMenuItem forumToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem websiteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem youTubeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem facebookToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem teamSpeakToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rolePlayToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem launcherToolStripMenuItem;
     }
 }
