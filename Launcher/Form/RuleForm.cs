@@ -40,6 +40,8 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 comboRule.Items.Add(rolePlay[i]);
             }
+
+            comboRule.SelectedItem = comboRule.Items[0];
         }
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
