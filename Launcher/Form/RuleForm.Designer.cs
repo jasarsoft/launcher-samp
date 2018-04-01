@@ -57,7 +57,7 @@ namespace Jasarsoft.Launcher.SAMP
             // textRule
             // 
             this.textRule.BackColor = System.Drawing.Color.White;
-            this.textRule.BeforeTouchSize = new System.Drawing.Size(320, 96);
+            this.textRule.BeforeTouchSize = new System.Drawing.Size(214, 22);
             this.textRule.BorderColor = System.Drawing.Color.Gainsboro;
             this.textRule.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textRule.FocusBorderColor = System.Drawing.Color.DarkCyan;
@@ -133,6 +133,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Location = new System.Drawing.Point(300, 200);
             this.MaximizeBox = false;
             this.MetroColor = System.Drawing.Color.DarkCyan;
             this.MinimizeBox = false;
@@ -141,7 +142,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.ShowInTaskbar = false;
             this.ShowMaximizeBox = false;
             this.ShowMinimizeBox = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "SAMP Launcher | Rules";
             this.TopMost = true;
             this.Load += new System.EventHandler(this.RuleForm_Load);
