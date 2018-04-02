@@ -59,24 +59,24 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 for(int i = 0; i < Result.Length; i++)
                 {
-                    switch(Result[i].ToString())
+                    switch(Result[i].ToString().ToLower())
                     {
-                        case "lagcomp":
+                        case RuleKey.LOGMAP:
                             serverLogcomp = Result[++i];
                             break;
-                        case "mapname":
+                        case RuleKey.MAPNAME:
                             serverMapname = Result[++i];
                             break;
-                        case "version":
+                        case RuleKey.VERSION:
                             serverVersion = Result[++i];
                             break;
-                        case "weather":
+                        case RuleKey.WEATHER:
                             serverWeather = Result[++i];
                             break;
-                        case "weburl":
+                        case RuleKey.WEBURL:
                             serverWeburl = Result[++i];
                             break;
-                        case "worldtime":
+                        case RuleKey.WORLDTIME:
                             serverWorldtime = Result[++i];
                             break;
 
@@ -88,5 +88,14 @@ namespace Jasarsoft.Launcher.SAMP
         }
 
         
+        private struct RuleKey
+        {
+            public const string LOGMAP = "lagcomp";
+            public const string MAPNAME = "mapname";
+            public const string VERSION = "version";
+            public const string WEATHER = "weather";
+            public const string WEBURL = "weburl";
+            public const string WORLDTIME = "worldtime";
+        }
     }
 }
