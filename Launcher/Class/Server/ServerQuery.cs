@@ -99,12 +99,12 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     writer.Write("SAMP".ToCharArray());
 
-                    string[] splitIP = serverAddress.ToString().Split('.');
+                    string[] splitip = serverAddress.ToString().Split('.');
 
-                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[0])));
-                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[1])));
-                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[2])));
-                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[3])));
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitip[0])));
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitip[1])));
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitip[2])));
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitip[3])));
 
                     writer.Write((ushort)serverPort);
 
@@ -139,113 +139,112 @@ namespace Jasarsoft.Launcher.SAMP
             try
             {
                 serverSocket.ReceiveFrom(buffer, ref endpoint);
-
-                timeEnd = DateTime.Now;
-
-                using (MemoryStream stream = new MemoryStream(buffer))
-                {
-                    using (BinaryReader reader = new BinaryReader(stream))
-                    {
-                        //if (stream.Length <= 10) return serverCount;
-
-                        reader.ReadBytes(10);
-
-                        switch (reader.ReadChar())
-                        {
-                            case 'i': // Information
-                                {
-                                    serverResults = new string[6];
-
-                                    serverResults[serverCount++] = Convert.ToString(reader.ReadByte());
-                                    serverResults[serverCount++] = Convert.ToString(reader.ReadInt16());
-                                    serverResults[serverCount++] = Convert.ToString(reader.ReadInt16());
-
-                                    int hostnamelen = reader.ReadInt32();
-                                    serverResults[serverCount++] = new string(reader.ReadChars(hostnamelen));
-
-                                    int gamemodelen = reader.ReadInt32();
-                                    serverResults[serverCount++] = new string(reader.ReadChars(gamemodelen));
-
-                                    int mapnamelen = reader.ReadInt32();
-                                    serverResults[serverCount++] = new string(reader.ReadChars(mapnamelen));
-
-                                    return serverCount;
-                                }
-
-                            case 'r': // Rules
-                                {
-                                    int rulecount = reader.ReadInt16();
-
-                                    serverResults = new string[rulecount * 2];
-
-                                    for (int i = 0; i < rulecount; i++)
-                                    {
-                                        int rulelen = reader.ReadByte();
-                                        serverResults[serverCount++] = new string(reader.ReadChars(rulelen));
-
-                                        int valuelen = reader.ReadByte();
-                                        serverResults[serverCount++] = new string(reader.ReadChars(valuelen));
-                                    }
-
-                                    return serverCount;
-                                }
-
-                            case 'c': // Client list
-                                {
-                                    int playercount = reader.ReadInt16();
-
-                                    serverResults = new string[playercount * 2];
-
-                                    for (int i = 0; i < playercount; i++)
-                                    {
-                                        int namelen = reader.ReadByte();
-                                        serverResults[serverCount++] = new string(reader.ReadChars(namelen));
-
-                                        serverResults[serverCount++] = Convert.ToString(reader.ReadInt32());
-                                    }
-
-                                    return serverCount;
-                                }
-
-                            case 'd': // Detailed player information
-                                {
-                                    int playercount = reader.ReadInt16();
-
-                                    serverResults = new string[playercount * 4];
-
-                                    for (int i = 0; i < playercount; i++)
-                                    {
-                                        serverResults[serverCount++] = Convert.ToString(reader.ReadByte());
-
-                                        int namelen = reader.ReadByte();
-                                        serverResults[serverCount++] = new string(reader.ReadChars(namelen));
-
-                                        serverResults[serverCount++] = Convert.ToString(reader.ReadInt32());
-                                        serverResults[serverCount++] = Convert.ToString(reader.ReadInt32());
-                                    }
-
-                                    return serverCount;
-                                }
-
-                            case 'p': // Ping
-                                {
-                                    serverResults = new string[1];
-
-                                    serverResults[serverCount++] = timeEnd.Subtract(timeStart).Milliseconds.ToString();
-
-                                    return serverCount;
-                                }
-
-                            default:
-                                return serverCount;
-                        }
-                    }
-                }
             }
-
             catch
             {
                 return serverCount;
+            }
+
+            timeEnd = DateTime.Now;
+
+            using (MemoryStream stream = new MemoryStream(buffer))
+            {
+                using (BinaryReader reader = new BinaryReader(stream))
+                {
+                    //if (stream.Length <= 10) return serverCount;
+
+                    reader.ReadBytes(10);
+
+                    switch (reader.ReadChar())
+                    {
+                        case 'i': // Information
+                            {
+                                serverResults = new string[6];
+
+                                serverResults[serverCount++] = Convert.ToString(reader.ReadByte());
+                                serverResults[serverCount++] = Convert.ToString(reader.ReadInt16());
+                                serverResults[serverCount++] = Convert.ToString(reader.ReadInt16());
+
+                                int hostnamelen = reader.ReadInt32();
+                                serverResults[serverCount++] = new string(reader.ReadChars(hostnamelen));
+
+                                int gamemodelen = reader.ReadInt32();
+                                serverResults[serverCount++] = new string(reader.ReadChars(gamemodelen));
+
+                                int mapnamelen = reader.ReadInt32();
+                                serverResults[serverCount++] = new string(reader.ReadChars(mapnamelen));
+
+                                return serverCount;
+                            }
+
+                        case 'r': // Rules
+                            {
+                                int rulecount = reader.ReadInt16();
+
+                                serverResults = new string[rulecount * 2];
+
+                                for (int i = 0; i < rulecount; i++)
+                                {
+                                    int rulelen = reader.ReadByte();
+                                    serverResults[serverCount++] = new string(reader.ReadChars(rulelen));
+
+                                    int valuelen = reader.ReadByte();
+                                    serverResults[serverCount++] = new string(reader.ReadChars(valuelen));
+                                }
+
+                                return serverCount;
+                            }
+
+                        case 'c': // Client list
+                            {
+                                int playercount = reader.ReadInt16();
+
+                                serverResults = new string[playercount * 2];
+
+                                for (int i = 0; i < playercount; i++)
+                                {
+                                    int namelen = reader.ReadByte();
+                                    serverResults[serverCount++] = new string(reader.ReadChars(namelen));
+
+                                    serverResults[serverCount++] = Convert.ToString(reader.ReadInt32());
+                                }
+
+                                return serverCount;
+                            }
+
+                        case 'd': // Detailed player information
+                            {
+                                int playercount = reader.ReadInt16();
+
+                                serverResults = new string[playercount * 4];
+
+                                for (int i = 0; i < playercount; i++)
+                                {
+                                    serverResults[serverCount++] = Convert.ToString(reader.ReadByte());
+
+                                    int namelen = reader.ReadByte();
+                                    serverResults[serverCount++] = new string(reader.ReadChars(namelen));
+
+                                    serverResults[serverCount++] = Convert.ToString(reader.ReadInt32());
+                                    serverResults[serverCount++] = Convert.ToString(reader.ReadInt32());
+                                }
+
+                                return serverCount;
+                            }
+
+                        case 'p': // Ping
+                            {
+                                serverResults = new string[1];
+
+                                serverResults[serverCount++] = timeEnd.Subtract(timeStart).Milliseconds.ToString();
+
+                                return serverCount;
+                            }
+
+                        default:
+                            return serverCount;
+                    }
+                }
             }
         }
 
