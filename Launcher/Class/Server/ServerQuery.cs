@@ -26,6 +26,7 @@ namespace Jasarsoft.Launcher.SAMP
             if (ip == null || ip == String.Empty || port == 0)
                 throw new ArgumentNullException("Ip adresa i/ili port nisu definisani.");
 
+            serverPort = port;
 
             serverSocket = new Socket(AddressFamily.InterNetwork, 
                                       SocketType.Dgram, 
@@ -36,13 +37,12 @@ namespace Jasarsoft.Launcher.SAMP
 
             try
             {
-                serverPort = port;
                 serverAddress = Dns.GetHostAddresses(ip)[0];
                 endpoint = new IPEndPoint(serverAddress, serverPort);
             }
             catch
             {
-
+                throw;
             }
         }
 
@@ -56,42 +56,77 @@ namespace Jasarsoft.Launcher.SAMP
             get { return serverResults; }
         }
 
-
-        protected bool Send(char opcode)
+        private bool ValidAddressNumber(string number)
         {
+            int result;
+
+            if (Int32.TryParse(number, out result))
+            {
+                if (result >= 0 && result <= 255)
+                    return true;
+            }
+
+            return false;
+        }
+
+
+        private bool CheckAddress(IPAddress ip)
+        {
+            string[] splitip;
+
             try
             {
-                using (MemoryStream stream = new MemoryStream())
-                {
-                    using (BinaryWriter writer = new BinaryWriter(stream))
-                    {
-                        writer.Write("SAMP".ToCharArray());
-
-                        string[] splitIP = serverAddress.ToString().Split('.');
-
-                        writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[0])));
-                        writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[1])));
-                        writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[2])));
-                        writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[3])));
-
-                        writer.Write((ushort)serverPort);
-
-                        writer.Write(opcode);
-
-                        if (opcode ==  ServerOpcode.INFO)
-                            writer.Write("8493".ToCharArray());
-                    }
-
-                    timeStart = DateTime.Now;
-
-                    if (serverSocket.SendTo(stream.ToArray(), endpoint) > 0)
-                        return true;
-                }
+                splitip = serverAddress.ToString().Split('.');
             }
-            catch
+            catch (Exception)
             {
                 return false;
             }
+
+            if (ValidAddressNumber(splitip[0]) && ValidAddressNumber(splitip[1]) &&
+                    ValidAddressNumber(splitip[2]) && ValidAddressNumber(splitip[3]))
+                return true;
+
+            return false;
+        }
+
+
+        protected bool Send(char opcode)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                using (BinaryWriter writer = new BinaryWriter(stream))
+                {
+                    writer.Write("SAMP".ToCharArray());
+
+                    string[] splitIP = serverAddress.ToString().Split('.');
+
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[0])));
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[1])));
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[2])));
+                    writer.Write(Convert.ToByte(Convert.ToInt32(splitIP[3])));
+
+                    writer.Write((ushort)serverPort);
+
+                    writer.Write(opcode);
+
+                    if (opcode == ServerOpcode.INFO)
+                        writer.Write("8493".ToCharArray());
+                }
+
+                timeStart = DateTime.Now;
+
+                try
+                {
+                    if (serverSocket.SendTo(stream.ToArray(), endpoint) > 0)
+                        return true;
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            
 
             return false;
         }
