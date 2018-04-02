@@ -120,6 +120,7 @@
     <Compile Include="Class\Server\ServerQuery.cs" />
     <Compile Include="Class\Server\ServerInfo.cs" />
     <Compile Include="Class\Server\ServerPing.cs" />
+    <Compile Include="Class\Server\ServerRule.cs" />
     <Compile Include="Structure\Server\ServerOpcode.cs" />
     <EmbeddedResource Include="Form\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
