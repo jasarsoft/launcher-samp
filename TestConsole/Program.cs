@@ -13,7 +13,7 @@ namespace TestConsole
         {
             Query.Query sQuery = new Query.Query("127.0.0.1", 7777);
 
-            sQuery.Send('i');
+            sQuery.Send('p');
 
             int count = sQuery.Receive();
 
@@ -31,11 +31,11 @@ namespace TestConsole
 
             //-------------------------
 
-            Query.RCONQuery sRCONQuery = new Query.RCONQuery("127.0.0.1", 7777, "changeme");
+            Query.RCONQuery sRCONQuery = new Query.RCONQuery("127.0.0.1", 7777, "123");
 
-            sRCONQuery.Send("echo Hello from C#");
+            sRCONQuery.Send("myriad");
 
-            count = sQuery.Receive();
+            count = sRCONQuery.Rceive();
 
             string[] infoRCON = sQuery.Store(count);
             foreach (string i in infoRCON)
