@@ -117,6 +117,10 @@
     <Compile Include="Class\Role\RolePlayBS.cs" />
     <Compile Include="Class\Role\RoleRule.cs" />
     <Compile Include="Class\SampRegistry.cs" />
+    <Compile Include="Class\Server\ServerQuery.cs" />
+    <Compile Include="Class\Server\ServerInfo.cs" />
+    <Compile Include="Class\Server\ServerPing.cs" />
+    <Compile Include="Structure\Server\ServerOpcode.cs" />
     <EmbeddedResource Include="Form\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Enumerable\" />
-    <Folder Include="Structure\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
