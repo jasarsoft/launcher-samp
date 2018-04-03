@@ -53,13 +53,16 @@ namespace Jasarsoft.Launcher.SAMP
         {
             if (Send(ServerOpcode.INFO))
             {
-                serverPassword = Result[0] == "0" ? false : true;
-                currentPlayers = Convert.ToInt32(Result[1]);
-                maxPlayers = Convert.ToInt32(Result[2]);
-                serverHostname = Result[3];
-                serverGamemode = Result[4];
-                serverLanguage = Result[5];
-
+                if(Receive() > 0)
+                {
+                    serverPassword = Result[0] == "0" ? false : true;
+                    currentPlayers = Convert.ToInt32(Result[1]);
+                    maxPlayers = Convert.ToInt32(Result[2]);
+                    serverHostname = Result[3];
+                    serverGamemode = Result[4];
+                    serverLanguage = Result[5];
+                }
+                
                 return true;
             }
 
