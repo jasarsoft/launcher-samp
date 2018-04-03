@@ -58,15 +58,6 @@ namespace Jasarsoft.Launcher.SAMP
             public const char PING = 'p';
         }
 
-        protected int Cout
-        {
-            get { return serverCount; }
-        }
-
-        protected string[] Result
-        {
-            get { return serverResults; }
-        }
 
         private bool ValidAddressNumber(string number)
         {
