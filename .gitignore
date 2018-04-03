@@ -3,6 +3,7 @@
 
 #My ignore files
 Library/
+TestConsole/
 
 # User-specific files
 *.suo

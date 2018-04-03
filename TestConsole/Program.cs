@@ -13,7 +13,7 @@ namespace TestConsole
         {
             Query.Query sQuery = new Query.Query("127.0.0.1", 7777);
 
-            sQuery.Send('p');
+            sQuery.Send('d');
 
             int count = sQuery.Receive();
 
