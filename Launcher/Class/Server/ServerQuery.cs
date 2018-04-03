@@ -120,7 +120,7 @@ namespace Jasarsoft.Launcher.SAMP
 
                 try
                 {
-                    endpoint = new IPEndPoint(serverAddress, serverPort);
+                    //endpoint = new IPEndPoint(serverAddress, serverPort);
                     if (serverSocket.SendTo(stream.ToArray(), endpoint) > 0)
                         return true;
                 }
@@ -141,7 +141,7 @@ namespace Jasarsoft.Launcher.SAMP
 
             try
             {
-                endpoint = new IPEndPoint(serverAddress, serverPort);
+                //endpoint = new IPEndPoint(serverAddress, serverPort);
                 serverSocket.ReceiveFrom(buffer, ref endpoint);
             }
             catch (Exception ex)
