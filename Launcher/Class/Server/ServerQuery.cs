@@ -12,15 +12,15 @@ namespace Jasarsoft.Launcher.SAMP
         int serverPort = 0;
         private int serverCount = 0;
 
-        Socket serverSocket;
+        protected Socket serverSocket;
         IPAddress serverAddress;
-        EndPoint endpoint;
+        protected EndPoint endpoint;
 
 
         private string[] serverResults;
 
-        DateTime timeStart;
-        DateTime timeEnd;
+        protected DateTime timeStart;
+        protected DateTime timeEnd;
         DateTime[] timeStamp = new DateTime[2];
 
         public ServerQuery(string ip, int port)
