@@ -18,7 +18,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public int Ping()
         {
-            if(Send(ServerOpcode.PING))
+            if(Send(OpcodeKey.PING))
             {
                 if(Receive())
                 {
@@ -44,7 +44,7 @@ namespace Jasarsoft.Launcher.SAMP
                         else
                             reader.ReadBytes(10);
 
-                        if (reader.ReadChar() == ServerOpcode.PING)
+                        if (reader.ReadChar() == OpcodeKey.PING)
                         {
                             pingValue = timeEnd.Subtract(timeStart).Milliseconds;
                             return true;

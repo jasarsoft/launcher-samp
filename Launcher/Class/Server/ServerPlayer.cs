@@ -24,7 +24,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public bool GetInfo()
         {
-            if(Send(ServerOpcode.PLAYER) && Receive())
+            if(Send(OpcodeKey.PLAYER) && Receive())
             {
                 return true;
             }
@@ -47,7 +47,7 @@ namespace Jasarsoft.Launcher.SAMP
                         else
                             reader.ReadBytes(10);
 
-                        if (reader.ReadChar() == ServerOpcode.PLAYER)
+                        if (reader.ReadChar() == OpcodeKey.PLAYER)
                         {
                             int playercount = reader.ReadInt16();
                             playersInfo = new List<PlayerInfo>();

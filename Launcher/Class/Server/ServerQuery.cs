@@ -48,6 +48,16 @@ namespace Jasarsoft.Launcher.SAMP
             }
         }
 
+        protected struct OpcodeKey
+        {
+            public const char INFO = 'i';
+            public const char RULE = 'r';
+            public const char CLIENT = 'c';
+            public const char PLAYER = 'd';
+            public const char RCON = 'x';
+            public const char PING = 'p';
+        }
+
         protected int Cout
         {
             get { return serverCount; }
@@ -111,7 +121,7 @@ namespace Jasarsoft.Launcher.SAMP
 
                     writer.Write(opcode);
 
-                    if (opcode == ServerOpcode.PING)
+                    if (opcode == OpcodeKey.PING)
                         writer.Write("8493".ToCharArray());
                 }
 

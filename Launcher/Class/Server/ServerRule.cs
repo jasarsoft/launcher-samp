@@ -65,7 +65,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public bool Rule()
         {
-            return Send(ServerOpcode.RULE) && Receive() ? true : false;
+            return Send(OpcodeKey.RULE) && Receive() ? true : false;
         }
 
         private new bool Receive()
@@ -89,7 +89,7 @@ namespace Jasarsoft.Launcher.SAMP
                         System.Diagnostics.Debug.WriteLine(debug);
 #endif
 
-                        if (reader.ReadChar() == ServerOpcode.RULE)
+                        if (reader.ReadChar() == OpcodeKey.RULE)
                         {
                             int rulecount = reader.ReadInt16();
 

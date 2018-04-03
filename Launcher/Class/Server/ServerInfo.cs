@@ -57,7 +57,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public bool Info()
         {
-            if (Send(ServerOpcode.INFO) && Receive())
+            if (Send(OpcodeKey.INFO) && Receive())
             {
                 return true;
             }
@@ -86,7 +86,7 @@ namespace Jasarsoft.Launcher.SAMP
                         System.Diagnostics.Debug.WriteLine(debug);
 #endif
 
-                        if (reader.ReadChar() == ServerOpcode.INFO)
+                        if (reader.ReadChar() == OpcodeKey.INFO)
                         {
                             serverPassword = reader.ReadByte() == 0 ? false : true;
                             currentPlayers = reader.ReadInt16();
