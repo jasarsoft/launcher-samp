@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime;
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -110,7 +112,7 @@ namespace Jasarsoft.Launcher.SAMP
 
                     writer.Write(opcode);
 
-                    if (opcode == ServerOpcode.INFO)
+                    if (opcode == ServerOpcode.PING)
                         writer.Write("8493".ToCharArray());
                 }
 
@@ -118,6 +120,7 @@ namespace Jasarsoft.Launcher.SAMP
 
                 try
                 {
+                    endpoint = new IPEndPoint(serverAddress, serverPort);
                     if (serverSocket.SendTo(stream.ToArray(), endpoint) > 0)
                         return true;
                 }
@@ -138,10 +141,12 @@ namespace Jasarsoft.Launcher.SAMP
 
             try
             {
+                endpoint = new IPEndPoint(serverAddress, serverPort);
                 serverSocket.ReceiveFrom(buffer, ref endpoint);
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine(ex.Message);
                 return serverCount;
             }
 

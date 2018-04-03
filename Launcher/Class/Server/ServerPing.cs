@@ -7,16 +7,9 @@ namespace Jasarsoft.Launcher.SAMP
 {
     class ServerPing : ServerQuery
     {
-        private int pingValue;      //ping milisecond value
-
         public ServerPing(string ip, int port) : base(ip, port)
         {
-            pingValue = Ping();
-        }
-
-        public int Value
-        {
-            get { return pingValue; }
+            //pingValue = Ping();
         }
 
 
@@ -24,7 +17,10 @@ namespace Jasarsoft.Launcher.SAMP
         {
             if(Send(ServerOpcode.PING))
             {
-                pingValue = Convert.ToInt32(Result[0]);
+                if(Receive() > 0)
+                {
+                    return Convert.ToInt32(Result[0]);
+                }
             }
 
             return 0;
