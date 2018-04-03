@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -14,7 +15,12 @@ namespace Jasarsoft.Launcher.SAMP
 
         public ServerInfo(string ip, int port) : base(ip, port)
         {
-            GetInfo();
+            serverPassword = false;
+            currentPlayers = 0;
+            maxPlayers = 0;
+            serverHostname = null;
+            serverGamemode = null;
+            serverLanguage = null;
         }
 
 
@@ -51,19 +57,48 @@ namespace Jasarsoft.Launcher.SAMP
 
         public bool GetInfo()
         {
-            if (Send(ServerOpcode.INFO))
+            if (Send(ServerOpcode.INFO) && Receive())
             {
-                if(Receive() > 0)
-                {
-                    serverPassword = Result[0] == "0" ? false : true;
-                    currentPlayers = Convert.ToInt32(Result[1]);
-                    maxPlayers = Convert.ToInt32(Result[2]);
-                    serverHostname = Result[3];
-                    serverGamemode = Result[4];
-                    serverLanguage = Result[5];
-                }
-                
                 return true;
+            }
+
+            return false;
+        }
+
+        private new bool Receive()
+        {
+            byte[] buffer = new byte[256];
+
+            if (base.Receive(ref buffer))
+            {
+                using (MemoryStream stream = new MemoryStream(buffer))
+                {
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        if (stream.Length <= 10)
+                            return false;
+                        else
+                            reader.ReadBytes(10);
+#if DEBUG
+                        string debug = String.Format("{0}: Binary stream size {1}", 
+                                                      this.ToString(), stream.Length);
+
+                        System.Diagnostics.Debug.WriteLine(debug);
+#endif
+
+                        if (reader.ReadChar() == ServerOpcode.INFO)
+                        {
+                            serverPassword = reader.ReadByte() == 0 ? false : true;
+                            currentPlayers = reader.ReadInt16();
+                            maxPlayers = reader.ReadInt16();
+                            serverHostname = new string(reader.ReadChars(reader.ReadInt32()));
+                            serverGamemode = new string(reader.ReadChars(reader.ReadInt32()));
+                            serverLanguage = new string(reader.ReadChars(reader.ReadInt32()));
+
+                            return true;
+                        }
+                    }
+                }
             }
 
             return false;
