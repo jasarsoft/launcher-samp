@@ -65,7 +65,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void timerStatus_Tick(object sender, EventArgs e)
         {
-            if(serverInfo.GetInfo())
+            if(serverInfo.Info())
             {
                 Random rnd = new Random();
                 switch(rnd.Next(2))

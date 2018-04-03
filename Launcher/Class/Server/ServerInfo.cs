@@ -55,7 +55,7 @@ namespace Jasarsoft.Launcher.SAMP
         }
 
 
-        public bool GetInfo()
+        public bool Info()
         {
             if (Send(ServerOpcode.INFO) && Receive())
             {
