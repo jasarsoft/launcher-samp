@@ -92,7 +92,6 @@ namespace Jasarsoft.Launcher.SAMP
             return false;
         }
 
-
         protected bool Send(char opcode)
         {
             using (MemoryStream stream = new MemoryStream())
@@ -132,6 +131,23 @@ namespace Jasarsoft.Launcher.SAMP
             
 
             return false;
+        }
+
+        protected bool Receive(ref byte[] buffer)
+        {
+            try
+            {
+                serverSocket.ReceiveFrom(buffer, ref endpoint);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
+
+            timeEnd = DateTime.Now;
+
+            return true;
         }
 
         public int Receive()
