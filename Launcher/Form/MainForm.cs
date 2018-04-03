@@ -19,12 +19,14 @@ namespace Jasarsoft.Launcher.SAMP
     public partial class MainForm : Syncfusion.Windows.Forms.MetroForm
     {
         ServerPing serverPing;
+        ServerInfo serverInfo;
 
         public MainForm()
         {
             InitializeComponent();
 
             serverPing = new ServerPing("127.0.0.1", 7777);
+            serverInfo = new ServerInfo("127.0.0.1", 7777);
         }
 
         
@@ -45,6 +47,9 @@ namespace Jasarsoft.Launcher.SAMP
 
             statusBarInfo.StartAnimation();
             timerPing.Start();
+            timerStatus.Start();
+
+            statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
         }
 
         private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,6 +61,28 @@ namespace Jasarsoft.Launcher.SAMP
         private void timerPing_Tick(object sender, EventArgs e)
         {
             statusBarPing.Text = String.Format("{0:D3}", serverPing.Ping());
+        }
+
+        private void timerStatus_Tick(object sender, EventArgs e)
+        {
+            if(serverInfo.GetInfo())
+            {
+                Random rnd = new Random();
+                switch(rnd.Next(2))
+                {
+                    case 0:
+                        statusBarMain.Text = String.Format("  Server hostname: {0}", serverInfo.Hostname);
+                        break;
+                    case 1:
+                        statusBarMain.Text = String.Format("  Server language: {0}", serverInfo.Language);
+                        break;
+                    case 2:
+                        statusBarMain.Text = String.Format("  Server gamemode: {0}", serverInfo.Gamemode);
+                        break;
+                }
+
+                statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
+            }
         }
     }
 }

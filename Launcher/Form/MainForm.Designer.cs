@@ -65,6 +65,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.statusBarPing = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.statusBarInfo = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.timerPing = new System.Windows.Forms.Timer(this.components);
+            this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
@@ -379,6 +380,11 @@ namespace Jasarsoft.Launcher.SAMP
             this.timerPing.Interval = 1000;
             this.timerPing.Tick += new System.EventHandler(this.timerPing_Tick);
             // 
+            // timerStatus
+            // 
+            this.timerStatus.Interval = 10000;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -461,5 +467,6 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPing;
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarInfo;
         private System.Windows.Forms.Timer timerPing;
+        private System.Windows.Forms.Timer timerStatus;
     }
 }
