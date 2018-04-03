@@ -8,17 +8,17 @@ namespace Jasarsoft.Launcher.SAMP
 {
     internal sealed class ServerClient : ServerQuery
     {
-        PlayerClient playerClient;
+        List<PlayerClient> playerClient;
         
         public ServerClient(string ip, int port) : base(ip, port)
         {
-            //nothing
+            playerClient = new List<PlayerClient>();
         }
 
 
-        public PlayerClient Player
+        public PlayerClient[] Players
         {
-            get { return playerClient; }
+            get { return playerClient.ToArray(); }
         }
 
 
@@ -51,6 +51,7 @@ namespace Jasarsoft.Launcher.SAMP
                         if (reader.ReadChar() == OpcodeKey.CLIENT)
                         {
                             int playercount = reader.ReadInt16();
+                            playerClient = new List<PlayerClient>();
 
 #if DEBUG
                             System.Diagnostics.Debug.Write(String.Format("{0}: Player count: {1}", this.ToString(), playercount));
@@ -63,7 +64,7 @@ namespace Jasarsoft.Launcher.SAMP
 
                                 int score = reader.ReadInt32();
 
-                                playerClient = new PlayerClient(name, score);
+                                playerClient.Add(new PlayerClient(name, score));
                             }
 
                             return true;
