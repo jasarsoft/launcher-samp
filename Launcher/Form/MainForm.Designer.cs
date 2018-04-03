@@ -61,9 +61,10 @@ namespace Jasarsoft.Launcher.SAMP
             this.autoLabel2 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.statusBarAdv1 = new Syncfusion.Windows.Forms.Tools.StatusBarAdv();
             this.statusBarMain = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
-            this.statusBarPing = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.statusBarPlayers = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
+            this.statusBarPing = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.statusBarInfo = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
+            this.timerPing = new System.Windows.Forms.Timer(this.components);
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
@@ -71,8 +72,8 @@ namespace Jasarsoft.Launcher.SAMP
             ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).BeginInit();
             this.statusBarAdv1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarMain)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPlayers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarInfo)).BeginInit();
             this.SuspendLayout();
             // 
@@ -322,6 +323,21 @@ namespace Jasarsoft.Launcher.SAMP
             this.statusBarMain.TabIndex = 0;
             this.statusBarMain.Text = "  Server: 127.0.0.1:7777";
             // 
+            // statusBarPlayers
+            // 
+            this.statusBarPlayers.BackColor = System.Drawing.Color.Transparent;
+            this.statusBarPlayers.BeforeTouchSize = new System.Drawing.Size(60, 16);
+            this.statusBarPlayers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.statusBarPlayers.ForeColor = System.Drawing.Color.Black;
+            this.statusBarPlayers.HAlign = Syncfusion.Windows.Forms.Tools.HorzFlowAlign.Right;
+            this.statusBarPlayers.Location = new System.Drawing.Point(245, 2);
+            this.statusBarPlayers.Margin = new System.Windows.Forms.Padding(0);
+            this.statusBarPlayers.Name = "statusBarPlayers";
+            this.statusBarPlayers.Size = new System.Drawing.Size(60, 16);
+            this.statusBarPlayers.TabIndex = 1;
+            this.statusBarPlayers.Text = "500/1000";
+            this.statusBarPlayers.ToolTip = "Trenutno stanje igraèa na serveru";
+            // 
             // statusBarPing
             // 
             this.statusBarPing.BackColor = System.Drawing.Color.Transparent;
@@ -337,23 +353,8 @@ namespace Jasarsoft.Launcher.SAMP
             this.statusBarPing.Name = "statusBarPing";
             this.statusBarPing.Size = new System.Drawing.Size(28, 16);
             this.statusBarPing.TabIndex = 1;
-            this.statusBarPing.Text = "100";
+            this.statusBarPing.Text = "000";
             this.statusBarPing.ToolTip = "Server ping vrijednost";
-            // 
-            // statusBarPlayers
-            // 
-            this.statusBarPlayers.BackColor = System.Drawing.Color.Transparent;
-            this.statusBarPlayers.BeforeTouchSize = new System.Drawing.Size(60, 16);
-            this.statusBarPlayers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.statusBarPlayers.ForeColor = System.Drawing.Color.Black;
-            this.statusBarPlayers.HAlign = Syncfusion.Windows.Forms.Tools.HorzFlowAlign.Right;
-            this.statusBarPlayers.Location = new System.Drawing.Point(245, 2);
-            this.statusBarPlayers.Margin = new System.Windows.Forms.Padding(0);
-            this.statusBarPlayers.Name = "statusBarPlayers";
-            this.statusBarPlayers.Size = new System.Drawing.Size(60, 16);
-            this.statusBarPlayers.TabIndex = 1;
-            this.statusBarPlayers.Text = "500/1000";
-            this.statusBarPlayers.ToolTip = "Trenutno stanje igraèa na serveru";
             // 
             // statusBarInfo
             // 
@@ -372,6 +373,11 @@ namespace Jasarsoft.Launcher.SAMP
             this.statusBarInfo.Text = "Trenutna korisnicki postavljena obavjestenja servera koja se ucitavaju iz baze po" +
     "dataka.";
             this.statusBarInfo.ToolTip = "Trenutna obavjestenja servera";
+            // 
+            // timerPing
+            // 
+            this.timerPing.Interval = 1000;
+            this.timerPing.Tick += new System.EventHandler(this.timerPing_Tick);
             // 
             // MainForm
             // 
@@ -416,8 +422,8 @@ namespace Jasarsoft.Launcher.SAMP
             ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).EndInit();
             this.statusBarAdv1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.statusBarMain)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPlayers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarInfo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -454,5 +460,6 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPlayers;
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPing;
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarInfo;
+        private System.Windows.Forms.Timer timerPing;
     }
 }

@@ -18,9 +18,13 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public partial class MainForm : Syncfusion.Windows.Forms.MetroForm
     {
+        ServerPing serverPing;
+
         public MainForm()
         {
             InitializeComponent();
+
+            serverPing = new ServerPing("127.0.0.1", 7777);
         }
 
         
@@ -40,12 +44,18 @@ namespace Jasarsoft.Launcher.SAMP
             }
 
             statusBarInfo.StartAnimation();
+            timerPing.Start();
         }
 
         private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RuleForm rule = new RuleForm();
             rule.ShowDialog();
+        }
+
+        private void timerPing_Tick(object sender, EventArgs e)
+        {
+            statusBarPing.Text = String.Format("{0:D3}", serverPing.Ping());
         }
     }
 }
