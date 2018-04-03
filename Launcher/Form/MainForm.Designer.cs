@@ -67,6 +67,7 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             // menuMain
             // 
+            this.menuMain.BackColor = System.Drawing.Color.WhiteSmoke;
             this.menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileMenu,
             this.editMenu,
