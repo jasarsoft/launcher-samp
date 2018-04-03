@@ -48,16 +48,18 @@ namespace Jasarsoft.Launcher.SAMP
             // pictureLogo
             // 
             this.pictureLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureLogo.Image = global::Jasarsoft.Launcher.SAMP.Properties.Resources.gtasa_cover;
             this.pictureLogo.Location = new System.Drawing.Point(12, 12);
             this.pictureLogo.Name = "pictureLogo";
             this.pictureLogo.Size = new System.Drawing.Size(320, 96);
+            this.pictureLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureLogo.TabIndex = 0;
             this.pictureLogo.TabStop = false;
             // 
             // textRule
             // 
             this.textRule.BackColor = System.Drawing.Color.White;
-            this.textRule.BeforeTouchSize = new System.Drawing.Size(214, 22);
+            this.textRule.BeforeTouchSize = new System.Drawing.Size(320, 96);
             this.textRule.BorderColor = System.Drawing.Color.Gainsboro;
             this.textRule.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textRule.FocusBorderColor = System.Drawing.Color.DarkCyan;
