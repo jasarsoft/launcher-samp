@@ -26,7 +26,18 @@ namespace Jasarsoft.Launcher.SAMP
         
         private void MainForm_Load(object sender, EventArgs e)
         {
+            SampRegistry reg = new SampRegistry();
 
+            if(reg.Valid() && reg.Read())
+            {
+                this.textboxUser.Text = reg.PlayerName;
+            }
+            else
+            {
+                reg.Default();
+                reg.Write();
+                this.textboxUser.Text = reg.PlayerName;
+            }
         }
 
         private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)
