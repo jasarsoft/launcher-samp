@@ -124,6 +124,7 @@
     <Compile Include="Class\Server\ServerPing.cs" />
     <Compile Include="Class\Server\ServerRule.cs" />
     <Compile Include="Class\Server\ServerPlayer.cs" />
+    <Compile Include="Class\Server\ServerClient.cs" />
     <EmbeddedResource Include="Form\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
