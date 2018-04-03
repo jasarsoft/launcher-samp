@@ -38,6 +38,8 @@ namespace Jasarsoft.Launcher.SAMP
                 reg.Write();
                 this.textboxUser.Text = reg.PlayerName;
             }
+
+            statusBarInfo.StartAnimation();
         }
 
         private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)

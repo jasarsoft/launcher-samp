@@ -59,10 +59,21 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelPassword = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.textboxPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.autoLabel2 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.statusBarAdv1 = new Syncfusion.Windows.Forms.Tools.StatusBarAdv();
+            this.statusBarMain = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
+            this.statusBarPing = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
+            this.statusBarPlayers = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
+            this.statusBarInfo = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).BeginInit();
+            this.statusBarAdv1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPlayers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarInfo)).BeginInit();
             this.SuspendLayout();
             // 
             // menuMain
@@ -188,14 +199,14 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonLogin.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonLogin.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.buttonLogin.IsBackStageButton = false;
-            this.buttonLogin.Location = new System.Drawing.Point(12, 227);
+            this.buttonLogin.Location = new System.Drawing.Point(12, 232);
             this.buttonLogin.MetroColor = System.Drawing.Color.DarkCyan;
             this.buttonLogin.Name = "buttonLogin";
             this.buttonLogin.Size = new System.Drawing.Size(320, 59);
             this.buttonLogin.TabIndex = 7;
             this.buttonLogin.Text = "LOGIN";
             this.buttonLogin.UseVisualStyle = true;
-            this.buttonLogin.UseVisualStyleBackColor = false;
+            this.buttonLogin.UseVisualStyleBackColor = true;
             // 
             // textboxUser
             // 
@@ -269,11 +280,98 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             this.autoLabel2.AutoSize = false;
             this.autoLabel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.autoLabel2.Location = new System.Drawing.Point(12, 212);
+            this.autoLabel2.Location = new System.Drawing.Point(12, 227);
             this.autoLabel2.Name = "autoLabel2";
             this.autoLabel2.Size = new System.Drawing.Size(320, 2);
             this.autoLabel2.TabIndex = 6;
             this.autoLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // statusBarAdv1
+            // 
+            this.statusBarAdv1.BeforeTouchSize = new System.Drawing.Size(344, 22);
+            this.statusBarAdv1.BorderColor = System.Drawing.Color.DimGray;
+            this.statusBarAdv1.BorderSides = System.Windows.Forms.Border3DSide.Top;
+            this.statusBarAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.statusBarAdv1.Controls.Add(this.statusBarMain);
+            this.statusBarAdv1.Controls.Add(this.statusBarPlayers);
+            this.statusBarAdv1.Controls.Add(this.statusBarPing);
+            this.statusBarAdv1.CustomLayoutBounds = new System.Drawing.Rectangle(0, 0, 0, 0);
+            this.statusBarAdv1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.statusBarAdv1.Location = new System.Drawing.Point(0, 297);
+            this.statusBarAdv1.Name = "statusBarAdv1";
+            this.statusBarAdv1.Padding = new System.Windows.Forms.Padding(3);
+            this.statusBarAdv1.Size = new System.Drawing.Size(344, 22);
+            this.statusBarAdv1.SizingGrip = false;
+            this.statusBarAdv1.Spacing = new System.Drawing.Size(2, 2);
+            this.statusBarAdv1.TabIndex = 10;
+            // 
+            // statusBarMain
+            // 
+            this.statusBarMain.AutoScroll = true;
+            this.statusBarMain.BackColor = System.Drawing.Color.Transparent;
+            this.statusBarMain.BeforeTouchSize = new System.Drawing.Size(230, 16);
+            this.statusBarMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.statusBarMain.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.statusBarMain.ForeColor = System.Drawing.Color.DimGray;
+            this.statusBarMain.IsMarquee = true;
+            this.statusBarMain.Location = new System.Drawing.Point(0, 2);
+            this.statusBarMain.Margin = new System.Windows.Forms.Padding(0);
+            this.statusBarMain.Name = "statusBarMain";
+            this.statusBarMain.PreferredSize = new System.Drawing.Size(295, 16);
+            this.statusBarMain.Size = new System.Drawing.Size(230, 16);
+            this.statusBarMain.TabIndex = 0;
+            this.statusBarMain.Text = "  Server: 127.0.0.1:7777";
+            // 
+            // statusBarPing
+            // 
+            this.statusBarPing.BackColor = System.Drawing.Color.Transparent;
+            this.statusBarPing.BeforeTouchSize = new System.Drawing.Size(28, 16);
+            this.statusBarPing.Border3DStyle = System.Windows.Forms.Border3DStyle.RaisedOuter;
+            this.statusBarPing.BorderSingle = System.Windows.Forms.ButtonBorderStyle.None;
+            this.statusBarPing.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.statusBarPing.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.statusBarPing.ForeColor = System.Drawing.Color.DarkCyan;
+            this.statusBarPing.HAlign = Syncfusion.Windows.Forms.Tools.HorzFlowAlign.Right;
+            this.statusBarPing.Location = new System.Drawing.Point(307, 2);
+            this.statusBarPing.Margin = new System.Windows.Forms.Padding(0);
+            this.statusBarPing.Name = "statusBarPing";
+            this.statusBarPing.Size = new System.Drawing.Size(28, 16);
+            this.statusBarPing.TabIndex = 1;
+            this.statusBarPing.Text = "100";
+            this.statusBarPing.ToolTip = "Server ping vrijednost";
+            // 
+            // statusBarPlayers
+            // 
+            this.statusBarPlayers.BackColor = System.Drawing.Color.Transparent;
+            this.statusBarPlayers.BeforeTouchSize = new System.Drawing.Size(60, 16);
+            this.statusBarPlayers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.statusBarPlayers.ForeColor = System.Drawing.Color.Black;
+            this.statusBarPlayers.HAlign = Syncfusion.Windows.Forms.Tools.HorzFlowAlign.Right;
+            this.statusBarPlayers.Location = new System.Drawing.Point(245, 2);
+            this.statusBarPlayers.Margin = new System.Windows.Forms.Padding(0);
+            this.statusBarPlayers.Name = "statusBarPlayers";
+            this.statusBarPlayers.Size = new System.Drawing.Size(60, 16);
+            this.statusBarPlayers.TabIndex = 1;
+            this.statusBarPlayers.Text = "500/1000";
+            this.statusBarPlayers.ToolTip = "Trenutno stanje igraèa na serveru";
+            // 
+            // statusBarInfo
+            // 
+            this.statusBarInfo.AnimationDelay = 10;
+            this.statusBarInfo.AutoScroll = true;
+            this.statusBarInfo.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.statusBarInfo.BeforeTouchSize = new System.Drawing.Size(320, 18);
+            this.statusBarInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.statusBarInfo.ForeColor = System.Drawing.Color.DimGray;
+            this.statusBarInfo.IsMarquee = true;
+            this.statusBarInfo.Location = new System.Drawing.Point(12, 209);
+            this.statusBarInfo.Margin = new System.Windows.Forms.Padding(0);
+            this.statusBarInfo.Name = "statusBarInfo";
+            this.statusBarInfo.Size = new System.Drawing.Size(320, 18);
+            this.statusBarInfo.TabIndex = 11;
+            this.statusBarInfo.Text = "Trenutna korisnicki postavljena obavjestenja servera koja se ucitavaju iz baze po" +
+    "dataka.";
+            this.statusBarInfo.ToolTip = "Trenutna obavjestenja servera";
             // 
             // MainForm
             // 
@@ -288,7 +386,9 @@ namespace Jasarsoft.Launcher.SAMP
             this.CaptionButtonColor = System.Drawing.Color.WhiteSmoke;
             this.CaptionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CaptionForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(344, 298);
+            this.ClientSize = new System.Drawing.Size(344, 319);
+            this.Controls.Add(this.statusBarInfo);
+            this.Controls.Add(this.statusBarAdv1);
             this.Controls.Add(this.autoLabel2);
             this.Controls.Add(this.labelPassword);
             this.Controls.Add(this.textboxPassword);
@@ -313,6 +413,12 @@ namespace Jasarsoft.Launcher.SAMP
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).EndInit();
+            this.statusBarAdv1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPlayers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarInfo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -343,5 +449,10 @@ namespace Jasarsoft.Launcher.SAMP
         private System.Windows.Forms.ToolStripMenuItem rolePlayToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem launcherToolStripMenuItem;
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdv statusBarAdv1;
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarMain;
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPlayers;
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPing;
+        private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarInfo;
     }
 }
