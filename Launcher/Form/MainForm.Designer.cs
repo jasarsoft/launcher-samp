@@ -359,7 +359,7 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             // statusBarInfo
             // 
-            this.statusBarInfo.AnimationDelay = 10;
+            this.statusBarInfo.AnimationDelay = 1;
             this.statusBarInfo.AutoScroll = true;
             this.statusBarInfo.BackColor = System.Drawing.Color.WhiteSmoke;
             this.statusBarInfo.BeforeTouchSize = new System.Drawing.Size(320, 18);
