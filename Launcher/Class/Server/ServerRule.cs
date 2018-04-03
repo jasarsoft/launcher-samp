@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -17,7 +18,17 @@ namespace Jasarsoft.Launcher.SAMP
 
         public ServerRule(string ip, int port) : base(ip, port)
         {
-            GetRule();
+            //nothing
+        }
+
+        private struct RuleKey
+        {
+            public const string LOGMAP = "lagcomp";
+            public const string MAPNAME = "mapname";
+            public const string VERSION = "version";
+            public const string WEATHER = "weather";
+            public const string WEBURL = "weburl";
+            public const string WORLDTIME = "worldtime";
         }
 
 
@@ -51,51 +62,75 @@ namespace Jasarsoft.Launcher.SAMP
             get { return serverWorldtime; }
         }
 
-        
 
-        public bool GetRule()
+        public bool Rule()
         {
-            if(Send(ServerOpcode.RULE))
-            {
-                for(int i = 0; i < Result.Length; i++)
-                {
-                    switch(Result[i].ToString().ToLower())
-                    {
-                        case RuleKey.LOGMAP:
-                            serverLogcomp = Result[++i];
-                            break;
-                        case RuleKey.MAPNAME:
-                            serverMapname = Result[++i];
-                            break;
-                        case RuleKey.VERSION:
-                            serverVersion = Result[++i];
-                            break;
-                        case RuleKey.WEATHER:
-                            serverWeather = Result[++i];
-                            break;
-                        case RuleKey.WEBURL:
-                            serverWeburl = Result[++i];
-                            break;
-                        case RuleKey.WORLDTIME:
-                            serverWorldtime = Result[++i];
-                            break;
+            return Send(ServerOpcode.RULE) && Receive() ? true : false;
+        }
 
+        private new bool Receive()
+        {
+            byte[] buffer = new byte[256];
+
+            if (base.Receive(ref buffer))
+            {
+                using (MemoryStream stream = new MemoryStream(buffer))
+                {
+                    using (BinaryReader reader = new BinaryReader(stream))
+                    {
+                        if (stream.Length <= 10)
+                            return false;
+                        else
+                            reader.ReadBytes(10);
+#if DEBUG
+                        string debug = String.Format("{0}: Binary stream size {1}",
+                                                      this.ToString(), stream.Length);
+
+                        System.Diagnostics.Debug.WriteLine(debug);
+#endif
+
+                        if (reader.ReadChar() == ServerOpcode.RULE)
+                        {
+                            int rulecount = reader.ReadInt16();
+
+                            for (int i = 0; i < rulecount; i++)
+                            {
+                                int rulelen = reader.ReadByte();
+                                string rule = new string(reader.ReadChars(rulelen));
+
+                                int valuelen = reader.ReadByte();
+                                string value = new string(reader.ReadChars(valuelen));
+
+                                switch (rule)
+                                {
+                                    case RuleKey.LOGMAP:
+                                        serverLogcomp = value;
+                                        break;
+                                    case RuleKey.MAPNAME:
+                                        serverMapname = value;
+                                        break;
+                                    case RuleKey.VERSION:
+                                        serverVersion = value;
+                                        break;
+                                    case RuleKey.WEATHER:
+                                        serverWeather = value;
+                                        break;
+                                    case RuleKey.WEBURL:
+                                        serverWeburl = value;
+                                        break;
+                                    case RuleKey.WORLDTIME:
+                                        serverWorldtime = value;
+                                        break;
+                                }
+                            }
+
+                            return true;
+                        }
                     }
                 }
             }
 
-            return true;
-        }
-
-        
-        private struct RuleKey
-        {
-            public const string LOGMAP = "lagcomp";
-            public const string MAPNAME = "mapname";
-            public const string VERSION = "version";
-            public const string WEATHER = "weather";
-            public const string WEBURL = "weburl";
-            public const string WORLDTIME = "worldtime";
+            return false;
         }
     }
 }
