@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
+
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -14,7 +13,6 @@ namespace Jasarsoft.Launcher.SAMP
         public ServerPlayer(string ip, int ping) : base(ip, ping)
         {
             playersInfo = new List<PlayerInfo>();
-
         }
 
 
@@ -34,9 +32,10 @@ namespace Jasarsoft.Launcher.SAMP
             return false;
         }
 
-        private bool Receive2()
+        private new bool Receive()
         {
             byte[] buffer = new byte[3402];
+
             if(Receive(ref buffer))
             {
                 using (MemoryStream stream = new MemoryStream(buffer))
@@ -51,6 +50,7 @@ namespace Jasarsoft.Launcher.SAMP
                         if (reader.ReadChar() == ServerOpcode.PLAYER)
                         {
                             int playercount = reader.ReadInt16();
+                            playersInfo = new List<PlayerInfo>();
 
                             for (int i = 0; i < playercount; i++)
                             {
@@ -67,7 +67,6 @@ namespace Jasarsoft.Launcher.SAMP
                                                                new string(reader.ReadChars(reader.ReadByte())),
                                                                reader.ReadInt32(),
                                                                reader.ReadInt32()));
-
                             }
 
                             return true;
@@ -76,54 +75,7 @@ namespace Jasarsoft.Launcher.SAMP
                 }
             }
 
-            return false;
-            
-        }
-
-        private new bool Receive()
-        {
-            byte[] buffer = new byte[3402];
-
-            try
-            {
-                //endpoint = new IPEndPoint(serverAddress, serverPort);
-                serverSocket.ReceiveFrom(buffer, ref endpoint);
-            }
-            catch (Exception ex)
-            {
-                //Debug.WriteLine(ex.Message);
-                return false;
-            }
-
-            timeEnd = DateTime.Now;
-
-            using (MemoryStream stream = new MemoryStream(buffer))
-            {
-                using (BinaryReader reader = new BinaryReader(stream))
-                {
-                    //if (stream.Length <= 10) return serverCount;
-
-                    reader.ReadBytes(10);
-
-                    if(reader.ReadChar() == 'd')
-                    {
-                        int playercount = reader.ReadInt16();
-
-                        for (int i = 0; i < playercount; i++)
-                        {
-                            playersInfo.Add(new PlayerInfo(reader.ReadByte(),
-                                                            new string(reader.ReadChars(reader.ReadByte())),
-                                                            reader.ReadInt32(),
-                                                            reader.ReadInt32()));
-
-                        }
-
-                        return true;
-                    }
-                }
-            }
-
-            return false;
+            return false;   
         }
     }
 }
