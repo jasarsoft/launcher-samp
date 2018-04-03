@@ -99,6 +99,7 @@
     <Compile Include="Class\Other\HashFile.cs" />
     <Compile Include="Interface\IMessageTitle.cs" />
     <Compile Include="Class\Player\PlayerInfo.cs" />
+    <Compile Include="Class\Player\PlayerClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Form\ValidForm.cs">
       <SubType>Form</SubType>
