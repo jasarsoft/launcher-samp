@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-
+using System.Threading;
 using System.Text;
 using System.Windows.Forms;
 
@@ -45,8 +45,9 @@ namespace Jasarsoft.Launcher.SAMP
                 this.textboxUser.Text = reg.PlayerName;
             }
 
+            workerPing.RunWorkerAsync();
+
             statusBarInfo.StartAnimation();
-            timerPing.Start();
             timerStatus.Start();
 
             statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
@@ -56,11 +57,6 @@ namespace Jasarsoft.Launcher.SAMP
         {
             RuleForm rule = new RuleForm();
             rule.ShowDialog();
-        }
-
-        private void timerPing_Tick(object sender, EventArgs e)
-        {
-            statusBarPing.Text = String.Format("{0:D3}", serverPing.Ping());
         }
 
         private void timerStatus_Tick(object sender, EventArgs e)
@@ -90,6 +86,32 @@ namespace Jasarsoft.Launcher.SAMP
             PlayersForm pf = new PlayersForm();
 
             pf.ShowDialog();
+        }
+
+        private void workerPing_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if(worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            Thread.Sleep(1000);
+            e.Result = serverPing.Ping();
+        }
+
+        private void workerPing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+                return;
+            else
+            {
+                statusBarPing.Text = String.Format("{0:D3}", e.Result);
+                
+                workerPing.RunWorkerAsync();
+            }
         }
     }
 }
