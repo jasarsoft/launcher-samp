@@ -29,7 +29,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private new bool Receive()
         {
-            byte[] buffer = new byte[128];
+            byte[] buffer = new byte[1024 * 8];
 
             if (base.Receive(ref buffer))
             {
