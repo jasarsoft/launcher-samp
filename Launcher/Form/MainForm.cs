@@ -84,5 +84,12 @@ namespace Jasarsoft.Launcher.SAMP
                 statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
             }
         }
+
+        private void playersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PlayersForm pf = new PlayersForm();
+
+            pf.ShowDialog();
+        }
     }
 }

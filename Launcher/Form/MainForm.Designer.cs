@@ -54,7 +54,6 @@ namespace Jasarsoft.Launcher.SAMP
             this.launcherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonLogin = new Syncfusion.Windows.Forms.ButtonAdv();
             this.textboxUser = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.labelUser = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.labelPassword = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.textboxPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
@@ -67,9 +66,9 @@ namespace Jasarsoft.Launcher.SAMP
             this.timerPing = new System.Windows.Forms.Timer(this.components);
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.playersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).BeginInit();
             this.statusBarAdv1.SuspendLayout();
@@ -77,6 +76,7 @@ namespace Jasarsoft.Launcher.SAMP
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPlayers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarInfo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // menuMain
@@ -123,41 +123,41 @@ namespace Jasarsoft.Launcher.SAMP
             // forumToolStripMenuItem
             // 
             this.forumToolStripMenuItem.Name = "forumToolStripMenuItem";
-            this.forumToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.forumToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.forumToolStripMenuItem.Text = "&Forum";
             // 
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.websiteToolStripMenuItem.Text = "&Website";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
             // 
             // youTubeToolStripMenuItem
             // 
             this.youTubeToolStripMenuItem.Name = "youTubeToolStripMenuItem";
-            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.youTubeToolStripMenuItem.Text = "&YouTube";
             // 
             // facebookToolStripMenuItem
             // 
             this.facebookToolStripMenuItem.Name = "facebookToolStripMenuItem";
-            this.facebookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.facebookToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.facebookToolStripMenuItem.Text = "Face&book";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(135, 6);
             // 
             // teamSpeakToolStripMenuItem
             // 
             this.teamSpeakToolStripMenuItem.Name = "teamSpeakToolStripMenuItem";
-            this.teamSpeakToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.teamSpeakToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.teamSpeakToolStripMenuItem.Text = "&Team Speak";
             // 
             // toolsMenu
@@ -181,19 +181,19 @@ namespace Jasarsoft.Launcher.SAMP
             // rolePlayToolStripMenuItem
             // 
             this.rolePlayToolStripMenuItem.Name = "rolePlayToolStripMenuItem";
-            this.rolePlayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rolePlayToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.rolePlayToolStripMenuItem.Text = "&RolePlay";
             this.rolePlayToolStripMenuItem.Click += new System.EventHandler(this.rolePlayToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(120, 6);
             // 
             // launcherToolStripMenuItem
             // 
             this.launcherToolStripMenuItem.Name = "launcherToolStripMenuItem";
-            this.launcherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.launcherToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.launcherToolStripMenuItem.Text = "&Launcher";
             // 
             // buttonLogin
@@ -230,17 +230,6 @@ namespace Jasarsoft.Launcher.SAMP
             this.textboxUser.TabIndex = 4;
             this.textboxUser.Text = "User_Name";
             this.textboxUser.WordWrap = false;
-            // 
-            // pictureLogo
-            // 
-            this.pictureLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureLogo.Image = global::Jasarsoft.Launcher.SAMP.Properties.Resources.gtasa_cover;
-            this.pictureLogo.Location = new System.Drawing.Point(12, 27);
-            this.pictureLogo.Name = "pictureLogo";
-            this.pictureLogo.Size = new System.Drawing.Size(320, 96);
-            this.pictureLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureLogo.TabIndex = 4;
-            this.pictureLogo.TabStop = false;
             // 
             // labelUser
             // 
@@ -393,6 +382,18 @@ namespace Jasarsoft.Launcher.SAMP
             this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
             this.playersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.playersToolStripMenuItem.Text = "&Players";
+            this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
+            // 
+            // pictureLogo
+            // 
+            this.pictureLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureLogo.Image = global::Jasarsoft.Launcher.SAMP.Properties.Resources.gtasa_cover;
+            this.pictureLogo.Location = new System.Drawing.Point(12, 27);
+            this.pictureLogo.Name = "pictureLogo";
+            this.pictureLogo.Size = new System.Drawing.Size(320, 96);
+            this.pictureLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureLogo.TabIndex = 4;
+            this.pictureLogo.TabStop = false;
             // 
             // MainForm
             // 
@@ -432,7 +433,6 @@ namespace Jasarsoft.Launcher.SAMP
             this.menuMain.ResumeLayout(false);
             this.menuMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarAdv1)).EndInit();
             this.statusBarAdv1.ResumeLayout(false);
@@ -440,6 +440,7 @@ namespace Jasarsoft.Launcher.SAMP
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPlayers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarPing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.statusBarInfo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
