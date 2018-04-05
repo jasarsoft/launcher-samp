@@ -18,13 +18,16 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public partial class MainForm : Syncfusion.Windows.Forms.MetroForm
     {
-        ServerPing serverPing;
-        ServerInfo serverInfo;
+        private int statusShow;             //trenutni slijed prikaza u statusu
+        private ServerPing serverPing;
+        private ServerInfo serverInfo;
+
 
         public MainForm()
         {
             InitializeComponent();
 
+            statusShow = 0;
             serverPing = new ServerPing("127.0.0.1", 7777);
             serverInfo = new ServerInfo("127.0.0.1", 7777);
         }
@@ -94,20 +97,30 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void workerStatus_DoWork(object sender, DoWorkEventArgs e)
         {
-            Thread.Sleep(3000);
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (worker != null && worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            Thread.Sleep(5000);
             if (serverInfo.Info())
             {
-                Random rnd = new Random();
-                switch (rnd.Next(2))
+                if (statusShow > 3) //reset trenutnog broja prikaza
+                    statusShow = 0;
+
+                switch (statusShow++)
                 {
                     case 0:
-                        statusBarMain.Text = String.Format("  Server hostname: {0}", serverInfo.Hostname);
+                        statusBarMain.Text = String.Format("  Hostname: {0}", serverInfo.Hostname);
                         break;
                     case 1:
-                        statusBarMain.Text = String.Format("  Server language: {0}", serverInfo.Language);
+                        statusBarMain.Text = String.Format("  Language: {0}", serverInfo.Language);
                         break;
                     case 2:
-                        statusBarMain.Text = String.Format("  Server gamemode: {0}", serverInfo.Gamemode);
+                        statusBarMain.Text = String.Format("  Gamemode: {0}", serverInfo.Gamemode);
                         break;
                 }
 
@@ -117,7 +130,10 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void workerStatus_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            workerStatus.RunWorkerAsync();
+            if (e.Cancelled)
+                return;
+            else
+                workerStatus.RunWorkerAsync();
         }
     }
 }
