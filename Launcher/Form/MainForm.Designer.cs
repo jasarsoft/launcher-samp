@@ -123,41 +123,41 @@ namespace Jasarsoft.Launcher.SAMP
             // forumToolStripMenuItem
             // 
             this.forumToolStripMenuItem.Name = "forumToolStripMenuItem";
-            this.forumToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.forumToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.forumToolStripMenuItem.Text = "&Forum";
             // 
             // websiteToolStripMenuItem
             // 
             this.websiteToolStripMenuItem.Name = "websiteToolStripMenuItem";
-            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.websiteToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.websiteToolStripMenuItem.Text = "&Website";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(135, 6);
             // 
             // youTubeToolStripMenuItem
             // 
             this.youTubeToolStripMenuItem.Name = "youTubeToolStripMenuItem";
-            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.youTubeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.youTubeToolStripMenuItem.Text = "&YouTube";
             // 
             // facebookToolStripMenuItem
             // 
             this.facebookToolStripMenuItem.Name = "facebookToolStripMenuItem";
-            this.facebookToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.facebookToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.facebookToolStripMenuItem.Text = "Face&book";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(135, 6);
             // 
             // teamSpeakToolStripMenuItem
             // 
             this.teamSpeakToolStripMenuItem.Name = "teamSpeakToolStripMenuItem";
-            this.teamSpeakToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.teamSpeakToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
             this.teamSpeakToolStripMenuItem.Text = "&Team Speak";
             // 
             // toolsMenu
@@ -171,7 +171,7 @@ namespace Jasarsoft.Launcher.SAMP
             // playersToolStripMenuItem
             // 
             this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
-            this.playersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.playersToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
             this.playersToolStripMenuItem.Text = "&Players";
             this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
             // 
@@ -188,19 +188,19 @@ namespace Jasarsoft.Launcher.SAMP
             // rolePlayToolStripMenuItem
             // 
             this.rolePlayToolStripMenuItem.Name = "rolePlayToolStripMenuItem";
-            this.rolePlayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rolePlayToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.rolePlayToolStripMenuItem.Text = "&RolePlay";
             this.rolePlayToolStripMenuItem.Click += new System.EventHandler(this.rolePlayToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(120, 6);
             // 
             // launcherToolStripMenuItem
             // 
             this.launcherToolStripMenuItem.Name = "launcherToolStripMenuItem";
-            this.launcherToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.launcherToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.launcherToolStripMenuItem.Text = "&Launcher";
             // 
             // buttonLogin

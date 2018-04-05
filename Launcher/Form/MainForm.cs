@@ -92,7 +92,7 @@ namespace Jasarsoft.Launcher.SAMP
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            if(worker.CancellationPending)
+            if(worker != null && worker.CancellationPending)
             {
                 e.Cancel = true;
                 return;
