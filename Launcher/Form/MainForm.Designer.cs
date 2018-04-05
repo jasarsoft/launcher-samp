@@ -64,9 +64,9 @@ namespace Jasarsoft.Launcher.SAMP
             this.statusBarPlayers = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.statusBarPing = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.statusBarInfo = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
-            this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.workerPing = new System.ComponentModel.BackgroundWorker();
+            this.workerStatus = new System.ComponentModel.BackgroundWorker();
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).BeginInit();
@@ -308,6 +308,7 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             // statusBarMain
             // 
+            this.statusBarMain.AnimationStyle = Syncfusion.Windows.Forms.Tools.MarqueeStyle.Slide;
             this.statusBarMain.AutoScroll = true;
             this.statusBarMain.BackColor = System.Drawing.Color.Transparent;
             this.statusBarMain.BeforeTouchSize = new System.Drawing.Size(230, 16);
@@ -374,11 +375,6 @@ namespace Jasarsoft.Launcher.SAMP
     "dataka.";
             this.statusBarInfo.ToolTip = "Trenutna obavjestenja servera";
             // 
-            // timerStatus
-            // 
-            this.timerStatus.Interval = 10000;
-            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
-            // 
             // pictureLogo
             // 
             this.pictureLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
@@ -395,6 +391,12 @@ namespace Jasarsoft.Launcher.SAMP
             this.workerPing.WorkerSupportsCancellation = true;
             this.workerPing.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerPing_DoWork);
             this.workerPing.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerPing_RunWorkerCompleted);
+            // 
+            // workerStatus
+            // 
+            this.workerStatus.WorkerSupportsCancellation = true;
+            this.workerStatus.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerStatus_DoWork);
+            this.workerStatus.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerStatus_RunWorkerCompleted);
             // 
             // MainForm
             // 
@@ -477,8 +479,8 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPlayers;
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPing;
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarInfo;
-        private System.Windows.Forms.Timer timerStatus;
         private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker workerPing;
+        private System.ComponentModel.BackgroundWorker workerStatus;
     }
 }

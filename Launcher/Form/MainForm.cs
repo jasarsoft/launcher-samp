@@ -46,9 +46,9 @@ namespace Jasarsoft.Launcher.SAMP
             }
 
             workerPing.RunWorkerAsync();
+            workerStatus.RunWorkerAsync();
 
             statusBarInfo.StartAnimation();
-            timerStatus.Start();
 
             statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
         }
@@ -58,29 +58,7 @@ namespace Jasarsoft.Launcher.SAMP
             RuleForm rule = new RuleForm();
             rule.ShowDialog();
         }
-
-        private void timerStatus_Tick(object sender, EventArgs e)
-        {
-            if(serverInfo.Info())
-            {
-                Random rnd = new Random();
-                switch(rnd.Next(2))
-                {
-                    case 0:
-                        statusBarMain.Text = String.Format("  Server hostname: {0}", serverInfo.Hostname);
-                        break;
-                    case 1:
-                        statusBarMain.Text = String.Format("  Server language: {0}", serverInfo.Language);
-                        break;
-                    case 2:
-                        statusBarMain.Text = String.Format("  Server gamemode: {0}", serverInfo.Gamemode);
-                        break;
-                }
-
-                statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
-            }
-        }
-
+        
         private void playersToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PlayersForm pf = new PlayersForm();
@@ -112,6 +90,34 @@ namespace Jasarsoft.Launcher.SAMP
                 
                 workerPing.RunWorkerAsync();
             }
+        }
+
+        private void workerStatus_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Thread.Sleep(3000);
+            if (serverInfo.Info())
+            {
+                Random rnd = new Random();
+                switch (rnd.Next(2))
+                {
+                    case 0:
+                        statusBarMain.Text = String.Format("  Server hostname: {0}", serverInfo.Hostname);
+                        break;
+                    case 1:
+                        statusBarMain.Text = String.Format("  Server language: {0}", serverInfo.Language);
+                        break;
+                    case 2:
+                        statusBarMain.Text = String.Format("  Server gamemode: {0}", serverInfo.Gamemode);
+                        break;
+                }
+
+                statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
+            }
+        }
+
+        private void workerStatus_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            workerStatus.RunWorkerAsync();
         }
     }
 }
