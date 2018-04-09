@@ -37,24 +37,42 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            workerPlayers.CancelAsync();
+            if(workerPlayers.IsBusy)
+            {
+                workerPlayers.CancelAsync();
+            }
+            
             this.Close();
         }
 
         private void PlayersForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!workerPlayers.CancellationPending)
+            if(workerPlayers.IsBusy || !workerPlayers.CancellationPending)
+            {
                 workerPlayers.CancelAsync();
+            }
         }
 
         private void workerPlayers_DoWork(object sender, DoWorkEventArgs e)
         {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (worker == null)
+                return;
+
             serverPlayer = new ServerPlayer("193.70.72.221", 7777);
 
             if (serverPlayer.GetInfo())
             {
                 foreach (PlayerInfo p in serverPlayer.Players)
                 {
+                    if(worker.CancellationPending)
+                    {
+                        //e.Result = false;
+                        e.Cancel = true;
+                        return;
+                    }
+
                     playerList.Add(p);
                 }
 
@@ -68,6 +86,9 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void workerPlayers_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Cancelled)
+                return;
+
             if ((bool)e.Result)
             {
                 gridListControlPlayers.DataSource = playerList;
