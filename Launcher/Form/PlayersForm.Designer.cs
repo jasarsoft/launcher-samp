@@ -144,7 +144,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "SAMP Launcher | Players";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlayersForm_FormClosing);
-            this.Load += new System.EventHandler(this.PlayersForm_Load);
+            this.Shown += new System.EventHandler(this.PlayersForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.gridListControlPlayers)).EndInit();
             this.ResumeLayout(false);
 

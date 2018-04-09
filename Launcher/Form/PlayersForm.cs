@@ -34,24 +34,24 @@ namespace Jasarsoft.Launcher.SAMP
             playerList = new List<PlayerInfo>();
         }
 
-        private void PlayersForm_Load(object sender, EventArgs e)
+        private void PlayersForm_Shown(object sender, EventArgs e)
         {
-            workerPlayers.RunWorkerAsync();
+            workerInfo.RunWorkerAsync();
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            if(workerPlayers.IsBusy)
-            {
-                workerPlayers.CancelAsync();
-            }
+            //if(workerPlayers.IsBusy)
+            //{
+            //    workerPlayers.CancelAsync();
+            //}
             
             this.Close();
         }
 
         private void PlayersForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(workerPlayers.IsBusy || !workerPlayers.CancellationPending)
+            if(workerPlayers.IsBusy)
             {
                 workerPlayers.CancelAsync();
             }
@@ -64,7 +64,6 @@ namespace Jasarsoft.Launcher.SAMP
             if (worker == null)
                 return;
 
-            serverInfo = new ServerInfo("193.70.72.221", 7777);
             serverPlayer = new ServerPlayer("193.70.72.221", 7777);
             
             if (serverPlayer.GetInfo())
@@ -105,7 +104,7 @@ namespace Jasarsoft.Launcher.SAMP
                     gridListControlPlayers.Grid.ColWidths[4] = 59;
                 }
 
-                workerInfo.RunWorkerAsync();
+                labelPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
             }
             else
             {
@@ -117,7 +116,11 @@ namespace Jasarsoft.Launcher.SAMP
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            if (worker == null) return;
+            if (worker == null)
+            {
+                return;
+            }
+                
 
             serverInfo = new ServerInfo("193.70.72.221", 7777);
 
@@ -128,7 +131,8 @@ namespace Jasarsoft.Launcher.SAMP
         {
             if ((bool)e.Result)
             {
-                labelPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
+                //labelPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
+                workerPlayers.RunWorkerAsync();
             }
             else
             {
