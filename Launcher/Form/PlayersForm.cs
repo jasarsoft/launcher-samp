@@ -20,89 +20,69 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public partial class PlayersForm : Syncfusion.Windows.Forms.MetroForm
     {
-        List<PlayerClient> lists;
-        List<PlayerInfo> lists2;
-        ServerClient client;
-        ServerPlayer player;
-        ServerPing serverPing;
+        List<PlayerInfo> playerList;
+        ServerPlayer serverPlayer;
 
         public PlayersForm()
         {
             InitializeComponent();
 
-            lists = new List<PlayerClient>();
-            lists2 = new List<PlayerInfo>();
-            //client = new ServerClient("193.70.72.221", 7777);
-            player = new ServerPlayer("193.70.72.221", 7777);
-            serverPing = new ServerPing("193.70.72.221", 7777);
-
-            workerPing.RunWorkerAsync();
+            playerList = new List<PlayerInfo>();
         }
 
         private void PlayersForm_Load(object sender, EventArgs e)
         {
-            /*if(client.Client())
-            {
-                foreach(PlayerClient pc in client.Players)
-                {
-                    lists.Add(pc);
-                }
-            }*/
-
-            if(player.GetInfo())
-            {
-                foreach(PlayerInfo p in player.Players)
-                {
-                    lists2.Add(p);
-                }
-            }
-
-            gridListControlPlayers.DataSource = lists2;
-            gridListControlPlayers.Grid.ColWidths[1] = 45;
-            gridListControlPlayers.Grid.ColWidths[2] = 135;
-            gridListControlPlayers.Grid.ColWidths[3] = 65;
-            gridListControlPlayers.Grid.ColWidths[4] = 65;
-            //gridListControlPlayers.Grid.ColWidths[1] = 50;
-            //gridListControlPlayers.Grid.ColWidths[2] = 80;
-            //gridListControlPlayers.Grid.ColWidths[3] = 80;
-        }
-
-        private void workerPing_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-
-            if (worker != null && worker.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            Thread.Sleep(3000);
-            e.Result = serverPing.Ping();
-        }
-
-        private void workerPing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled)
-                return;
-            else
-            {
-                labelPingText.Text = String.Format("{0:D3}", e.Result);
-
-                workerPing.RunWorkerAsync();
-            }
+            workerPlayers.RunWorkerAsync();
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            workerPing.CancelAsync();
+            workerPlayers.CancelAsync();
             this.Close();
         }
 
         private void PlayersForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(!workerPing.CancellationPending)
-                workerPing.CancelAsync();
+            if (!workerPlayers.CancellationPending)
+                workerPlayers.CancelAsync();
+        }
+
+        private void workerPlayers_DoWork(object sender, DoWorkEventArgs e)
+        {
+            serverPlayer = new ServerPlayer("193.70.72.221", 7777);
+
+            if (serverPlayer.GetInfo())
+            {
+                foreach (PlayerInfo p in serverPlayer.Players)
+                {
+                    playerList.Add(p);
+                }
+
+                e.Result = true;
+            }
+            else
+            {
+                e.Result = false;
+            }
+        }
+
+        private void workerPlayers_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if ((bool)e.Result)
+            {
+                gridListControlPlayers.DataSource = playerList;
+                if (gridListControlPlayers.Grid.ColCount == 4)
+                {
+                    gridListControlPlayers.Grid.ColWidths[1] = 45;
+                    gridListControlPlayers.Grid.ColWidths[2] = 135;
+                    gridListControlPlayers.Grid.ColWidths[3] = 59;
+                    gridListControlPlayers.Grid.ColWidths[4] = 59;
+                }
+            }
+            else
+            {
+                workerPlayers.RunWorkerAsync();
+            }
         }
     }
 }
