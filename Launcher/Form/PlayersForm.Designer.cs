@@ -40,6 +40,8 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelInfo = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.buttonClose = new Syncfusion.Windows.Forms.ButtonAdv();
             this.workerPlayers = new System.ComponentModel.BackgroundWorker();
+            this.labelPlayers = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.workerInfo = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.gridListControlPlayers)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,7 +70,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelInfo.AutoSize = false;
             this.labelInfo.Location = new System.Drawing.Point(12, 18);
             this.labelInfo.Name = "labelInfo";
-            this.labelInfo.Size = new System.Drawing.Size(320, 22);
+            this.labelInfo.Size = new System.Drawing.Size(249, 22);
             this.labelInfo.TabIndex = 3;
             this.labelInfo.Text = "Detaljna lista igraèa:";
             this.labelInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -97,6 +99,21 @@ namespace Jasarsoft.Launcher.SAMP
             this.workerPlayers.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerPlayers_DoWork);
             this.workerPlayers.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerPlayers_RunWorkerCompleted);
             // 
+            // labelPlayers
+            // 
+            this.labelPlayers.AutoSize = false;
+            this.labelPlayers.Location = new System.Drawing.Point(267, 18);
+            this.labelPlayers.Name = "labelPlayers";
+            this.labelPlayers.Size = new System.Drawing.Size(65, 22);
+            this.labelPlayers.TabIndex = 9;
+            this.labelPlayers.Text = "500/1000";
+            this.labelPlayers.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // workerInfo
+            // 
+            this.workerInfo.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerInfo_DoWork);
+            this.workerInfo.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerInfo_RunWorkerCompleted);
+            // 
             // PlayersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -111,6 +128,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.CaptionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CaptionForeColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(344, 359);
+            this.Controls.Add(this.labelPlayers);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.labelInfo);
             this.Controls.Add(this.gridListControlPlayers);
@@ -138,5 +156,7 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.Tools.AutoLabel labelInfo;
         private Syncfusion.Windows.Forms.ButtonAdv buttonClose;
         private System.ComponentModel.BackgroundWorker workerPlayers;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel labelPlayers;
+        private System.ComponentModel.BackgroundWorker workerInfo;
     }
 }

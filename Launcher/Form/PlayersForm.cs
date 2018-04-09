@@ -20,12 +20,16 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public partial class PlayersForm : Syncfusion.Windows.Forms.MetroForm
     {
-        List<PlayerInfo> playerList;
+        ServerInfo serverInfo;
         ServerPlayer serverPlayer;
+        List<PlayerInfo> playerList;
+        
 
         public PlayersForm()
         {
             InitializeComponent();
+
+            labelPlayers.Text = "...loading";
 
             playerList = new List<PlayerInfo>();
         }
@@ -60,8 +64,9 @@ namespace Jasarsoft.Launcher.SAMP
             if (worker == null)
                 return;
 
+            serverInfo = new ServerInfo("193.70.72.221", 7777);
             serverPlayer = new ServerPlayer("193.70.72.221", 7777);
-
+            
             if (serverPlayer.GetInfo())
             {
                 foreach (PlayerInfo p in serverPlayer.Players)
@@ -99,10 +104,35 @@ namespace Jasarsoft.Launcher.SAMP
                     gridListControlPlayers.Grid.ColWidths[3] = 59;
                     gridListControlPlayers.Grid.ColWidths[4] = 59;
                 }
+
+                workerInfo.RunWorkerAsync();
             }
             else
             {
                 workerPlayers.RunWorkerAsync();
+            }
+        }
+
+        private void workerInfo_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (worker == null) return;
+
+            serverInfo = new ServerInfo("193.70.72.221", 7777);
+
+            e.Result = serverInfo.Info();
+        }
+
+        private void workerInfo_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if ((bool)e.Result)
+            {
+                labelPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
+            }
+            else
+            {
+                workerInfo.RunWorkerAsync();
             }
         }
     }
