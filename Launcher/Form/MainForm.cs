@@ -13,6 +13,8 @@ using System.Drawing;
 using System.Threading;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using Syncfusion.Windows.Forms;
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -22,14 +24,13 @@ namespace Jasarsoft.Launcher.SAMP
         private ServerPing serverPing;
         private ServerInfo serverInfo;
 
-
         public MainForm()
         {
             InitializeComponent();
 
             statusShow = 0;
-            serverPing = new ServerPing("127.0.0.1", 7777);
-            serverInfo = new ServerInfo("127.0.0.1", 7777);
+            serverPing = new ServerPing("193.70.72.221", 7777);
+            serverInfo = new ServerInfo("193.70.72.221", 7777);
         }
 
         
@@ -134,6 +135,110 @@ namespace Jasarsoft.Launcher.SAMP
                 return;
             else
                 workerStatus.RunWorkerAsync();
+        }
+
+        private void buttonLogin_Click(object sender, EventArgs e)
+        {
+        }
+
+        private bool CheckUserName(string name)
+        {
+            return true;
+            if (name.ToLower() == "ime_prezime")
+            {
+                //MessageTitle title = new MessageTitle();
+
+                string message = "Korisnièko ime ne može biti poèetno postaljeno (Ime_Prezime).\n" +
+                                 "Unesite vaše korisnièko za prijavu na server formata 'Ime_Prezime'.";
+
+                //MessageBoxAdv.Show(message, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //return;
+            }
+
+            /*
+            if (this.textName.Text.Length < 4)
+            {
+                MessageTitle title = new MessageTitle();
+                string text = "Korisnièko ime mora sadržavati najmanje 4 karaktera.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
+                MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.textName.Text = "Ime_Prezime";
+                //this.Show();
+                return;
+            }
+
+            if (this.textName.Text.Length > 21)
+            {
+                MessageTitle title = new MessageTitle();
+                string text = "Korisnièko ime može imati najviše 21 karakter.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
+                MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.textName.Text = "Ime_Prezime";
+                //this.Show();
+                return;
+            }*/
+
+            //if (!this.textName.Text.Contains("_"))
+            //{
+            //    MessageTitle title = new MessageTitle();
+            //    string text = "Korisnièko ime mora sadržavati znak '_' u sebi.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
+            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    this.textName.Text = "Ime_Prezime";
+            //    //this.Show();
+            //    return;
+            //}
+
+            //if (this.textName.Text.Contains("_"))
+            //{
+            //    string temp = this.textName.Text.Remove(this.textName.Text.IndexOf("_"), 1);
+            //    if (temp.Contains("_"))
+            //    {
+            //        MessageTitle title = new MessageTitle();
+            //        string text = "Korisnièko ime može samo sadržavati jednu donju-crtu '_'.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
+            //        MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        this.textName.Text = "Ime_Prezime";
+            //        //this.Show();
+            //        return;
+            //    }
+            //}
+
+            //if (!Regex.IsMatch(this.textName.Text, @"^[a-zA-Z_]+$"))
+            //{
+            //    MessageTitle title = new MessageTitle();
+            //    string text = String.Format("Korisnièko ime može sadržavati samo slova i znak donje-crte '_'.\nFormat korisnièkog imena mora biti 'Ime_Prezime', maksimalne dužine 21 karakter.");
+            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    this.textName.Text = "Ime_Prezime";
+            //    return;
+            //}
+
+            //string name = this.textName.Text.Substring(0, this.textName.Text.IndexOf("_"));
+            //string surname = this.textName.Text.Substring(this.textName.Text.IndexOf("_") + 1);
+
+            //if (name.Length < 3 || surname.Length < 4)
+            //{
+            //    MessageTitle title = new MessageTitle();
+            //    string text = "Dio 'Ime' može imati najamnje 3 slova, dok 'Prezime' najmanje 4 slova.\nFormat korisnièkog imena mora biti 'Ime_Prezime', maksimalne dužine 21 karakter.";
+            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    this.textName.Text = "Ime_Prezime";
+            //    //this.Show();
+            //    return;
+            //}
+
+            //if (name.Substring(0, 1) != name.Substring(0, 1).ToUpper())
+            //{
+            //    MessageTitle title = new MessageTitle();
+            //    string text =String.Format("Dio '{0}' mora poèinjati velikim slovom.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.", name);
+            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    this.textName.Text = "Ime_Prezime";
+            //    return;
+            //}
+
+            //if (surname.Substring(0, 1) != surname.Substring(0, 1).ToUpper())
+            //{
+            //    MessageTitle title = new MessageTitle();
+            //    string text = String.Format("Dio '{0}' mora poèinjati velikim slovom.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.", surname);
+            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    this.textName.Text = "Ime_Prezime";
+            //    return;
+            //}
         }
     }
 }

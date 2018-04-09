@@ -219,6 +219,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonLogin.Text = "LOGIN";
             this.buttonLogin.UseVisualStyle = true;
             this.buttonLogin.UseVisualStyleBackColor = true;
+            this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
             // textboxUser
             // 
