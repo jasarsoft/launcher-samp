@@ -40,18 +40,19 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelInfo = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.buttonClose = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupBoxServer = new System.Windows.Forms.GroupBox();
-            this.labelHostname = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelGamemode = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelPlayers = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelAddress = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelLang = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelPing = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelHostnameText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelGamemodeText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelPlayersText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelAddressText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            this.labelLangText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             this.labelPingText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelLangText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelAddressText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelPlayersText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelGamemodeText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelHostnameText = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelPing = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelLang = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelAddress = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelPlayers = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelGamemode = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.labelHostname = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            this.workerPing = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.gridListControlPlayers)).BeginInit();
             this.groupBoxServer.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +103,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonClose.Text = "CLOSE";
             this.buttonClose.UseVisualStyle = true;
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // groupBoxServer
             // 
@@ -124,65 +126,65 @@ namespace Jasarsoft.Launcher.SAMP
             this.groupBoxServer.TabStop = false;
             this.groupBoxServer.Text = "Server Information";
             // 
-            // labelHostname
+            // labelPingText
             // 
-            this.labelHostname.AutoSize = false;
-            this.labelHostname.Location = new System.Drawing.Point(6, 28);
-            this.labelHostname.Name = "labelHostname";
-            this.labelHostname.Size = new System.Drawing.Size(85, 22);
-            this.labelHostname.TabIndex = 3;
-            this.labelHostname.Text = "Hostname:";
-            this.labelHostname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelPingText.AutoSize = false;
+            this.labelPingText.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.labelPingText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelPingText.Location = new System.Drawing.Point(97, 138);
+            this.labelPingText.Name = "labelPingText";
+            this.labelPingText.Size = new System.Drawing.Size(225, 22);
+            this.labelPingText.TabIndex = 14;
+            this.labelPingText.Text = "31";
+            this.labelPingText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelGamemode
+            // labelLangText
             // 
-            this.labelGamemode.AutoSize = false;
-            this.labelGamemode.Location = new System.Drawing.Point(6, 50);
-            this.labelGamemode.Name = "labelGamemode";
-            this.labelGamemode.Size = new System.Drawing.Size(85, 22);
-            this.labelGamemode.TabIndex = 4;
-            this.labelGamemode.Text = "Gamemode:";
-            this.labelGamemode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelLangText.AutoSize = false;
+            this.labelLangText.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.labelLangText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelLangText.Location = new System.Drawing.Point(97, 116);
+            this.labelLangText.Name = "labelLangText";
+            this.labelLangText.Size = new System.Drawing.Size(225, 22);
+            this.labelLangText.TabIndex = 13;
+            this.labelLangText.Text = "HR/BiH/SR";
+            this.labelLangText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelPlayers
+            // labelAddressText
             // 
-            this.labelPlayers.AutoSize = false;
-            this.labelPlayers.Location = new System.Drawing.Point(6, 72);
-            this.labelPlayers.Name = "labelPlayers";
-            this.labelPlayers.Size = new System.Drawing.Size(85, 22);
-            this.labelPlayers.TabIndex = 5;
-            this.labelPlayers.Text = "Players:";
-            this.labelPlayers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelAddressText.AutoSize = false;
+            this.labelAddressText.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.labelAddressText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelAddressText.Location = new System.Drawing.Point(97, 94);
+            this.labelAddressText.Name = "labelAddressText";
+            this.labelAddressText.Size = new System.Drawing.Size(225, 22);
+            this.labelAddressText.TabIndex = 12;
+            this.labelAddressText.Text = "5.230.21.34:7780";
+            this.labelAddressText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelAddress
+            // labelPlayersText
             // 
-            this.labelAddress.AutoSize = false;
-            this.labelAddress.Location = new System.Drawing.Point(6, 94);
-            this.labelAddress.Name = "labelAddress";
-            this.labelAddress.Size = new System.Drawing.Size(85, 22);
-            this.labelAddress.TabIndex = 6;
-            this.labelAddress.Text = "IP Address:";
-            this.labelAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelPlayersText.AutoSize = false;
+            this.labelPlayersText.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.labelPlayersText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelPlayersText.Location = new System.Drawing.Point(97, 72);
+            this.labelPlayersText.Name = "labelPlayersText";
+            this.labelPlayersText.Size = new System.Drawing.Size(225, 22);
+            this.labelPlayersText.TabIndex = 11;
+            this.labelPlayersText.Text = "64/300";
+            this.labelPlayersText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelLang
+            // labelGamemodeText
             // 
-            this.labelLang.AutoSize = false;
-            this.labelLang.Location = new System.Drawing.Point(6, 116);
-            this.labelLang.Name = "labelLang";
-            this.labelLang.Size = new System.Drawing.Size(85, 22);
-            this.labelLang.TabIndex = 7;
-            this.labelLang.Text = "Language:";
-            this.labelLang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelPing
-            // 
-            this.labelPing.AutoSize = false;
-            this.labelPing.Location = new System.Drawing.Point(6, 138);
-            this.labelPing.Name = "labelPing";
-            this.labelPing.Size = new System.Drawing.Size(85, 22);
-            this.labelPing.TabIndex = 8;
-            this.labelPing.Text = "Current Ping:";
-            this.labelPing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelGamemodeText.AutoSize = false;
+            this.labelGamemodeText.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.labelGamemodeText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.labelGamemodeText.Location = new System.Drawing.Point(97, 50);
+            this.labelGamemodeText.Name = "labelGamemodeText";
+            this.labelGamemodeText.Size = new System.Drawing.Size(225, 22);
+            this.labelGamemodeText.TabIndex = 10;
+            this.labelGamemodeText.Text = "RPG/DM 2.9.1 - Theo";
+            this.labelGamemodeText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // labelHostnameText
             // 
@@ -197,65 +199,71 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelHostnameText.Text = "Los Balkan RPG/DM [www.los-balkan]";
             this.labelHostnameText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelGamemodeText
+            // labelPing
             // 
-            this.labelGamemodeText.AutoSize = false;
-            this.labelGamemodeText.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.labelGamemodeText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelGamemodeText.Location = new System.Drawing.Point(97, 50);
-            this.labelGamemodeText.Name = "labelGamemodeText";
-            this.labelGamemodeText.Size = new System.Drawing.Size(225, 22);
-            this.labelGamemodeText.TabIndex = 10;
-            this.labelGamemodeText.Text = "RPG/DM 2.9.1 - Theo";
-            this.labelGamemodeText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelPing.AutoSize = false;
+            this.labelPing.Location = new System.Drawing.Point(6, 138);
+            this.labelPing.Name = "labelPing";
+            this.labelPing.Size = new System.Drawing.Size(85, 22);
+            this.labelPing.TabIndex = 8;
+            this.labelPing.Text = "Current Ping:";
+            this.labelPing.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelPlayersText
+            // labelLang
             // 
-            this.labelPlayersText.AutoSize = false;
-            this.labelPlayersText.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.labelPlayersText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelPlayersText.Location = new System.Drawing.Point(97, 72);
-            this.labelPlayersText.Name = "labelPlayersText";
-            this.labelPlayersText.Size = new System.Drawing.Size(225, 22);
-            this.labelPlayersText.TabIndex = 11;
-            this.labelPlayersText.Text = "64/300";
-            this.labelPlayersText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelLang.AutoSize = false;
+            this.labelLang.Location = new System.Drawing.Point(6, 116);
+            this.labelLang.Name = "labelLang";
+            this.labelLang.Size = new System.Drawing.Size(85, 22);
+            this.labelLang.TabIndex = 7;
+            this.labelLang.Text = "Language:";
+            this.labelLang.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelAddressText
+            // labelAddress
             // 
-            this.labelAddressText.AutoSize = false;
-            this.labelAddressText.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.labelAddressText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelAddressText.Location = new System.Drawing.Point(97, 94);
-            this.labelAddressText.Name = "labelAddressText";
-            this.labelAddressText.Size = new System.Drawing.Size(225, 22);
-            this.labelAddressText.TabIndex = 12;
-            this.labelAddressText.Text = "5.230.21.34:7780";
-            this.labelAddressText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelAddress.AutoSize = false;
+            this.labelAddress.Location = new System.Drawing.Point(6, 94);
+            this.labelAddress.Name = "labelAddress";
+            this.labelAddress.Size = new System.Drawing.Size(85, 22);
+            this.labelAddress.TabIndex = 6;
+            this.labelAddress.Text = "IP Address:";
+            this.labelAddress.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelLangText
+            // labelPlayers
             // 
-            this.labelLangText.AutoSize = false;
-            this.labelLangText.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.labelLangText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelLangText.Location = new System.Drawing.Point(97, 116);
-            this.labelLangText.Name = "labelLangText";
-            this.labelLangText.Size = new System.Drawing.Size(225, 22);
-            this.labelLangText.TabIndex = 13;
-            this.labelLangText.Text = "HR/BiH/SR";
-            this.labelLangText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelPlayers.AutoSize = false;
+            this.labelPlayers.Location = new System.Drawing.Point(6, 72);
+            this.labelPlayers.Name = "labelPlayers";
+            this.labelPlayers.Size = new System.Drawing.Size(85, 22);
+            this.labelPlayers.TabIndex = 5;
+            this.labelPlayers.Text = "Players:";
+            this.labelPlayers.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // labelPingText
+            // labelGamemode
             // 
-            this.labelPingText.AutoSize = false;
-            this.labelPingText.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.labelPingText.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.labelPingText.Location = new System.Drawing.Point(97, 138);
-            this.labelPingText.Name = "labelPingText";
-            this.labelPingText.Size = new System.Drawing.Size(225, 22);
-            this.labelPingText.TabIndex = 14;
-            this.labelPingText.Text = "31";
-            this.labelPingText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.labelGamemode.AutoSize = false;
+            this.labelGamemode.Location = new System.Drawing.Point(6, 50);
+            this.labelGamemode.Name = "labelGamemode";
+            this.labelGamemode.Size = new System.Drawing.Size(85, 22);
+            this.labelGamemode.TabIndex = 4;
+            this.labelGamemode.Text = "Gamemode:";
+            this.labelGamemode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // labelHostname
+            // 
+            this.labelHostname.AutoSize = false;
+            this.labelHostname.Location = new System.Drawing.Point(6, 28);
+            this.labelHostname.Name = "labelHostname";
+            this.labelHostname.Size = new System.Drawing.Size(85, 22);
+            this.labelHostname.TabIndex = 3;
+            this.labelHostname.Text = "Hostname:";
+            this.labelHostname.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // workerPing
+            // 
+            this.workerPing.WorkerSupportsCancellation = true;
+            this.workerPing.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerPing_DoWork);
+            this.workerPing.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerPing_RunWorkerCompleted);
             // 
             // PlayersForm
             // 
@@ -286,6 +294,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.ShowMaximizeBox = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "SAMP Launcher | Players";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PlayersForm_FormClosing);
             this.Load += new System.EventHandler(this.PlayersForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridListControlPlayers)).EndInit();
             this.groupBoxServer.ResumeLayout(false);
@@ -311,5 +320,6 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.Tools.AutoLabel labelAddressText;
         private Syncfusion.Windows.Forms.Tools.AutoLabel labelPlayersText;
         private Syncfusion.Windows.Forms.Tools.AutoLabel labelGamemodeText;
+        private System.ComponentModel.BackgroundWorker workerPing;
     }
 }
