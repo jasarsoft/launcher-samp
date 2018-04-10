@@ -140,6 +140,7 @@
     <Compile Include="Class\Server\ServerRule.cs" />
     <Compile Include="Class\Server\ServerPlayer.cs" />
     <Compile Include="Class\Server\ServerClient.cs" />
+    <Compile Include="Class\Server\ServerItem.cs" />
     <EmbeddedResource Include="Form\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
