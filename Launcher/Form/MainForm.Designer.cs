@@ -171,7 +171,7 @@ namespace Jasarsoft.Launcher.SAMP
             // playersToolStripMenuItem
             // 
             this.playersToolStripMenuItem.Name = "playersToolStripMenuItem";
-            this.playersToolStripMenuItem.Size = new System.Drawing.Size(111, 22);
+            this.playersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.playersToolStripMenuItem.Text = "&Players";
             this.playersToolStripMenuItem.Click += new System.EventHandler(this.playersToolStripMenuItem_Click);
             // 
@@ -309,10 +309,9 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             // statusBarMain
             // 
-            this.statusBarMain.AnimationStyle = Syncfusion.Windows.Forms.Tools.MarqueeStyle.Slide;
             this.statusBarMain.AutoScroll = true;
             this.statusBarMain.BackColor = System.Drawing.Color.Transparent;
-            this.statusBarMain.BeforeTouchSize = new System.Drawing.Size(230, 16);
+            this.statusBarMain.BeforeTouchSize = new System.Drawing.Size(219, 16);
             this.statusBarMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.statusBarMain.Font = new System.Drawing.Font("Trebuchet MS", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.statusBarMain.ForeColor = System.Drawing.Color.DimGray;
@@ -321,7 +320,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.statusBarMain.Margin = new System.Windows.Forms.Padding(0);
             this.statusBarMain.Name = "statusBarMain";
             this.statusBarMain.PreferredSize = new System.Drawing.Size(295, 16);
-            this.statusBarMain.Size = new System.Drawing.Size(230, 16);
+            this.statusBarMain.Size = new System.Drawing.Size(219, 16);
             this.statusBarMain.TabIndex = 0;
             this.statusBarMain.Text = "  Server: 127.0.0.1:7777";
             // 
@@ -424,6 +423,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.Controls.Add(this.buttonLogin);
             this.Controls.Add(this.menuMain);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuMain;
             this.MaximizeBox = false;
