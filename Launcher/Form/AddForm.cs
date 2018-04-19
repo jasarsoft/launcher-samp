@@ -22,44 +22,6 @@ namespace Jasarsoft.Launcher.SAMP
         private ServerInfo serverInfo;
         private List<ServerItem> serverItems;
 
-        public AddForm()
-        {
-            InitializeComponent();
-
-            serverItems = new List<ServerItem>();
-        }
-
-        private void AddForm_Load(object sender, EventArgs e)
-        {
-            gridListServers.DataSource = serverItems;
-            gridListServers.Grid.ColWidths[1] = 40;
-            gridListServers.Grid.ColWidths[2] = 60;
-            gridListServers.Grid.ColWidths[3] = 230;
-            gridListServers.Grid.ColWidths[4] = 130;
-            gridListServers.Grid.ColWidths[4] = 110;
-        }
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            serverInfo = new ServerInfo(textAddress.Text, (int)numericPort.Value);
-
-            if (serverInfo.Info())
-            {
-                serverItems.Add(new ServerItem(serverInfo.Password,
-                                               serverInfo.CurrentPlayers,
-                                               serverInfo.MaxPlayers,
-                                               serverInfo.Hostname,
-                                               serverInfo.Gamemode,
-                                               serverInfo.Language));
-            }
-
-            gridListServers.DataSource = null;
-            gridListServers.Refresh();
-            gridListServers.DataSource = serverItems;
-
-            gridListServers.Refresh();
-        }
-
         private class ServerItem
         {
             private string serverKey;           //server je zakljucan/otkljucan
@@ -108,12 +70,79 @@ namespace Jasarsoft.Launcher.SAMP
 
             private void Initialize(bool key, int players, int max, ref string host, ref string game, ref string lang)
             {
-                this.serverKey= key ? "Da" : "Ne";
-                this.serverPlayers = String.Format("{0}/{1}",players, max);
+                this.serverKey = key ? "Da" : "Ne";
+                this.serverPlayers = String.Format("{0}/{1}", players, max);
                 this.serverHostname = host;
                 this.serverGamemode = game;
                 this.serverLanguage = lang;
             }
         }
+
+        public AddForm()
+        {
+            InitializeComponent();
+
+            serverItems = new List<ServerItem>();
+        }
+
+        private void AddForm_Load(object sender, EventArgs e)
+        {
+            gridListServers.DataSource = serverItems;
+            gridListServers.Grid.ColWidths[1] = 40;
+            gridListServers.Grid.ColWidths[2] = 60;
+            gridListServers.Grid.ColWidths[3] = 230;
+            gridListServers.Grid.ColWidths[4] = 130;
+            gridListServers.Grid.ColWidths[4] = 110;
+
+            buttonDelete.Enabled = false;
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            serverInfo = new ServerInfo(textAddress.Text, (int)numericPort.Value);
+
+            if (serverInfo.Info())
+            {
+                serverItems.Add(new ServerItem(serverInfo.Password,
+                                               serverInfo.CurrentPlayers,
+                                               serverInfo.MaxPlayers,
+                                               serverInfo.Hostname,
+                                               serverInfo.Gamemode,
+                                               serverInfo.Language));
+            }
+
+            gridListServers.DataSource = null;
+            gridListServers.Refresh();
+            gridListServers.DataSource = serverItems;
+
+            gridListServers.Refresh();
+
+            if(gridListServers.SelectedIndex != -1)
+                buttonDelete.Enabled = true;
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            if (gridListServers.SelectedIndex != -1)
+            {
+                serverItems.Remove((ServerItem)gridListServers.SelectedItem);
+
+                gridListServers.DataSource = null;
+                gridListServers.Refresh();
+                gridListServers.DataSource = serverItems;
+
+                gridListServers.Refresh();
+
+                buttonDelete.Enabled = false;
+            }
+        }
+
+        private void gridListServers_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (gridListServers.SelectedIndex != -1)
+                buttonDelete.Enabled = true;
+            else
+                buttonDelete.Enabled = false;
+        }  
     }
 }

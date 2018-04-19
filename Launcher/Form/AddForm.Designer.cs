@@ -71,6 +71,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.gridListServers.TabIndex = 0;
             this.gridListServers.ThemesEnabled = true;
             this.gridListServers.TopIndex = 0;
+            this.gridListServers.SelectedValueChanged += new System.EventHandler(this.gridListServers_SelectedValueChanged);
             // 
             // labelInfo
             // 
@@ -176,6 +177,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonDelete.Text = "DELETE";
             this.buttonDelete.UseVisualStyle = true;
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonOK
             // 
