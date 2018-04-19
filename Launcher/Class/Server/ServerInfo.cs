@@ -79,12 +79,6 @@ namespace Jasarsoft.Launcher.SAMP
                             return false;
                         else
                             reader.ReadBytes(10);
-#if DEBUG
-                        string debug = String.Format("{0}: Binary stream size {1}", 
-                                                      this.ToString(), stream.Length);
-
-                        System.Diagnostics.Debug.WriteLine(debug);
-#endif
 
                         if (reader.ReadChar() == OpcodeKey.INFO)
                         {
