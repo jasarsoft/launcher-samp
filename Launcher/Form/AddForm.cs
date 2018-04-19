@@ -41,7 +41,23 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            
+            serverInfo = new ServerInfo(textAddress.Text, (int)numericPort.Value);
+
+            if (serverInfo.Info())
+            {
+                serverItems.Add(new ServerItem(serverInfo.Password,
+                                               serverInfo.CurrentPlayers,
+                                               serverInfo.MaxPlayers,
+                                               serverInfo.Hostname,
+                                               serverInfo.Gamemode,
+                                               serverInfo.Language));
+            }
+
+            gridListServers.DataSource = null;
+            gridListServers.Refresh();
+            gridListServers.DataSource = serverItems;
+
+            gridListServers.Refresh();
         }
 
         private class ServerItem
