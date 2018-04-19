@@ -55,11 +55,15 @@ namespace Jasarsoft.Launcher.SAMP
             this.gridListServers.BackColor = System.Drawing.Color.WhiteSmoke;
             this.gridListServers.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridListServers.GridVisualStyles = Syncfusion.Windows.Forms.GridVisualStyles.Metro;
+            this.gridListServers.HeaderBackColor = System.Drawing.Color.WhiteSmoke;
+            this.gridListServers.HeaderTextColor = System.Drawing.Color.DarkCyan;
             this.gridListServers.ItemHeight = 20;
             this.gridListServers.Location = new System.Drawing.Point(12, 55);
+            this.gridListServers.MultiColumn = true;
             this.gridListServers.Name = "gridListServers";
             this.gridListServers.Properties.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridListServers.Properties.FixedLinesColor = System.Drawing.Color.DarkCyan;
+            this.gridListServers.Properties.ForceImmediateRepaint = true;
             this.gridListServers.Properties.GridLineColor = System.Drawing.Color.DarkTurquoise;
             this.gridListServers.Properties.ThemedHeader = true;
             this.gridListServers.SelectedIndex = -1;
@@ -154,6 +158,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonAdd.Text = "ADD";
             this.buttonAdd.UseVisualStyle = true;
             this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonDelete
             // 
@@ -222,6 +227,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.ShowMaximizeBox = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "SAMP Launcher | Add Server";
+            this.Load += new System.EventHandler(this.AddForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridListServers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).EndInit();
