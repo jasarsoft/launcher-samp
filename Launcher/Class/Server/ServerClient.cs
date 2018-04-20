@@ -27,7 +27,7 @@ namespace Jasarsoft.Launcher.SAMP
             return Send(OpcodeKey.CLIENT) && Receive() ? true : false;
         }
 
-        private new bool Receive()
+        private bool Receive()
         {
             byte[] buffer = new byte[1024 * 8];
 

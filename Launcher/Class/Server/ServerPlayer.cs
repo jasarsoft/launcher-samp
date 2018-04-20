@@ -32,7 +32,7 @@ namespace Jasarsoft.Launcher.SAMP
             return false;
         }
 
-        private new bool Receive()
+        private bool Receive()
         {
             byte[] buffer = new byte[3402];
 
