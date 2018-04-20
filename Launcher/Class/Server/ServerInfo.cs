@@ -57,12 +57,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public bool Info()
         {
-            if (Send(OpcodeKey.INFO) && Receive())
-            {
-                return true;
-            }
-
-            return false;
+            return Send(OpcodeKey.INFO) && Receive();
         }
 
         private bool Receive()
@@ -75,10 +70,9 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        if (stream.Length <= 10)
-                            return false;
-                        else
-                            reader.ReadBytes(10);
+                        if (stream.Length <= 10) return false;
+
+                        reader.ReadBytes(10);
 
                         if (reader.ReadChar() == OpcodeKey.INFO)
                         {
