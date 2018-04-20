@@ -22,14 +22,9 @@ namespace Jasarsoft.Launcher.SAMP
         }
 
 
-        public bool GetInfo()
+        public bool Info()
         {
-            if(Send(OpcodeKey.PLAYER) && Receive())
-            {
-                return true;
-            }
-
-            return false;
+            return Send(OpcodeKey.PLAYER) && Receive();
         }
 
         private bool Receive()
@@ -42,10 +37,9 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        if (stream.Length <= 10)
-                            return false;
-                        else
-                            reader.ReadBytes(10);
+                        if (stream.Length <= 10) return false;
+                        
+                        reader.ReadBytes(10);
 
                         if (reader.ReadChar() == OpcodeKey.PLAYER)
                         {
@@ -54,15 +48,6 @@ namespace Jasarsoft.Launcher.SAMP
 
                             for (int i = 0; i < playercount; i++)
                             {
-                                //int playerid = reader.ReadByte();
-                                //int playernicklen = reader.ReadByte();
-                                //string playernick = new string(reader.ReadChars(playernicklen));
-                                //int playerscore = reader.ReadInt32();
-                                //int playerping = reader.ReadInt32();
-
-                                //playersInfo.Add(new PlayerInfo(playerid, playernick, playerscore, playerping));
-
-
                                 playersInfo.Add(new PlayerInfo(reader.ReadByte(),
                                                                new string(reader.ReadChars(reader.ReadByte())),
                                                                reader.ReadInt32(),

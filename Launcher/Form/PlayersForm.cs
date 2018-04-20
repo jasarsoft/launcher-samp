@@ -68,7 +68,7 @@ namespace Jasarsoft.Launcher.SAMP
 
             serverPlayer = new ServerPlayer(serverIp);
             
-            if (serverPlayer.GetInfo())
+            if (serverPlayer.Info())
             {
                 foreach (PlayerInfo p in serverPlayer.Players)
                 {
