@@ -24,13 +24,16 @@ namespace Jasarsoft.Launcher.SAMP
         private ServerPing serverPing;
         private ServerInfo serverInfo;
 
+        private ServerIp serverIp;
+    
         public MainForm()
         {
             InitializeComponent();
 
             statusShow = 0;
-            serverPing = new ServerPing("193.70.72.221", 7777);
-            serverInfo = new ServerInfo("193.70.72.221", 7777);
+            serverIp = new ServerIp("193.70.72.221", 7777);
+            serverPing = new ServerPing(serverIp);
+            serverInfo = new ServerInfo(serverIp);
         }
 
         
@@ -65,7 +68,7 @@ namespace Jasarsoft.Launcher.SAMP
         
         private void playersToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PlayersForm pf = new PlayersForm();
+            PlayersForm pf = new PlayersForm(serverIp);
 
             pf.ShowDialog();
         }
@@ -80,7 +83,7 @@ namespace Jasarsoft.Launcher.SAMP
                 return;
             }
 
-            Thread.Sleep(1000);
+            Thread.Sleep(2500);
             e.Result = serverPing.Ping();
         }
 
@@ -106,7 +109,7 @@ namespace Jasarsoft.Launcher.SAMP
                 return;
             }
 
-            Thread.Sleep(5000);
+            Thread.Sleep(11333);
             if (serverInfo.Info())
             {
                 if (statusShow > 3) //reset trenutnog broja prikaza
@@ -239,6 +242,18 @@ namespace Jasarsoft.Launcher.SAMP
             //    this.textName.Text = "Ime_Prezime";
             //    return;
             //}
+        }
+
+        private void addToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            //workerPing.CancelAsync();
+            //workerStatus.CancelAsync();
+            AddForm add = new AddForm();
+            add.ShowDialog();
+            //workerPing.RunWorkerAsync();
+            //workerStatus.RunWorkerAsync();
+#endif
         }
     }
 }

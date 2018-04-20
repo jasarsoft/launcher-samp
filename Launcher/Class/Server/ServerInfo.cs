@@ -13,7 +13,7 @@ namespace Jasarsoft.Launcher.SAMP
         private string serverLanguage;          //jezik servera
 
 
-        public ServerInfo(string ip, int port) : base(ip, port)
+        public ServerInfo(ServerIp server) : base(server)
         {
             serverPassword = false;
             currentPlayers = 0;

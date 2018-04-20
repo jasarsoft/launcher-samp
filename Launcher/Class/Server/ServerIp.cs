@@ -1,32 +1,41 @@
 ﻿using System;
+using System.Net;
 
 namespace Jasarsoft.Launcher.SAMP
 {
-    internal sealed class ServerIp
+    public sealed class ServerIp
     {
-        private static string ip;
-        private static int port;
+        private static IPAddress addressIp;
+        private static int addressPort;
 
-        public ServerIp(string _ip, int _port)
+        public ServerIp(string ip, int port)
         {
-            ip = _ip;
-            port = _port;
+            try
+            {
+                addressPort = port;
+                addressIp = Dns.GetHostAddresses(ip)[0];
+            }
+            catch
+            {
+                addressPort = 0;
+                addressIp = null;
+            }
         }
 
 
-        public string Ip
+        public IPAddress Ip
         {
-            get { return ip; }
+            get { return addressIp; }
         }
 
         public int Port
         {
-            get { return port; }
+            get { return addressPort; }
         }
 
-        public string Address
+        public override string ToString()
         {
-            get { return String.Format("{0}:{1}", ip, port); }
+            return String.Format("{0}:{1}", addressIp, addressPort);
         }
     }
 }

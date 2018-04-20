@@ -20,15 +20,17 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public partial class PlayersForm : Syncfusion.Windows.Forms.MetroForm
     {
+        ServerIp serverIp;
         ServerInfo serverInfo;
         ServerPlayer serverPlayer;
         List<PlayerInfo> playerList;
         
 
-        public PlayersForm()
+        public PlayersForm(ServerIp server)
         {
             InitializeComponent();
 
+            serverIp = server;
             labelPlayers.Text = "...loading";
 
             playerList = new List<PlayerInfo>();
@@ -64,7 +66,7 @@ namespace Jasarsoft.Launcher.SAMP
             if (worker == null)
                 return;
 
-            serverPlayer = new ServerPlayer("193.70.72.221", 7777);
+            serverPlayer = new ServerPlayer(serverIp);
             
             if (serverPlayer.GetInfo())
             {
@@ -122,7 +124,7 @@ namespace Jasarsoft.Launcher.SAMP
             }
                 
 
-            serverInfo = new ServerInfo("193.70.72.221", 7777);
+            serverInfo = new ServerInfo(serverIp);
 
             e.Result = serverInfo.Info();
         }

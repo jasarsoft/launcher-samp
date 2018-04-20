@@ -16,7 +16,7 @@ namespace Jasarsoft.Launcher.SAMP
         private string serverWorldtime;
         
 
-        public ServerRule(string ip, int port) : base(ip, port)
+        public ServerRule(ServerIp server) : base(server)
         {
             //nothing
         }

@@ -9,11 +9,11 @@ namespace Jasarsoft.Launcher.SAMP
 {
     abstract class ServerQuery
     {
-        int serverPort = 0;
         private int serverCount = 0;
 
+        private ServerIp serverIp;
+
         protected Socket serverSocket;
-        IPAddress serverAddress;
         protected EndPoint endpoint;
 
 
@@ -23,12 +23,12 @@ namespace Jasarsoft.Launcher.SAMP
         protected DateTime timeEnd;
         DateTime[] timeStamp = new DateTime[2];
 
-        public ServerQuery(string ip, int port)
+        public ServerQuery(ServerIp server)
         {
-            if (ip == null || ip == String.Empty || port == 0)
+            if (server == null || server.Ip == null || server.Port == 0)
                 throw new ArgumentNullException("Ip adresa i/ili port nisu definisani.");
 
-            serverPort = port;
+            this.serverIp= server;
 
             serverSocket = new Socket(AddressFamily.InterNetwork, 
                                       SocketType.Dgram, 
@@ -39,8 +39,7 @@ namespace Jasarsoft.Launcher.SAMP
 
             try
             {
-                serverAddress = Dns.GetHostAddresses(ip)[0];
-                endpoint = new IPEndPoint(serverAddress, serverPort);
+                endpoint = new IPEndPoint(serverIp.Ip, serverIp.Port);
             }
             catch
             {
@@ -79,7 +78,7 @@ namespace Jasarsoft.Launcher.SAMP
 
             try
             {
-                splitip = serverAddress.ToString().Split('.');
+                splitip = serverIp.Ip.ToString().Split('.');
             }
             catch (Exception)
             {
@@ -101,14 +100,14 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     writer.Write("SAMP".ToCharArray());
 
-                    string[] splitip = serverAddress.ToString().Split('.');
+                    string[] splitip = serverIp.Ip.ToString().Split('.');
 
                     writer.Write(Convert.ToByte(Convert.ToInt32(splitip[0])));
                     writer.Write(Convert.ToByte(Convert.ToInt32(splitip[1])));
                     writer.Write(Convert.ToByte(Convert.ToInt32(splitip[2])));
                     writer.Write(Convert.ToByte(Convert.ToInt32(splitip[3])));
 
-                    writer.Write((ushort)serverPort);
+                    writer.Write((ushort)serverIp.Port);
 
                     writer.Write(opcode);
 

@@ -10,7 +10,7 @@ namespace Jasarsoft.Launcher.SAMP
         List<PlayerInfo> playersInfo;
 
 
-        public ServerPlayer(string ip, int ping) : base(ip, ping)
+        public ServerPlayer(ServerIp server) : base(server)
         {
             playersInfo = new List<PlayerInfo>();
         }

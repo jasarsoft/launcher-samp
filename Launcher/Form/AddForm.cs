@@ -14,11 +14,13 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Syncfusion.Windows.Forms;
 
 namespace Jasarsoft.Launcher.SAMP
 {
     public partial class AddForm : Syncfusion.Windows.Forms.MetroForm
     {
+        private ServerIp serverIp;
         private ServerInfo serverInfo;
         private List<ServerItem> serverItems;
 
@@ -99,7 +101,8 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            serverInfo = new ServerInfo(textAddress.Text, (int)numericPort.Value);
+            serverIp = new ServerIp(textAddress.Text, (int)numericPort.Value);
+            serverInfo = new ServerInfo(serverIp);
 
             if (serverInfo.Info())
             {
@@ -143,6 +146,22 @@ namespace Jasarsoft.Launcher.SAMP
                 buttonDelete.Enabled = true;
             else
                 buttonDelete.Enabled = false;
-        }  
+        }
+
+        private void buttonClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            if(gridListServers.SelectedIndex != -1)
+            {
+                TitleError title = new TitleError();
+                string msg = "Za promjenu servera odaberite isti sa liste prije potvrde!";
+
+                MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

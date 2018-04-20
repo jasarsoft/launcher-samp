@@ -142,6 +142,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonClose.Text = "CLOSE";
             this.buttonClose.UseVisualStyle = true;
             this.buttonClose.UseVisualStyleBackColor = true;
+            this.buttonClose.Click += new System.EventHandler(this.buttonClose_Click);
             // 
             // buttonAdd
             // 
@@ -195,6 +196,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyle = true;
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // AddForm
             // 

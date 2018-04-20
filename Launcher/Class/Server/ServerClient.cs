@@ -10,7 +10,7 @@ namespace Jasarsoft.Launcher.SAMP
     {
         List<PlayerClient> playerClient;
         
-        public ServerClient(string ip, int port) : base(ip, port)
+        public ServerClient(ServerIp server) : base(server)
         {
             playerClient = new List<PlayerClient>();
         }

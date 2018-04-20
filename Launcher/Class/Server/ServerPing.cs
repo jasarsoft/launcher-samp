@@ -10,7 +10,7 @@ namespace Jasarsoft.Launcher.SAMP
     {
         private int pingValue;
 
-        public ServerPing(string ip, int port) : base(ip, port)
+        public ServerPing(ServerIp server) : base(server)
         {
             //pingValue = Ping();
         }
