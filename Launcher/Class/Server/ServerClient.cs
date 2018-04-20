@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
+
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -10,6 +9,7 @@ namespace Jasarsoft.Launcher.SAMP
     {
         List<PlayerClient> playerClient;
         
+
         public ServerClient(ServerIp server) : base(server)
         {
             playerClient = new List<PlayerClient>();
@@ -24,7 +24,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public bool Client()
         {
-            return Send(OpcodeKey.CLIENT) && Receive() ? true : false;
+            return Send(OpcodeKey.CLIENT) && Receive();
         }
 
         private bool Receive()
@@ -37,25 +37,14 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        if (stream.Length <= 10)
-                            return false;
-                        else
-                            reader.ReadBytes(10);
-#if DEBUG
-                        string debug = String.Format("{0}: Binary stream size {1}",
-                                                      this.ToString(), stream.Length);
+                        if (stream.Length <= 10) return false;
 
-                        System.Diagnostics.Debug.WriteLine(debug);
-#endif
+                        reader.ReadBytes(10);
 
                         if (reader.ReadChar() == OpcodeKey.CLIENT)
                         {
                             int playercount = reader.ReadInt16();
                             playerClient = new List<PlayerClient>();
-
-#if DEBUG
-                            System.Diagnostics.Debug.Write(String.Format("{0}: Player count: {1}", this.ToString(), playercount));
-#endif
 
                             for (int i = 0; i < playercount; i++)
                             {
