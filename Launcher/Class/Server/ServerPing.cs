@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+
 
 namespace Jasarsoft.Launcher.SAMP
 {
     class ServerPing : ServerQuery
     {
         private int pingValue;
+
 
         public ServerPing(ServerIp server) : base(server)
         {
@@ -18,15 +17,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public int Ping()
         {
-            if(Send(OpcodeKey.PING))
-            {
-                if(Receive())
-                {
-                    return pingValue;
-                }
-            }
-
-            return 0;
+            return Send(OpcodeKey.PING) && Receive() ? pingValue : 0;
         }
 
         private bool Receive()
@@ -39,10 +30,9 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     using (BinaryReader reader = new BinaryReader(stream))
                     {
-                        if (stream.Length <= 10)
-                            return false;
-                        else
-                            reader.ReadBytes(10);
+                        if (stream.Length <= 10) return false;
+
+                        reader.ReadBytes(10);
 
                         if (reader.ReadChar() == OpcodeKey.PING)
                         {
