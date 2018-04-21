@@ -15,6 +15,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 using Syncfusion.Windows.Forms;
+using System.IO;
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -161,6 +162,12 @@ namespace Jasarsoft.Launcher.SAMP
                 string msg = "Za promjenu servera odaberite isti sa liste prije potvrde!";
 
                 MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                //int index = gridListServers.SelectedIndex;
+                //ServerItem item = serverItems[index];
+                //serverIp = new ServerIp(item.)
             }
         }
     }
