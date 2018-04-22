@@ -44,18 +44,18 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     //address
                     int addresslen = reader.ReadInt32();
-                    string address = reader.ReadChars(addresslen).ToString();
+                    string address = new string(reader.ReadChars(addresslen));
                     //port
                     int port = reader.ReadInt32();
                     //hostname
                     int hostlen = reader.ReadInt32();
-                    string host = reader.ReadChars(hostlen).ToString();
+                    string host = new string(reader.ReadChars(hostlen));
                     //password
                     int pwlen = reader.ReadInt32();
-                    string pw = reader.ReadChars(pwlen).ToString();
+                    string pw = new string(reader.ReadChars(pwlen));
                     //rcon
                     int rconlen = reader.ReadInt32();
-                    string rcon = reader.ReadChars(rconlen).ToString();
+                    string rcon = new string(reader.ReadChars(rconlen));
 
                     fileServers.Add(new UserServer(address, port, host, pw, rcon));
                 }
