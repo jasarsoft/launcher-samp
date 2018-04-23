@@ -90,6 +90,25 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void AddForm_Load(object sender, EventArgs e)
         {
+            UserFile uf = new UserFile();
+            uf.Read();
+
+            foreach(var us in uf.Servers)
+            {
+                serverIp = new ServerIp(us.Address, us.Port);
+                serverInfo = new ServerInfo(serverIp);
+
+                if (serverInfo.Info())
+                {
+                    serverItems.Add(new ServerItem(serverInfo.Password,
+                                                   serverInfo.CurrentPlayers,
+                                                   serverInfo.MaxPlayers,
+                                                   serverInfo.Hostname,
+                                                   serverInfo.Gamemode,
+                                                   serverInfo.Language));
+                }
+            }
+
             gridListServers.DataSource = serverItems;
             gridListServers.Grid.ColWidths[1] = 40;
             gridListServers.Grid.ColWidths[2] = 60;
