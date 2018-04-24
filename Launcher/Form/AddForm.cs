@@ -34,6 +34,20 @@ namespace Jasarsoft.Launcher.SAMP
             private string serverLanguage;      //jezik servera
 
 
+            private ServerItem()
+            {
+                serverKey = "-";
+                serverPlayers = "0/0";
+                serverHostname = "-";
+                serverGamemode = "-";
+                serverLanguage = "-";
+            }
+
+            public ServerItem(string host) : this()
+            {
+                serverHostname = host;
+            }
+
             public ServerItem(int players, int max, string host, string game, string lang)
             {
                 Initialize(false, players, max, ref host, ref game, ref lang);
@@ -106,6 +120,10 @@ namespace Jasarsoft.Launcher.SAMP
                                                    serverInfo.Hostname,
                                                    serverInfo.Gamemode,
                                                    serverInfo.Language));
+                }
+                else
+                {
+                    serverItems.Add(new ServerItem(us.Hostname));
                 }
             }
 
