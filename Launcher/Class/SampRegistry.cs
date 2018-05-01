@@ -25,6 +25,17 @@ namespace Jasarsoft.Launcher.SAMP
             this.subKey = @"Software\SAMP";
         }
 
+        public SampRegistry(string name) : this()
+        {
+            this.playerName = name;
+        }
+
+        public SampRegistry(string name, string path) : this(name)
+        {
+            this.pathName = path;
+        }
+
+
         public string PathName
         {
             get { return this.pathName; }
@@ -44,26 +55,18 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(subKey))
                 {
-                    if (rk != null)
-                    {
-                        object value;
+                    if (rk == null) return false;
 
-                        value = rk.GetValue(RegKey.PATH_NAME, null);
-                        if (value == null) return false;
-
-                        value = rk.GetValue(RegKey.PLAYER_NAME, null);
-                        if (value == null) return false;
-
-                        return true;
-                    }
-
-                    return false;
+                    if (rk.GetValue(RegKey.PATH_NAME, null) == null) return false;
+                    if (rk.GetValue(RegKey.PLAYER_NAME, null) == null) return false;
                 }
             }
             catch (Exception)
             {
                 return false;
             }
+
+            return true;
         }
 
         public bool Valid()
@@ -146,6 +149,11 @@ namespace Jasarsoft.Launcher.SAMP
         {
             this.PlayerName = "Ime_Prezime";
             this.pathName = Directory.GetCurrentDirectory() + @"\gta_sa.exe";
+        }
+
+        public void SetPath(string path)
+        {
+            this.pathName = String.Format("{0}\\{1}", path, RegKey.PATH_NAME);
         }
     }
 }
