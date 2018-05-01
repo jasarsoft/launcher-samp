@@ -28,37 +28,42 @@ namespace Jasarsoft.Launcher.SAMP
         }
 
 
-        public void Read()
+        public bool Read()
         {
             fileServers = new List<UserServer>();
 
-            if (!File.Exists(filePath)) return;
+            if (!File.Exists(filePath)) return false;
 
-            using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+            try
             {
-                fileHeader = reader.ReadChars(4);   //header
-                fileVersion = reader.ReadInt32();   //file version
-                fileLength = reader.ReadInt32();    //server count
-
-                for (int i = 0; i < fileLength; i++)
+                using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
                 {
-                    //address
-                    int addresslen = reader.ReadInt32();
-                    string address = new string(reader.ReadChars(addresslen));
-                    //port
-                    int port = reader.ReadInt32();
-                    //hostname
-                    int hostlen = reader.ReadInt32();
-                    string host = new string(reader.ReadChars(hostlen));
-                    //password
-                    int pwlen = reader.ReadInt32();
-                    string pw = new string(reader.ReadChars(pwlen));
-                    //rcon
-                    int rconlen = reader.ReadInt32();
-                    string rcon = new string(reader.ReadChars(rconlen));
+                    fileHeader = reader.ReadChars(4);   //header
+                    fileVersion = reader.ReadInt32();   //file version
+                    fileLength = reader.ReadInt32();    //server count
 
-                    fileServers.Add(new UserServer(address, port, host, pw, rcon));
+                    for (int i = 0; i < fileLength; i++)
+                    {
+                        //address
+                        string address = new string(reader.ReadChars(reader.ReadInt32()));
+                        //port
+                        int port = reader.ReadInt32();
+                        //hostname
+                        string host = new string(reader.ReadChars(reader.ReadInt32()));
+                        //password
+                        string pw = new string(reader.ReadChars(reader.ReadInt32()));
+                        //rcon
+                        string rcon = new string(reader.ReadChars(reader.ReadInt32()));
+
+                        fileServers.Add(new UserServer(address, port, host, pw, rcon));
+                    }
                 }
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }
