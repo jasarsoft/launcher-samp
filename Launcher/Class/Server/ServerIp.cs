@@ -33,6 +33,16 @@ namespace Jasarsoft.Launcher.SAMP
             get { return addressPort; }
         }
 
+        public bool IsLive()
+        {
+            ServerPing sp = new ServerPing(this);
+
+            if (sp.Ping() > 0)
+                return true;
+
+            return false;
+        }
+
         public override string ToString()
         {
             return String.Format("{0}:{1}", addressIp, addressPort);
