@@ -5,25 +5,17 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public sealed class ServerIp
     {
-        private static IPAddress addressIp;
-        private static int addressPort;
+        private string addressIp;
+        private int addressPort;
 
         public ServerIp(string ip, int port)
         {
-            try
-            {
-                addressPort = port;
-                addressIp = Dns.GetHostAddresses(ip)[0];
-            }
-            catch
-            {
-                addressPort = 0;
-                addressIp = null;
-            }
+            addressIp = ip;
+            addressPort = port;
         }
 
 
-        public IPAddress Ip
+        public string Address
         {
             get { return addressIp; }
         }
@@ -37,10 +29,7 @@ namespace Jasarsoft.Launcher.SAMP
         {
             ServerPing sp = new ServerPing(this);
 
-            if (sp.Ping() > 0)
-                return true;
-
-            return false;
+            return sp.Ping() > 0 ? true : false;
         }
 
         public override string ToString()
