@@ -1,20 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Collections.Generic;
+
 
 namespace Jasarsoft.Launcher.SAMP
 {
     class UserFile
     {
-        private char[] fileHeader;
-        private int fileVersion;
-        private int fileLength;
+        private readonly string filePath;
         private List<UserServer> fileServers;
 
-        private readonly string filePath;
-
+        
         public UserFile()
         {
             this.filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + 
@@ -24,23 +20,28 @@ namespace Jasarsoft.Launcher.SAMP
 
         public UserServer[] Servers
         {
-            get { return fileServers.ToArray(); }
+            get { return this.fileServers.ToArray(); }
+        }
+
+        public string Path
+        {
+            get { return this.filePath; }
         }
 
 
         public bool Read()
         {
-            fileServers = new List<UserServer>();
+            this.fileServers = new List<UserServer>();
 
-            if (!File.Exists(filePath)) return false;
+            if (!File.Exists(this.filePath)) return false;
 
             try
             {
-                using (BinaryReader reader = new BinaryReader(File.Open(filePath, FileMode.Open)))
+                using (BinaryReader reader = new BinaryReader(File.Open(this.filePath, FileMode.Open)))
                 {
-                    fileHeader = reader.ReadChars(4);   //header
-                    fileVersion = reader.ReadInt32();   //file version
-                    fileLength = reader.ReadInt32();    //server count
+                    char[] fileHeader = reader.ReadChars(4);    //header
+                    int fileVersion = reader.ReadInt32();       //file version
+                    int fileLength = reader.ReadInt32();        //server count
 
                     for (int i = 0; i < fileLength; i++)
                     {
@@ -55,7 +56,7 @@ namespace Jasarsoft.Launcher.SAMP
                         //rcon
                         string rcon = new string(reader.ReadChars(reader.ReadInt32()));
 
-                        fileServers.Add(new UserServer(address, port, host, pw, rcon));
+                        this.fileServers.Add(new UserServer(address, port, host, pw, rcon));
                     }
                 }
 
