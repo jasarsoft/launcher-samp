@@ -9,43 +9,14 @@ namespace Jasarsoft.Launcher.SAMP
 {
     abstract class ServerQuery
     {
-        private int serverCount = 0;
-
         private ServerIp serverIp;
 
         protected Socket serverSocket;
-        protected EndPoint endpoint;
-
-
-        private string[] serverResults;
+        protected EndPoint endPoint;
 
         protected DateTime timeStart;
         protected DateTime timeEnd;
-        DateTime[] timeStamp = new DateTime[2];
 
-        public ServerQuery(ServerIp server)
-        {
-            if (server == null || server.Ip == null || server.Port == 0)
-                throw new ArgumentNullException("Ip adresa i/ili port nisu definisani.");
-
-            this.serverIp= server;
-
-            serverSocket = new Socket(AddressFamily.InterNetwork, 
-                                      SocketType.Dgram, 
-                                      ProtocolType.Udp);
-
-            serverSocket.SendTimeout = 5000;
-            serverSocket.ReceiveTimeout = 5000;
-
-            try
-            {
-                endpoint = new IPEndPoint(serverIp.Ip, serverIp.Port);
-            }
-            catch
-            {
-                throw;
-            }
-        }
 
         protected struct OpcodeKey
         {
@@ -58,6 +29,36 @@ namespace Jasarsoft.Launcher.SAMP
         }
 
 
+        public ServerQuery(ServerIp server)
+        {
+            if (server == null || server.Address == null || server.Port == 0)
+                throw new ArgumentNullException("Ip adresa i/ili port nisu definisani.");
+
+            this.serverIp= server;
+
+            this.serverSocket = new Socket(AddressFamily.InterNetwork, 
+                                           SocketType.Dgram, 
+                                           ProtocolType.Udp);
+
+            this.serverSocket.SendTimeout = 5000;
+            this.serverSocket.ReceiveTimeout = 5000;
+
+            try
+            {
+                this.endPoint = new IPEndPoint(Dns.GetHostAddresses(serverIp.Address)[0], serverIp.Port);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+
+        public ServerIp Server
+        {
+            get { return this.serverIp; }
+        }
+        
         private bool ValidAddressNumber(string number)
         {
             int result;
@@ -78,7 +79,7 @@ namespace Jasarsoft.Launcher.SAMP
 
             try
             {
-                splitip = serverIp.Ip.ToString().Split('.');
+                splitip = serverIp.Address.ToString().Split('.');
             }
             catch (Exception)
             {
@@ -100,7 +101,7 @@ namespace Jasarsoft.Launcher.SAMP
                 {
                     writer.Write("SAMP".ToCharArray());
 
-                    string[] splitip = serverIp.Ip.ToString().Split('.');
+                    string[] splitip = serverIp.Address.ToString().Split('.');
 
                     writer.Write(Convert.ToByte(Convert.ToInt32(splitip[0])));
                     writer.Write(Convert.ToByte(Convert.ToInt32(splitip[1])));
@@ -115,16 +116,19 @@ namespace Jasarsoft.Launcher.SAMP
                         writer.Write("8493".ToCharArray());
                 }
 
-                timeStart = DateTime.Now;
+                this.timeStart = DateTime.Now;
 
                 try
                 {
                     //endpoint = new IPEndPoint(serverAddress, serverPort);
-                    if (serverSocket.SendTo(stream.ToArray(), endpoint) > 0)
+                    if (this.serverSocket.SendTo(stream.ToArray(), this.endPoint) > 0)
                         return true;
                 }
-                catch
+                catch (Exception ex)
                 {
+#if DEBUG
+                    Debug.WriteLine(this.ToString() + "|Send soccket|" + ex.Message);
+#endif
                     return false;
                 }
             }
@@ -137,15 +141,17 @@ namespace Jasarsoft.Launcher.SAMP
         {
             try
             {
-                serverSocket.ReceiveFrom(buffer, ref endpoint);
+                this.serverSocket.ReceiveFrom(buffer, ref endPoint);
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+#if DEBUG
+                Debug.WriteLine(this.ToString() + "|Receive soccket|" +  ex.Message);
+#endif
                 return false;
             }
 
-            timeEnd = DateTime.Now;
+            this.timeEnd = DateTime.Now;
 
             return true;
         }
