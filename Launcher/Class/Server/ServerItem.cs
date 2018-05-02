@@ -5,6 +5,7 @@ namespace Jasarsoft.Launcher.SAMP
     internal sealed class ServerItem
     {
         private ServerIp serverIp;
+        private bool serverKey;             //server zakljucan
         private string serverPassword;        
         private string serverRcon;
         private int serverCurPlayers;       //trenutni broj igraca na serveru
@@ -17,6 +18,7 @@ namespace Jasarsoft.Launcher.SAMP
         public ServerItem(ServerIp server)
         {
             this.serverIp = server;
+            this.serverKey = false;
             this.serverPassword = null;
             this.serverCurPlayers = 0;
             this.serverMaxPlayers = 0;
@@ -36,34 +38,20 @@ namespace Jasarsoft.Launcher.SAMP
             this.serverRcon = rcon;
         }
 
-        public ServerItem(ServerIp server, int players, int max, string host, string password, string rcon) : this(server, host, password, rcon)
+        public ServerItem(ServerIp server, bool key, int players, int max, string host, string game, string lang) : this(server, host)
         {
+            this.serverKey = key;
             this.serverCurPlayers = players;
             this.serverMaxPlayers = max;
-        }
-
-        public ServerItem(ServerIp server, int players, int max, string host, string game, string lang, string password, string rcon) : this(server, players, max, host, password, rcon)
-        {
             this.serverGamemode = game;
             this.serverLanguage = lang;
         }
 
 
-        public ServerIp Server
-        {
-            get { return this.serverIp; }
-        }
 
-        public string Password
+        public string Key
         {
-            get { return this.serverPassword; }
-            set { this.serverPassword = value; }
-        }
-
-        public string PasswordRcon
-        {
-            get { return this.serverRcon; }
-            set { this.serverRcon = value; }
+            get { return this.serverKey ? "Da" : "Ne"; }
         }
 
         public string Players
@@ -71,40 +59,29 @@ namespace Jasarsoft.Launcher.SAMP
             get { return String.Format("{0}/{1}", this.serverCurPlayers, this.serverMaxPlayers); }
         }
 
-        public int PlayerCurrent
-        {
-            get { return this.serverCurPlayers; }
-            set { this.serverCurPlayers = value; }
-        }
-
-        public int PlayerMax
-        {
-            get { return this.serverMaxPlayers; }
-            set { this.serverMaxPlayers = value; }
-        }
 
         public string Hostname
         {
             get { return this.serverHostname; }
-            set { this.serverHostname = value; }
+            //set { this.serverHostname = value; }
         }
 
         public string Gamemode
         {
             get { return this.serverGamemode; }
-            set { this.serverGamemode = value; }
+            //set { this.serverGamemode = value; }
         }
 
         public string Language
         {
             get { return this.serverLanguage; }
-            set { this.serverLanguage = value; }
+            //set { this.serverLanguage = value; }
         }
 
 
         public bool IsLock()
         {
-            return this.serverPassword != null ? true : false;
+            return this.serverKey;
         }
 
         public bool IsLive()
@@ -112,6 +89,51 @@ namespace Jasarsoft.Launcher.SAMP
             ServerPing sp = new ServerPing(this.serverIp);
 
             return sp.Ping() > 0 ? true : false;
+        }
+
+        public ServerIp GetServer()
+        {
+            return this.serverIp;
+        }
+
+        public string GetAddress()
+        {
+            return this.serverIp.Address;
+        }
+
+        public int GetPort()
+        {
+            return this.serverIp.Port;
+        }
+
+        public string GetPassword()
+        {
+            return this.serverPassword;
+        }
+
+        public void SetPassword(string password)
+        {
+            this.serverPassword = password;
+        }
+
+        public void ResetPassword()
+        {
+            SetPassword(null); //this.serverPassword = null;
+        }
+
+        public string GetRconPassword()
+        {
+            return this.serverRcon;
+        }
+
+        public void SetRconPassword(string rcon)
+        {
+            this.serverRcon = rcon;
+        }
+
+        public void ResetRconPassword()
+        {
+            SetRconPassword(null); //this.serverRcon = null;
         }
     }
 }
