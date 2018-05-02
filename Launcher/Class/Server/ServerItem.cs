@@ -1,82 +1,117 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Jasarsoft.Launcher.SAMP
 {
     internal sealed class ServerItem
     {
-        private static int serverId = 0;    //redni broj servera
-        private bool serverPassword;        //server je zakljucan/otkljucan
-        private int serverPlayers;          //trenutni broj igraca na serveru
+        private ServerIp serverIp;
+        private string serverPassword;        
+        private string serverRcon;
+        private int serverCurPlayers;       //trenutni broj igraca na serveru
         private int serverMaxPlayers;       //podrzani broj igraca
         private string serverHostname;      //hostname servera
         private string serverGamemode;      //gamemode servera
         private string serverLanguage;      //jezik servera
 
 
-        public ServerItem(string host, string game, string lang)
+        public ServerItem(ServerIp server)
         {
-            Initialize(false, 0, 0, ref host, ref game, ref lang);
+            this.serverIp = server;
+            this.serverPassword = null;
+            this.serverCurPlayers = 0;
+            this.serverMaxPlayers = 0;
+            this.serverHostname = null;
+            this.serverGamemode = null;
+            this.serverLanguage = null;
         }
 
-        public ServerItem(int players, int max, string host, string game, string lang)
+        public ServerItem(ServerIp server, string host) : this(server)
         {
-            Initialize(false, players, max, ref host, ref game, ref lang);
+            this.serverHostname = host;
         }
 
-        public ServerItem(bool key, int players, int max, string host, string game, string lang)
+        public ServerItem(ServerIp server, string host, string password, string rcon) : this(server, host)
         {
-            Initialize(key, players, max, ref host, ref game, ref lang);
+            this.serverPassword = password;
+            this.serverRcon = rcon;
+        }
+
+        public ServerItem(ServerIp server, int players, int max, string host, string password, string rcon) : this(server, host, password, rcon)
+        {
+            this.serverCurPlayers = players;
+            this.serverMaxPlayers = max;
+        }
+
+        public ServerItem(ServerIp server, int players, int max, string host, string game, string lang, string password, string rcon) : this(server, players, max, host, password, rcon)
+        {
+            this.serverGamemode = game;
+            this.serverLanguage = lang;
         }
 
 
-        public int Id
+        public ServerIp Server
         {
-            get { return serverId; }
+            get { return this.serverIp; }
         }
 
-        public bool Password
+        public string Password
         {
-            get { return serverPassword; }
+            get { return this.serverPassword; }
+            set { this.serverPassword = value; }
         }
 
-        public int Players
+        public string PasswordRcon
         {
-            get { return serverPlayers; }
+            get { return this.serverRcon; }
+            set { this.serverRcon = value; }
         }
 
-        public int MaxPlayers
+        public string Players
         {
-            get { return serverMaxPlayers; }
+            get { return String.Format("{0}/{1}", this.serverCurPlayers, this.serverMaxPlayers); }
+        }
+
+        public int PlayerCurrent
+        {
+            get { return this.serverCurPlayers; }
+            set { this.serverCurPlayers = value; }
+        }
+
+        public int PlayerMax
+        {
+            get { return this.serverMaxPlayers; }
+            set { this.serverMaxPlayers = value; }
         }
 
         public string Hostname
         {
-            get { return serverHostname; }
+            get { return this.serverHostname; }
+            set { this.serverHostname = value; }
         }
 
         public string Gamemode
         {
-            get { return serverGamemode; }
+            get { return this.serverGamemode; }
+            set { this.serverGamemode = value; }
         }
 
         public string Language
         {
-            get { return serverLanguage; }
+            get { return this.serverLanguage; }
+            set { this.serverLanguage = value; }
         }
 
 
-        private void Initialize(bool key, int players, int max, ref string host, ref string game, ref string lang)
+        public bool IsLock()
         {
-            serverId++;
-            this.serverPassword = key;
-            this.serverPlayers = players;
-            this.serverMaxPlayers = max;
-            this.serverHostname = host;
-            this.serverGamemode = game;
-            this.serverLanguage = lang;
+            return this.serverPassword != null ? true : false;
+        }
+
+        public bool IsLive()
+        {
+            ServerPing sp = new ServerPing(this.serverIp);
+
+            return sp.Ping() > 0 ? true : false;
         }
     }
 }
