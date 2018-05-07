@@ -114,6 +114,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonOK.Text = "UREDU";
             this.buttonOK.UseVisualStyle = true;
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // autoLabel2
             // 
@@ -153,6 +154,8 @@ namespace Jasarsoft.Launcher.SAMP
             this.ShowMaximizeBox = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SAMP Launcher | Enter Server";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnterForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EnterForm_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).EndInit();
             this.ResumeLayout(false);
