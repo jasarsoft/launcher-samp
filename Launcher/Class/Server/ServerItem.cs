@@ -98,7 +98,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public string GetAddress()
         {
-            return this.serverIp.Address;
+            return this.serverIp.Ip;
         }
 
         public int GetPort()
@@ -113,7 +113,16 @@ namespace Jasarsoft.Launcher.SAMP
 
         public void SetPassword(string password)
         {
-            this.serverPassword = password;
+            if(password == null)
+            {
+                this.serverKey = false;
+                this.serverPassword = null;
+            }
+            else
+            {
+                this.serverKey = true;
+                this.serverPassword = password;
+            }
         }
 
         public void ResetPassword()
@@ -134,6 +143,27 @@ namespace Jasarsoft.Launcher.SAMP
         public void ResetRconPassword()
         {
             SetRconPassword(null); //this.serverRcon = null;
+        }
+
+        public bool Info()
+        {
+            ServerInfo si = new ServerInfo(serverIp);
+
+            if(si.Info())
+            {
+                this.serverKey = si.Password;
+
+                this.serverCurPlayers = si.CurrentPlayers;
+                this.serverMaxPlayers = si.MaxPlayers;
+
+                this.serverHostname = si.Hostname;
+                this.serverGamemode = si.Gamemode;
+                this.serverLanguage = si.Language;
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
