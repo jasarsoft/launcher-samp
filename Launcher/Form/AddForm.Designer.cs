@@ -44,6 +44,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonAdd = new Syncfusion.Windows.Forms.ButtonAdv();
             this.buttonDelete = new Syncfusion.Windows.Forms.ButtonAdv();
             this.buttonOK = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.workerLoad = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.gridListServers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).BeginInit();
@@ -67,7 +68,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.gridListServers.Properties.GridLineColor = System.Drawing.Color.DarkTurquoise;
             this.gridListServers.Properties.ThemedHeader = true;
             this.gridListServers.SelectedIndex = -1;
-            this.gridListServers.Size = new System.Drawing.Size(509, 185);
+            this.gridListServers.Size = new System.Drawing.Size(569, 225);
             this.gridListServers.TabIndex = 0;
             this.gridListServers.ThemesEnabled = true;
             this.gridListServers.TopIndex = 0;
@@ -78,7 +79,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.labelInfo.AutoSize = false;
             this.labelInfo.Location = new System.Drawing.Point(12, 18);
             this.labelInfo.Name = "labelInfo";
-            this.labelInfo.Size = new System.Drawing.Size(260, 22);
+            this.labelInfo.Size = new System.Drawing.Size(320, 22);
             this.labelInfo.TabIndex = 3;
             this.labelInfo.Text = "Unesite novi u polje ili odaberite sa liste server:";
             this.labelInfo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -89,7 +90,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.textAddress.BorderColor = System.Drawing.Color.DarkCyan;
             this.textAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textAddress.FocusBorderColor = System.Drawing.Color.Aqua;
-            this.textAddress.Location = new System.Drawing.Point(278, 18);
+            this.textAddress.Location = new System.Drawing.Point(338, 18);
             this.textAddress.Metrocolor = System.Drawing.Color.DarkCyan;
             this.textAddress.Name = "textAddress";
             this.textAddress.Size = new System.Drawing.Size(175, 22);
@@ -104,7 +105,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.numericPort.BorderColor = System.Drawing.Color.DarkCyan;
             this.numericPort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numericPort.ForeColor = System.Drawing.Color.Black;
-            this.numericPort.Location = new System.Drawing.Point(459, 18);
+            this.numericPort.Location = new System.Drawing.Point(519, 18);
             this.numericPort.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -134,7 +135,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonClose.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonClose.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.buttonClose.IsBackStageButton = false;
-            this.buttonClose.Location = new System.Drawing.Point(446, 256);
+            this.buttonClose.Location = new System.Drawing.Point(506, 296);
             this.buttonClose.MetroColor = System.Drawing.Color.DarkCyan;
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(75, 32);
@@ -152,7 +153,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonAdd.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonAdd.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.buttonAdd.IsBackStageButton = false;
-            this.buttonAdd.Location = new System.Drawing.Point(12, 256);
+            this.buttonAdd.Location = new System.Drawing.Point(12, 296);
             this.buttonAdd.MetroColor = System.Drawing.Color.DarkCyan;
             this.buttonAdd.Name = "buttonAdd";
             this.buttonAdd.Size = new System.Drawing.Size(75, 32);
@@ -170,7 +171,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonDelete.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonDelete.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.buttonDelete.IsBackStageButton = false;
-            this.buttonDelete.Location = new System.Drawing.Point(93, 256);
+            this.buttonDelete.Location = new System.Drawing.Point(93, 296);
             this.buttonDelete.MetroColor = System.Drawing.Color.DarkCyan;
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(75, 32);
@@ -184,19 +185,26 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             this.buttonOK.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.buttonOK.BackColor = System.Drawing.Color.DarkCyan;
-            this.buttonOK.BeforeTouchSize = new System.Drawing.Size(95, 32);
+            this.buttonOK.BeforeTouchSize = new System.Drawing.Size(115, 32);
             this.buttonOK.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.buttonOK.ForeColor = System.Drawing.Color.WhiteSmoke;
             this.buttonOK.IsBackStageButton = false;
-            this.buttonOK.Location = new System.Drawing.Point(345, 256);
+            this.buttonOK.Location = new System.Drawing.Point(385, 296);
             this.buttonOK.MetroColor = System.Drawing.Color.DarkCyan;
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(95, 32);
+            this.buttonOK.Size = new System.Drawing.Size(115, 32);
             this.buttonOK.TabIndex = 11;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyle = true;
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
+            // 
+            // workerLoad
+            // 
+            this.workerLoad.WorkerReportsProgress = true;
+            this.workerLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerLoad_DoWork);
+            this.workerLoad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerLoad_ProgressChanged);
+            this.workerLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerLoad_RunWorkerCompleted);
             // 
             // AddForm
             // 
@@ -211,7 +219,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.CaptionButtonColor = System.Drawing.Color.WhiteSmoke;
             this.CaptionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CaptionForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(533, 300);
+            this.ClientSize = new System.Drawing.Size(593, 340);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonAdd);
@@ -250,5 +258,6 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.ButtonAdv buttonAdd;
         private Syncfusion.Windows.Forms.ButtonAdv buttonDelete;
         private Syncfusion.Windows.Forms.ButtonAdv buttonOK;
+        private System.ComponentModel.BackgroundWorker workerLoad;
     }
 }

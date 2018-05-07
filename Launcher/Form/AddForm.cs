@@ -22,10 +22,11 @@ namespace Jasarsoft.Launcher.SAMP
     public partial class AddForm : Syncfusion.Windows.Forms.MetroForm
     {
         private ServerIp serverIp;
+        private UserFile userFile;
         private ServerInfo serverInfo;
         private List<ServerItem> serverItems;
 
-        private class ServerItem
+        /*private class ServerItem
         {
             private string serverKey;           //server je zakljucan/otkljucan
             private string serverPlayers;       //broj igraca na serveru
@@ -93,7 +94,7 @@ namespace Jasarsoft.Launcher.SAMP
                 this.serverGamemode = game;
                 this.serverLanguage = lang;
             }
-        }
+        }*/
 
         public AddForm()
         {
@@ -102,62 +103,75 @@ namespace Jasarsoft.Launcher.SAMP
             serverItems = new List<ServerItem>();
         }
 
+
+        public ServerIp Server
+        {
+            get { return this.serverIp; }
+        }
+
+
         private void AddForm_Load(object sender, EventArgs e)
         {
-            UserFile uf = new UserFile();
-            uf.Read();
+            this.userFile = new UserFile();
 
-            foreach(var us in uf.Servers)
+            if (this.userFile.Read())
             {
-                serverIp = new ServerIp(us.Address, us.Port);
-                serverInfo = new ServerInfo(serverIp);
+                foreach (var us in this.userFile.Servers)
+                {
+                    this.serverIp = new ServerIp(us.Address, us.Port);
 
-                if (serverInfo.Info())
-                {
-                    serverItems.Add(new ServerItem(serverInfo.Password,
-                                                   serverInfo.CurrentPlayers,
-                                                   serverInfo.MaxPlayers,
-                                                   serverInfo.Hostname,
-                                                   serverInfo.Gamemode,
-                                                   serverInfo.Language));
-                }
-                else
-                {
-                    serverItems.Add(new ServerItem(us.Hostname));
+                    ServerItem si = new ServerItem(serverIp, us.Hostname, us.Password, us.Rcon);
+                    //si.SetPassword(us.Password);
+                    //si.SetRconPassword(us.Rcon);
+
+                    this.serverItems.Add(si);
                 }
             }
+            else
+            {
+                this.userFile.Default();
+            }
 
-            gridListServers.DataSource = serverItems;
+            gridListServers.DataSource = this.serverItems;
             gridListServers.Grid.ColWidths[1] = 40;
             gridListServers.Grid.ColWidths[2] = 60;
-            gridListServers.Grid.ColWidths[3] = 230;
-            gridListServers.Grid.ColWidths[4] = 130;
-            gridListServers.Grid.ColWidths[4] = 110;
+            gridListServers.Grid.ColWidths[3] = 235;
+            gridListServers.Grid.ColWidths[4] = 120;
+            gridListServers.Grid.ColWidths[5] = 110;
 
             buttonDelete.Enabled = false;
+
+            workerLoad.RunWorkerAsync();
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            ServerItem si;
             serverIp = new ServerIp(textAddress.Text, (int)numericPort.Value);
             serverInfo = new ServerInfo(serverIp);
 
             if (serverInfo.Info())
             {
-                serverItems.Add(new ServerItem(serverInfo.Password,
-                                               serverInfo.CurrentPlayers,
-                                               serverInfo.MaxPlayers,
-                                               serverInfo.Hostname,
-                                               serverInfo.Gamemode,
-                                               serverInfo.Language));
+                si = new ServerItem(serverIp,
+                                    serverInfo.Password,
+                                    serverInfo.CurrentPlayers,
+                                    serverInfo.MaxPlayers,
+                                    serverInfo.Hostname,
+                                    serverInfo.Gamemode,
+                                    serverInfo.Language);
+
+                gridListServers.BeginUpdate();
+                gridListServers.DataSource = serverItems;
+                //gridListServers.Update();
+                gridListServers.EndUpdate();
             }
-
-            gridListServers.DataSource = null;
-            gridListServers.Refresh();
-            gridListServers.DataSource = serverItems;
-
-            gridListServers.Refresh();
-
+            else
+            {
+                si = new ServerItem(serverIp);
+                
+                serverItems.Add(si);
+            }
+           
             if(gridListServers.SelectedIndex != -1)
                 buttonDelete.Enabled = true;
         }
@@ -168,13 +182,17 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 serverItems.Remove((ServerItem)gridListServers.SelectedItem);
 
-                gridListServers.DataSource = null;
-                gridListServers.Refresh();
+                gridListServers.BeginUpdate();
                 gridListServers.DataSource = serverItems;
-
-                gridListServers.Refresh();
+                //gridListServers.Update();
+                gridListServers.EndUpdate();
 
                 buttonDelete.Enabled = false;
+
+                ServerItem item = (ServerItem)gridListServers.SelectedItem;
+
+                this.userFile.Delete(item.GetAddress(), item.GetPort());
+                //this.userFile.Write();
             }
         }
 
@@ -193,7 +211,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if(gridListServers.SelectedIndex != -1)
+            if(gridListServers.SelectedIndex == -1)
             {
                 TitleError title = new TitleError();
                 string msg = "Za promjenu servera odaberite isti sa liste prije potvrde!";
@@ -202,10 +220,40 @@ namespace Jasarsoft.Launcher.SAMP
             }
             else
             {
-                //int index = gridListServers.SelectedIndex;
-                //ServerItem item = serverItems[index];
-                //serverIp = new ServerIp(item.)
+                int index = gridListServers.SelectedIndex;
+                serverIp = serverItems[index].GetServer();
             }
+
+            if(this.userFile.Write())
+            {
+                MessageBox.Show("OK");
+            }
+        }
+
+        private void workerLoad_DoWork(object sender, DoWorkEventArgs e)
+        {            
+            BackgroundWorker bw = sender as BackgroundWorker;
+
+            if (bw == null) return;
+
+            foreach (var us in this.serverItems)
+            {
+                if(us.Info())
+                    bw.ReportProgress(0);
+                //System.Threading.Thread.Sleep(3000);
+            }
+        }
+
+        private void workerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            
+        }
+
+        private void workerLoad_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            gridListServers.BeginUpdate();
+            gridListServers.Update();
+            gridListServers.EndUpdate();
         }
     }
 }
