@@ -5,24 +5,41 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public sealed class ServerIp
     {
-        private string addressIp;
-        private int addressPort;
+        private string serverIp;
+        private int serverPort;
+        private IPAddress serverAddress;
+        
 
         public ServerIp(string ip, int port)
         {
-            addressIp = ip;
-            addressPort = port;
+            serverIp = ip;
+            serverPort = port;
+
+            try
+            {
+                serverAddress = Dns.GetHostAddresses(ip)[0];
+            }
+            catch (Exception)
+            {
+                this.serverAddress = null;
+                //throw;
+            }
         }
 
 
-        public string Address
+        public string Ip
         {
-            get { return addressIp; }
+            get { return this.serverIp; }
+        }
+
+        public IPAddress Address
+        {
+            get { return serverAddress; }
         }
 
         public int Port
         {
-            get { return addressPort; }
+            get { return serverPort; }
         }
 
         public bool IsLive()
@@ -34,7 +51,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         public override string ToString()
         {
-            return String.Format("{0}:{1}", addressIp, addressPort);
+            return String.Format("{0}:{1}", serverIp, serverPort);
         }
     }
 }
