@@ -6,7 +6,7 @@ namespace Jasarsoft.Launcher.SAMP
     internal sealed class UserName
     {
         private string playerName;
-        private bool playerRolePlay;
+        //private bool playerRolePlay;
         private readonly string nameDefault;
 
         private int lengthMin;      //minimalno dozvoljena duzina imena
