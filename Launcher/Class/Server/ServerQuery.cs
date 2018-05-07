@@ -40,12 +40,12 @@ namespace Jasarsoft.Launcher.SAMP
                                            SocketType.Dgram, 
                                            ProtocolType.Udp);
 
-            this.serverSocket.SendTimeout = 5000;
-            this.serverSocket.ReceiveTimeout = 5000;
+            this.serverSocket.SendTimeout = 10000;
+            this.serverSocket.ReceiveTimeout = 10000;
 
             try
             {
-                this.endPoint = new IPEndPoint(Dns.GetHostAddresses(serverIp.Address)[0], serverIp.Port);
+                this.endPoint = new IPEndPoint(serverIp.Address, serverIp.Port);
             }
             catch
             {
