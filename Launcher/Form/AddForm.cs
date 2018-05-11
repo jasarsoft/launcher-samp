@@ -187,7 +187,9 @@ namespace Jasarsoft.Launcher.SAMP
         {
             if (gridListServers.SelectedIndex != -1)
             {
-                serverItems.Remove((ServerItem)gridListServers.SelectedItem);
+                int index = gridListServers.SelectedIndex;
+                ServerItem item = this.serverItems[index];
+                this.serverItems.RemoveAt(index);
 
                 gridListServers.BeginUpdate();
                 gridListServers.DataSource = serverItems;
@@ -196,10 +198,8 @@ namespace Jasarsoft.Launcher.SAMP
 
                 buttonDelete.Enabled = false;
 
-                ServerItem item = (ServerItem)gridListServers.SelectedItem;
-
                 this.userFile.Delete(item.GetAddress(), item.GetPort());
-                //this.userFile.Write();
+                this.userFile.Write();
             }
         }
 

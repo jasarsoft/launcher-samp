@@ -59,8 +59,8 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 if(this.fileServers[i].Address == address && this.fileServers[i].Port == port)
                 {
-                    if (this.fileServers.Remove(this.fileServers[i]))
-                        this.fileLength--;
+                    this.fileServers.RemoveAt(i);
+                    this.fileLength--;
                 }
             }
         }
