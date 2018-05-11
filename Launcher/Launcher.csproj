@@ -144,6 +144,14 @@
     <Compile Include="Class\Server\ServerIp.cs" />
     <Compile Include="Class\User\UserFile.cs" />
     <Compile Include="Class\User\UserServer.cs" />
+    <Compile Include="Class\User\UserName.cs" />
+    <Compile Include="Form\EnterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form\EnterForm.Designer.cs">
+      <DependentUpon>EnterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Class\User\UserXml.cs" />
     <EmbeddedResource Include="Form\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -161,6 +169,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form\RuleForm.resx">
       <DependentUpon>RuleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form\EnterForm.resx">
+      <DependentUpon>EnterForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form\ValidForm.resx">
       <DependentUpon>ValidForm.cs</DependentUpon>

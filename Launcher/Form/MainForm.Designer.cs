@@ -38,6 +38,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.components = new System.ComponentModel.Container();
             this.menuMain = new System.Windows.Forms.MenuStrip();
             this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.openItemFileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.editMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.serverMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.forumToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,7 +68,10 @@ namespace Jasarsoft.Launcher.SAMP
             this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.workerPing = new System.ComponentModel.BackgroundWorker();
             this.workerStatus = new System.ComponentModel.BackgroundWorker();
-            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workerLoad = new System.ComponentModel.BackgroundWorker();
+            this.newItemFileMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.separatorItemFileMenu = new System.Windows.Forms.ToolStripSeparator();
+            this.exitItemFileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).BeginInit();
@@ -98,10 +102,20 @@ namespace Jasarsoft.Launcher.SAMP
             // fileMenu
             // 
             this.fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addToolStripMenuItem});
+            this.newItemFileMenu,
+            this.openItemFileMenu,
+            this.separatorItemFileMenu,
+            this.exitItemFileMenu});
             this.fileMenu.Name = "fileMenu";
             this.fileMenu.Size = new System.Drawing.Size(37, 20);
             this.fileMenu.Text = "&File";
+            // 
+            // openItemFileMenu
+            // 
+            this.openItemFileMenu.Name = "openItemFileMenu";
+            this.openItemFileMenu.Size = new System.Drawing.Size(152, 22);
+            this.openItemFileMenu.Text = "&Open";
+            this.openItemFileMenu.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
             // 
             // editMenu
             // 
@@ -227,7 +241,7 @@ namespace Jasarsoft.Launcher.SAMP
             // textboxUser
             // 
             this.textboxUser.BackColor = System.Drawing.Color.White;
-            this.textboxUser.BeforeTouchSize = new System.Drawing.Size(214, 22);
+            this.textboxUser.BeforeTouchSize = new System.Drawing.Size(207, 22);
             this.textboxUser.BorderColor = System.Drawing.Color.Gainsboro;
             this.textboxUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxUser.FocusBorderColor = System.Drawing.Color.DarkCyan;
@@ -265,7 +279,7 @@ namespace Jasarsoft.Launcher.SAMP
             // textboxPassword
             // 
             this.textboxPassword.BackColor = System.Drawing.Color.White;
-            this.textboxPassword.BeforeTouchSize = new System.Drawing.Size(214, 22);
+            this.textboxPassword.BeforeTouchSize = new System.Drawing.Size(207, 22);
             this.textboxPassword.BorderColor = System.Drawing.Color.Gainsboro;
             this.textboxPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxPassword.FocusBorderColor = System.Drawing.Color.DarkCyan;
@@ -401,12 +415,30 @@ namespace Jasarsoft.Launcher.SAMP
             this.workerStatus.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerStatus_DoWork);
             this.workerStatus.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerStatus_RunWorkerCompleted);
             // 
-            // addToolStripMenuItem
+            // workerLoad
             // 
-            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
-            this.addToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.addToolStripMenuItem.Text = "&Add";
-            this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+            this.workerLoad.WorkerSupportsCancellation = true;
+            this.workerLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerLoad_DoWork);
+            this.workerLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerLoad_RunWorkerCompleted);
+            // 
+            // newItemFileMenu
+            // 
+            this.newItemFileMenu.Name = "newItemFileMenu";
+            this.newItemFileMenu.Size = new System.Drawing.Size(152, 22);
+            this.newItemFileMenu.Text = "&New";
+            this.newItemFileMenu.Click += new System.EventHandler(this.newItemFileMenu_Click);
+            // 
+            // separatorItemFileMenu
+            // 
+            this.separatorItemFileMenu.Name = "separatorItemFileMenu";
+            this.separatorItemFileMenu.Size = new System.Drawing.Size(149, 6);
+            // 
+            // exitItemFileMenu
+            // 
+            this.exitItemFileMenu.Name = "exitItemFileMenu";
+            this.exitItemFileMenu.Size = new System.Drawing.Size(152, 22);
+            this.exitItemFileMenu.Text = "E&xit";
+            this.exitItemFileMenu.Click += new System.EventHandler(this.exitItemFileMenu_Click);
             // 
             // MainForm
             // 
@@ -493,6 +525,10 @@ namespace Jasarsoft.Launcher.SAMP
         private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
         private System.ComponentModel.BackgroundWorker workerPing;
         private System.ComponentModel.BackgroundWorker workerStatus;
-        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openItemFileMenu;
+        private System.ComponentModel.BackgroundWorker workerLoad;
+        private System.Windows.Forms.ToolStripMenuItem newItemFileMenu;
+        private System.Windows.Forms.ToolStripSeparator separatorItemFileMenu;
+        private System.Windows.Forms.ToolStripMenuItem exitItemFileMenu;
     }
 }

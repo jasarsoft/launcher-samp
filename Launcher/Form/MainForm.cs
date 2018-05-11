@@ -15,6 +15,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using Syncfusion.Windows.Forms;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -25,20 +27,27 @@ namespace Jasarsoft.Launcher.SAMP
         private ServerInfo serverInfo;
 
         private ServerIp serverIp;
+        private UserFile userFile;
+
+        private Task pingValue;
     
         public MainForm()
         {
             InitializeComponent();
 
             statusShow = 0;
-            serverIp = new ServerIp("193.70.72.221", 7777);
-            serverPing = new ServerPing(serverIp);
-            serverInfo = new ServerInfo(serverIp);
+            //serverIp = new ServerIp("193.70.72.221", 7777);
+            //serverPing = new ServerPing(serverIp);
+            //serverInfo = new ServerInfo(serverIp);
         }
 
         
         private void MainForm_Load(object sender, EventArgs e)
         {
+            workerLoad.RunWorkerAsync();
+
+            
+
             SampRegistry reg = new SampRegistry();
 
             if(reg.Valid() && reg.Read())
@@ -52,8 +61,8 @@ namespace Jasarsoft.Launcher.SAMP
                 this.textboxUser.Text = reg.PlayerName;
             }
 
-            workerPing.RunWorkerAsync();
-            workerStatus.RunWorkerAsync();
+            //workerPing.RunWorkerAsync();
+            //workerStatus.RunWorkerAsync();
 
             statusBarInfo.StartAnimation();
 
@@ -73,6 +82,21 @@ namespace Jasarsoft.Launcher.SAMP
             pf.ShowDialog();
         }
 
+        private void StatusPing()
+        {
+            int ping = serverPing.Ping();
+
+            if(ping > 0)
+            {
+                statusBarPing.ForeColor = Color.DarkCyan;
+                statusBarPing.Text = String.Format("{0:D3}", ping);
+            }
+            else
+            {
+                statusBarPing.ForeColor = Color.DarkOrange;
+            }            
+        }
+
         private void workerPing_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -83,8 +107,23 @@ namespace Jasarsoft.Launcher.SAMP
                 return;
             }
 
-            Thread.Sleep(2500);
+            for (int i = 0; i < 3; i++)
+            {
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                Thread.Sleep(1000);
+            }
+
             e.Result = serverPing.Ping();
+
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+            }
         }
 
         private void workerPing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -93,8 +132,16 @@ namespace Jasarsoft.Launcher.SAMP
                 return;
             else
             {
-                statusBarPing.Text = String.Format("{0:D3}", e.Result);
-                
+                if ((int)e.Result > 0)
+                {
+                    statusBarPing.ForeColor = Color.DarkCyan;
+                    statusBarPing.Text = String.Format("{0:D3}", e.Result);
+                }
+                else
+                {
+                    statusBarPing.ForeColor = Color.DarkOrange;
+                }
+                    
                 workerPing.RunWorkerAsync();
             }
         }
@@ -118,13 +165,13 @@ namespace Jasarsoft.Launcher.SAMP
                 switch (statusShow++)
                 {
                     case 0:
-                        statusBarMain.Text = String.Format("  Hostname: {0}", serverInfo.Hostname);
+                        statusBarMain.Text = String.Format("  Host: {0}", serverInfo.Hostname);
                         break;
                     case 1:
-                        statusBarMain.Text = String.Format("  Language: {0}", serverInfo.Language);
+                        statusBarMain.Text = String.Format("  Lang: {0}", serverInfo.Language);
                         break;
                     case 2:
-                        statusBarMain.Text = String.Format("  Gamemode: {0}", serverInfo.Gamemode);
+                        statusBarMain.Text = String.Format("  Mode: {0}", serverInfo.Gamemode);
                         break;
                 }
 
@@ -142,106 +189,21 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-        }
+            //UserFile uf = new UserFile();
+            //uf.Read();
+            //UserXml uxml = new UserXml();
+            //uxml.Servers = uf.ServerList;
+            //uxml.Write2();
+            //uxml.Read();
 
-        private bool CheckUserName(string name)
-        {
-            return true;
-            if (name.ToLower() == "ime_prezime")
+            /*if (this.textboxUser.Text.Length > 0)
             {
-                //MessageTitle title = new MessageTitle();
-
-                string message = "Korisnièko ime ne može biti poèetno postaljeno (Ime_Prezime).\n" +
-                                 "Unesite vaše korisnièko za prijavu na server formata 'Ime_Prezime'.";
-
-                //MessageBoxAdv.Show(message, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                //return;
-            }
-
-            /*
-            if (this.textName.Text.Length < 4)
-            {
-                MessageTitle title = new MessageTitle();
-                string text = "Korisnièko ime mora sadržavati najmanje 4 karaktera.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
-                MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.textName.Text = "Ime_Prezime";
-                //this.Show();
-                return;
-            }
-
-            if (this.textName.Text.Length > 21)
-            {
-                MessageTitle title = new MessageTitle();
-                string text = "Korisnièko ime može imati najviše 21 karakter.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
-                MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                this.textName.Text = "Ime_Prezime";
-                //this.Show();
-                return;
+                ProcessStartInfo processInfo = new ProcessStartInfo();
+                processInfo.FileName = "samp.exe";
+                processInfo.WorkingDirectory = @".\";
+                processInfo.Arguments = String.Format("{0} {1}", "IP", "PASSWORD");
+                Process.Start(processInfo);
             }*/
-
-            //if (!this.textName.Text.Contains("_"))
-            //{
-            //    MessageTitle title = new MessageTitle();
-            //    string text = "Korisnièko ime mora sadržavati znak '_' u sebi.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
-            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    this.textName.Text = "Ime_Prezime";
-            //    //this.Show();
-            //    return;
-            //}
-
-            //if (this.textName.Text.Contains("_"))
-            //{
-            //    string temp = this.textName.Text.Remove(this.textName.Text.IndexOf("_"), 1);
-            //    if (temp.Contains("_"))
-            //    {
-            //        MessageTitle title = new MessageTitle();
-            //        string text = "Korisnièko ime može samo sadržavati jednu donju-crtu '_'.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.";
-            //        MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        this.textName.Text = "Ime_Prezime";
-            //        //this.Show();
-            //        return;
-            //    }
-            //}
-
-            //if (!Regex.IsMatch(this.textName.Text, @"^[a-zA-Z_]+$"))
-            //{
-            //    MessageTitle title = new MessageTitle();
-            //    string text = String.Format("Korisnièko ime može sadržavati samo slova i znak donje-crte '_'.\nFormat korisnièkog imena mora biti 'Ime_Prezime', maksimalne dužine 21 karakter.");
-            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    this.textName.Text = "Ime_Prezime";
-            //    return;
-            //}
-
-            //string name = this.textName.Text.Substring(0, this.textName.Text.IndexOf("_"));
-            //string surname = this.textName.Text.Substring(this.textName.Text.IndexOf("_") + 1);
-
-            //if (name.Length < 3 || surname.Length < 4)
-            //{
-            //    MessageTitle title = new MessageTitle();
-            //    string text = "Dio 'Ime' može imati najamnje 3 slova, dok 'Prezime' najmanje 4 slova.\nFormat korisnièkog imena mora biti 'Ime_Prezime', maksimalne dužine 21 karakter.";
-            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    this.textName.Text = "Ime_Prezime";
-            //    //this.Show();
-            //    return;
-            //}
-
-            //if (name.Substring(0, 1) != name.Substring(0, 1).ToUpper())
-            //{
-            //    MessageTitle title = new MessageTitle();
-            //    string text =String.Format("Dio '{0}' mora poèinjati velikim slovom.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.", name);
-            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    this.textName.Text = "Ime_Prezime";
-            //    return;
-            //}
-
-            //if (surname.Substring(0, 1) != surname.Substring(0, 1).ToUpper())
-            //{
-            //    MessageTitle title = new MessageTitle();
-            //    string text = String.Format("Dio '{0}' mora poèinjati velikim slovom.\nFormat korisnièkog imena mora biti 'Ime_Prezime'.", surname);
-            //    MessageBoxAdv.Show(text, title.ErrorMsg, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    this.textName.Text = "Ime_Prezime";
-            //    return;
-            //}
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -251,9 +213,87 @@ namespace Jasarsoft.Launcher.SAMP
             //workerStatus.CancelAsync();
             AddForm add = new AddForm();
             add.ShowDialog();
+            this.serverIp = add.Server;
             //workerPing.RunWorkerAsync();
             //workerStatus.RunWorkerAsync();
 #endif
+        }
+
+        private void workerLoad_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.userFile = new UserFile();
+            if (this.userFile.Read())
+            {
+                if(this.userFile.Servers.Length > 0)
+                {
+                    serverIp = new ServerIp(this.userFile.Servers[0].Address, this.userFile.Servers[0].Port);
+
+                    serverPing = new ServerPing(serverIp);
+                    //serverInfo = new ServerInfo(serverIp);
+
+                    workerPing.RunWorkerAsync();
+                    //workerStatus.RunWorkerAsync();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
+            else
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void workerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if(e.Cancelled)
+            {
+                EnterForm ef = new EnterForm();
+
+                ef.ShowDialog();
+
+                if (ef.Server != null)
+                {
+                    serverPing = new ServerPing(serverIp);
+                    //serverInfo = new ServerInfo(serverIp);
+
+                    workerPing.RunWorkerAsync();
+                    //workerStatus.RunWorkerAsync();
+
+                    //this.userFile.Default();
+                }
+            }
+        }
+
+        private void exitItemFileMenu_Click(object sender, EventArgs e)
+        {
+            if (workerPing.IsBusy)
+            {
+                workerPing.CancelAsync();
+            }
+
+            Application.Exit();
+        }
+
+        private void newItemFileMenu_Click(object sender, EventArgs e)
+        {
+            if(workerPing.IsBusy)
+            {
+                workerPing.CancelAsync();
+            }
+
+            EnterForm enter = new EnterForm();
+
+            enter.ShowDialog();
+
+            if(enter.Server != null)
+            {
+                serverPing = new ServerPing(serverIp);
+                //serverInfo = new ServerInfo(serverIp);
+
+                workerPing.RunWorkerAsync();
+            }
         }
     }
 }
