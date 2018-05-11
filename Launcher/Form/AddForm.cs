@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Syncfusion.Windows.Forms;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Jasarsoft.Launcher.SAMP
 {
@@ -139,9 +140,15 @@ namespace Jasarsoft.Launcher.SAMP
             gridListServers.Grid.ColWidths[4] = 120;
             gridListServers.Grid.ColWidths[5] = 110;
 
-            buttonDelete.Enabled = false;
+            buttonDelete.Enabled = false; 
+        }
 
-            workerLoad.RunWorkerAsync();
+        private void AddForm_Shown(object sender, EventArgs e)
+        {
+            if(this.userFile.Servers.Length > 0)
+            {
+                workerLoad.RunWorkerAsync();
+            }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -211,6 +218,11 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            if(workerLoad.IsBusy)
+            {
+                workerLoad.CancelAsync();
+            }
+
             if(gridListServers.SelectedIndex == -1)
             {
                 TitleError title = new TitleError();
@@ -222,12 +234,20 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 int index = gridListServers.SelectedIndex;
                 serverIp = serverItems[index].GetServer();
+                var us = this.userFile.ServerList[index];
+                this.userFile.ServerList.Remove(userFile.ServerList[index]);
+                this.userFile.ServerList.Insert(0, us);
             }
 
-            if(this.userFile.Write())
+            if(!this.userFile.Write())
             {
-                MessageBox.Show("OK");
+                TitleError title = new TitleError();
+                string msg = "Doslo je do greske prilikom spremanja server liste!";
+
+                MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+            this.Close();
         }
 
         private void workerLoad_DoWork(object sender, DoWorkEventArgs e)
@@ -238,8 +258,13 @@ namespace Jasarsoft.Launcher.SAMP
 
             foreach (var us in this.serverItems)
             {
-                if(us.Info())
-                    bw.ReportProgress(0);
+                if(us.Info()) bw.ReportProgress(0);
+
+                if (bw.CancellationPending)
+                {
+                    e.Cancel = true;
+                    break;
+                }
                 //System.Threading.Thread.Sleep(3000);
             }
         }
@@ -254,6 +279,6 @@ namespace Jasarsoft.Launcher.SAMP
             gridListServers.BeginUpdate();
             gridListServers.Update();
             gridListServers.EndUpdate();
-        }
+        }        
     }
 }

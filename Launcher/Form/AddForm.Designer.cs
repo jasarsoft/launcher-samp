@@ -202,6 +202,7 @@ namespace Jasarsoft.Launcher.SAMP
             // workerLoad
             // 
             this.workerLoad.WorkerReportsProgress = true;
+            this.workerLoad.WorkerSupportsCancellation = true;
             this.workerLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerLoad_DoWork);
             this.workerLoad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerLoad_ProgressChanged);
             this.workerLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerLoad_RunWorkerCompleted);
@@ -240,6 +241,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "SAMP Launcher | Add Server";
             this.Load += new System.EventHandler(this.AddForm_Load);
+            this.Shown += new System.EventHandler(this.AddForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.gridListServers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).EndInit();

@@ -264,6 +264,8 @@ namespace Jasarsoft.Launcher.SAMP
                     //this.userFile.Default();
                 }
             }
+
+            MessageBox.Show(serverIp.Ip + serverIp.Port);
         }
 
         private void exitItemFileMenu_Click(object sender, EventArgs e)

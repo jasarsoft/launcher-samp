@@ -42,7 +42,6 @@ namespace Jasarsoft.Launcher.SAMP
             get { return this.filePath; }
         }
 
-
         public void Delete(UserServer server)
         {
             for (int i = 0; i < this.fileServers.Count; i++)
