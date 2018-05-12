@@ -78,36 +78,47 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            if (workerLoad.IsBusy) workerLoad.CancelAsync();
-            if (workerServer.IsBusy) workerServer.CancelAsync();
+            this.Enabled = false;
+            if(workerLoad.IsBusy) workerLoad.CancelAsync();
+            if(workerServer.IsBusy) workerServer.CancelAsync();
 
-            ServerItem si;
             serverIp = new ServerIp(textAddress.Text, (int)numericPort.Value);
+            if(serverIp.Address == null)
+            {
+                TitleError title = new TitleError();
+                string msg = "Server adresa nije validna, molimo vas unesite ispravan ip i port!";
+
+                MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             serverInfo = new ServerInfo(serverIp);
 
-            if (serverInfo.Info())
+            if(serverInfo.Info())
             {
-                si = new ServerItem(serverIp,
-                                    serverInfo.Password,
-                                    serverInfo.CurrentPlayers,
-                                    serverInfo.MaxPlayers,
-                                    serverInfo.Hostname,
-                                    serverInfo.Gamemode,
-                                    serverInfo.Language);
+                serverItems.Add(new ServerItem(serverIp,
+                                               serverInfo.Password,
+                                               serverInfo.CurrentPlayers,
+                                               serverInfo.MaxPlayers,
+                                               serverInfo.Hostname,
+                                               serverInfo.Gamemode,
+                                               serverInfo.Language));
 
-                gridListServers.BeginUpdate();
-                gridListServers.DataSource = serverItems;
-                gridListServers.EndUpdate();
+                
             }
             else
             {
-                si = new ServerItem(serverIp);
-                
-                serverItems.Add(si);
+                serverItems.Add(new ServerItem(serverIp));
             }
-           
-            if(gridListServers.SelectedIndex != -1)
-                buttonDelete.Enabled = true;
+
+            gridListServers.BeginUpdate();
+            gridListServers.DataSource = serverItems;
+            gridListServers.EndUpdate();
+
+            gridListServers.SelectedIndex = -1;
+            buttonDelete.Enabled = false;
+
+            this.Enabled = true;
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
