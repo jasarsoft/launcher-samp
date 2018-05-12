@@ -45,6 +45,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonDelete = new Syncfusion.Windows.Forms.ButtonAdv();
             this.buttonOK = new Syncfusion.Windows.Forms.ButtonAdv();
             this.workerLoad = new System.ComponentModel.BackgroundWorker();
+            this.workerServer = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.gridListServers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).BeginInit();
@@ -207,6 +208,12 @@ namespace Jasarsoft.Launcher.SAMP
             this.workerLoad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerLoad_ProgressChanged);
             this.workerLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerLoad_RunWorkerCompleted);
             // 
+            // workerServer
+            // 
+            this.workerServer.WorkerSupportsCancellation = true;
+            this.workerServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerServer_DoWork);
+            this.workerServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerServer_RunWorkerCompleted);
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -261,5 +268,6 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.ButtonAdv buttonDelete;
         private Syncfusion.Windows.Forms.ButtonAdv buttonOK;
         private System.ComponentModel.BackgroundWorker workerLoad;
+        private System.ComponentModel.BackgroundWorker workerServer;
     }
 }

@@ -27,7 +27,6 @@ namespace Jasarsoft.Launcher.SAMP
         private ServerInfo serverInfo;
         private List<ServerItem> serverItems;
 
-
         public AddForm()
         {
             InitializeComponent();
@@ -137,13 +136,26 @@ namespace Jasarsoft.Launcher.SAMP
         private void gridListServers_SelectedValueChanged(object sender, EventArgs e)
         {
             if (gridListServers.SelectedIndex != -1)
+            {
                 buttonDelete.Enabled = true;
+
+                if(!workerServer.IsBusy && !workerLoad.IsBusy)
+                {
+                    ServerItem item = this.serverItems[gridListServers.SelectedIndex];
+                    workerServer.RunWorkerAsync(item);
+                }
+            }                
             else
                 buttonDelete.Enabled = false;
         }
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
+            if (workerLoad.IsBusy)
+            {
+                workerLoad.CancelAsync();
+            }
+
             this.Close();
         }
 
@@ -210,6 +222,42 @@ namespace Jasarsoft.Launcher.SAMP
             gridListServers.BeginUpdate();
             gridListServers.Update();
             gridListServers.EndUpdate();
-        }        
+        }
+
+        private void workerServer_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ServerItem item = e.Argument as ServerItem;
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            if (item == null || worker == null)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            item.Info();
+
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+        }
+
+        private void workerServer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if(!e.Cancelled)
+            {
+                gridListServers.BeginUpdate();
+                gridListServers.Update();
+                gridListServers.EndUpdate();
+            }
+        }
     }
 }
