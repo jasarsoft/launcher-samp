@@ -156,6 +156,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.Text = "SAMP Launcher | Enter Server";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnterForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.EnterForm_FormClosed);
+            this.Load += new System.EventHandler(this.EnterForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).EndInit();
             this.ResumeLayout(false);

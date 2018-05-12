@@ -19,7 +19,8 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public partial class EnterForm : Syncfusion.Windows.Forms.MetroForm
     {
-        ServerIp serverIp;
+        private ServerIp serverIp;
+        private UserFile userFile;
 
         public EnterForm()
         {
@@ -36,24 +37,24 @@ namespace Jasarsoft.Launcher.SAMP
         {
             string text;
 
-            try
-            {
-                serverIp = new ServerIp(this.textAddress.Text, (int)this.numericPort.Value);
-                if (serverIp.Address == null) throw new ArgumentNullException();
+            this.serverIp = new ServerIp(this.textAddress.Text, (int)this.numericPort.Value);
 
-                ServerPing sp = new ServerPing(serverIp);
-                if(sp.Ping() > 0)
-                {
-                    this.Close();
-                    return;
-                }
-            }
-            catch (Exception)
+            if(this.serverIp.Address == null)
             {
                 TitleError error = new TitleError();
                 text = "Server adresa nije validna, pokusajte ponovo unijeti istu.";
                 MessageBoxAdv.Show(text, error.Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 serverIp = null;
+                return;
+            }
+
+            ServerPing sp = new ServerPing(serverIp);
+            if (sp.Ping() > 0)
+            {
+                this.userFile.ServerList.Add(new UserServer(this.textAddress.Text, (int)this.numericPort.Value));
+                this.userFile.Write();
+                this.Close();
+                return;
             }
 
             TitleWarning warn = new TitleWarning();
@@ -68,14 +69,14 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void EnterForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(e.CloseReason == CloseReason.UserClosing)
-            {
-                e.Cancel = false;
-            }
-            else
-            {
-                e.Cancel = true;
-            }
+            e.Cancel = e.CloseReason != CloseReason.UserClosing;
+        }
+
+        private void EnterForm_Load(object sender, EventArgs e)
+        {
+            this.userFile = new UserFile();
+
+            if(!this.userFile.Read()) this.userFile.Default();
         }
     }
 }

@@ -259,7 +259,6 @@ namespace Jasarsoft.Launcher.SAMP
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "SAMP Launcher | Add Server";
             this.Load += new System.EventHandler(this.AddForm_Load);
-            this.Shown += new System.EventHandler(this.AddForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.gridListServers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).EndInit();

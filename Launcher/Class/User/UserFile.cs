@@ -109,7 +109,7 @@ namespace Jasarsoft.Launcher.SAMP
         }
 
         public bool Write()
-        {
+        {   
             try
             {
                 using (BinaryWriter writer = new BinaryWriter(File.Open(this.filePath, FileMode.Open)))
@@ -120,9 +120,9 @@ namespace Jasarsoft.Launcher.SAMP
                     writer.Write(data);
 
                     writer.Write(this.fileVersion);
-                    writer.Write(this.fileLength);
+                    writer.Write(this.fileServers.Count);
 
-                    for (int i = 0; i < this.fileLength; i++)
+                    for (int i = 0; i < this.fileServers.Count; i++)
                     {
                         //address
                         if(this.fileServers[i].Address != null)
@@ -196,12 +196,13 @@ namespace Jasarsoft.Launcher.SAMP
             int length = 0;
 
             try
-            {                
+            {
                 using (BinaryWriter writer = new BinaryWriter(File.Open(this.filePath, FileMode.Create)))
                 {
                     writer.Write(Encoding.Default.GetBytes(header));
+
                     writer.Write(version);
-                    writer.Write(length); 
+                    writer.Write(length);
 
                     return true;
                 }

@@ -45,10 +45,9 @@ namespace Jasarsoft.Launcher.SAMP
         {
             this.userFile = new UserFile();
 
-            if (this.userFile.Read() == false || this.userFile.Servers.Length == 0)
+            if (!this.userFile.Read() || this.userFile.Servers.Length == 0)
             {
                 EnterForm enter = new EnterForm();
-
                 enter.ShowDialog();
 
                 if (enter.Server != null)
@@ -67,7 +66,6 @@ namespace Jasarsoft.Launcher.SAMP
             if(this.serverIp.Address == null)
             {
                 EnterForm enter = new EnterForm();
-
                 enter.ShowDialog();
 
                 if (enter.Server != null)

@@ -66,11 +66,8 @@ namespace Jasarsoft.Launcher.SAMP
             gridListServers.Grid.ColWidths[4] = 120;
             gridListServers.Grid.ColWidths[5] = 110;
 
+            gridListServers.SelectedIndex = -1;
             buttonDelete.Enabled = false; 
-        }
-
-        private void AddForm_Shown(object sender, EventArgs e)
-        {
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
