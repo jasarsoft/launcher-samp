@@ -39,7 +39,7 @@ namespace Jasarsoft.Launcher.SAMP
         {
             get { return this.serverIp; }
         }
-
+        
 
         private void AddForm_Load(object sender, EventArgs e)
         {
@@ -50,12 +50,7 @@ namespace Jasarsoft.Launcher.SAMP
                 foreach (var us in this.userFile.Servers)
                 {
                     this.serverIp = new ServerIp(us.Address, us.Port);
-
-                    ServerItem si = new ServerItem(serverIp, us.Hostname, us.Password, us.Rcon);
-                    //si.SetPassword(us.Password);
-                    //si.SetRconPassword(us.Rcon);
-
-                    this.serverItems.Add(si);
+                    this.serverItems.Add(new ServerItem(serverIp, us.Hostname, us.Password, us.Rcon));
                 }
             }
             else
@@ -83,6 +78,9 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
+            if (workerLoad.IsBusy) workerLoad.CancelAsync();
+            if (workerServer.IsBusy) workerServer.CancelAsync();
+
             ServerItem si;
             serverIp = new ServerIp(textAddress.Text, (int)numericPort.Value);
             serverInfo = new ServerInfo(serverIp);
@@ -99,7 +97,6 @@ namespace Jasarsoft.Launcher.SAMP
 
                 gridListServers.BeginUpdate();
                 gridListServers.DataSource = serverItems;
-                //gridListServers.Update();
                 gridListServers.EndUpdate();
             }
             else
@@ -115,18 +112,20 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            if (workerLoad.IsBusy) workerLoad.CancelAsync();
+            if (workerServer.IsBusy) workerServer.CancelAsync();
+
             if (gridListServers.SelectedIndex != -1)
             {
+                buttonDelete.Enabled = false;
+
                 int index = gridListServers.SelectedIndex;
                 ServerItem item = this.serverItems[index];
                 this.serverItems.RemoveAt(index);
 
                 gridListServers.BeginUpdate();
                 gridListServers.DataSource = serverItems;
-                //gridListServers.Update();
                 gridListServers.EndUpdate();
-
-                buttonDelete.Enabled = false;
 
                 this.userFile.Delete(item.GetAddress(), item.GetPort());
                 this.userFile.Write();
@@ -135,15 +134,15 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void gridListServers_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (gridListServers.SelectedIndex != -1)
+            if(gridListServers.SelectedIndex != -1)
             {
-                buttonDelete.Enabled = true;
-
                 if(!workerServer.IsBusy && !workerLoad.IsBusy)
                 {
                     ServerItem item = this.serverItems[gridListServers.SelectedIndex];
                     workerServer.RunWorkerAsync(item);
                 }
+
+                buttonDelete.Enabled = true;
             }                
             else
                 buttonDelete.Enabled = false;
@@ -151,20 +150,16 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            if (workerLoad.IsBusy)
-            {
-                workerLoad.CancelAsync();
-            }
+            if(workerLoad.IsBusy) workerLoad.CancelAsync();
+            if(workerServer.IsBusy) workerServer.CancelAsync();
 
             this.Close();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if(workerLoad.IsBusy)
-            {
-                workerLoad.CancelAsync();
-            }
+            if(workerLoad.IsBusy) workerLoad.CancelAsync();            
+            if(workerServer.IsBusy) workerServer.CancelAsync();
 
             if(gridListServers.SelectedIndex == -1)
             {
