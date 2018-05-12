@@ -44,7 +44,6 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonAdd = new Syncfusion.Windows.Forms.ButtonAdv();
             this.buttonDelete = new Syncfusion.Windows.Forms.ButtonAdv();
             this.buttonOK = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.workerLoad = new System.ComponentModel.BackgroundWorker();
             this.workerServer = new System.ComponentModel.BackgroundWorker();
             this.buttonRefresh = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.gridListServers)).BeginInit();
@@ -88,7 +87,7 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             // textAddress
             // 
-            this.textAddress.BeforeTouchSize = new System.Drawing.Size(320, 96);
+            this.textAddress.BeforeTouchSize = new System.Drawing.Size(175, 22);
             this.textAddress.BorderColor = System.Drawing.Color.DarkCyan;
             this.textAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textAddress.FocusBorderColor = System.Drawing.Color.Aqua;
@@ -201,14 +200,6 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // workerLoad
-            // 
-            this.workerLoad.WorkerReportsProgress = true;
-            this.workerLoad.WorkerSupportsCancellation = true;
-            this.workerLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerLoad_DoWork);
-            this.workerLoad.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.workerLoad_ProgressChanged);
-            this.workerLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerLoad_RunWorkerCompleted);
-            // 
             // workerServer
             // 
             this.workerServer.WorkerSupportsCancellation = true;
@@ -287,7 +278,6 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.ButtonAdv buttonAdd;
         private Syncfusion.Windows.Forms.ButtonAdv buttonDelete;
         private Syncfusion.Windows.Forms.ButtonAdv buttonOK;
-        private System.ComponentModel.BackgroundWorker workerLoad;
         private System.ComponentModel.BackgroundWorker workerServer;
         private Syncfusion.Windows.Forms.ButtonAdv buttonRefresh;
     }

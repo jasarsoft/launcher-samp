@@ -69,9 +69,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.statusBarPing = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.statusBarInfo = new Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel();
             this.pictureLogo = new System.Windows.Forms.PictureBox();
-            this.workerPing = new System.ComponentModel.BackgroundWorker();
             this.workerStatus = new System.ComponentModel.BackgroundWorker();
-            this.workerLoad = new System.ComponentModel.BackgroundWorker();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
@@ -261,7 +259,7 @@ namespace Jasarsoft.Launcher.SAMP
             // textboxUser
             // 
             this.textboxUser.BackColor = System.Drawing.Color.White;
-            this.textboxUser.BeforeTouchSize = new System.Drawing.Size(320, 96);
+            this.textboxUser.BeforeTouchSize = new System.Drawing.Size(214, 22);
             this.textboxUser.BorderColor = System.Drawing.Color.Gainsboro;
             this.textboxUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxUser.FocusBorderColor = System.Drawing.Color.DarkCyan;
@@ -299,7 +297,7 @@ namespace Jasarsoft.Launcher.SAMP
             // textboxPassword
             // 
             this.textboxPassword.BackColor = System.Drawing.Color.White;
-            this.textboxPassword.BeforeTouchSize = new System.Drawing.Size(320, 96);
+            this.textboxPassword.BeforeTouchSize = new System.Drawing.Size(214, 22);
             this.textboxPassword.BorderColor = System.Drawing.Color.Gainsboro;
             this.textboxPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxPassword.FocusBorderColor = System.Drawing.Color.DarkCyan;
@@ -423,23 +421,11 @@ namespace Jasarsoft.Launcher.SAMP
             this.pictureLogo.TabIndex = 4;
             this.pictureLogo.TabStop = false;
             // 
-            // workerPing
-            // 
-            this.workerPing.WorkerSupportsCancellation = true;
-            this.workerPing.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerPing_DoWork);
-            this.workerPing.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerPing_RunWorkerCompleted);
-            // 
             // workerStatus
             // 
             this.workerStatus.WorkerSupportsCancellation = true;
             this.workerStatus.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerStatus_DoWork);
             this.workerStatus.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerStatus_RunWorkerCompleted);
-            // 
-            // workerLoad
-            // 
-            this.workerLoad.WorkerSupportsCancellation = true;
-            this.workerLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerLoad_DoWork);
-            this.workerLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerLoad_RunWorkerCompleted);
             // 
             // timerStatus
             // 
@@ -529,10 +515,8 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarPing;
         private Syncfusion.Windows.Forms.Tools.StatusBarAdvPanel statusBarInfo;
         private System.Windows.Forms.ToolStripMenuItem playersToolStripMenuItem;
-        private System.ComponentModel.BackgroundWorker workerPing;
         private System.ComponentModel.BackgroundWorker workerStatus;
         private System.Windows.Forms.ToolStripMenuItem openItemFileMenu;
-        private System.ComponentModel.BackgroundWorker workerLoad;
         private System.Windows.Forms.ToolStripMenuItem newItemFileMenu;
         private System.Windows.Forms.ToolStripSeparator separatorItemFileMenu;
         private System.Windows.Forms.ToolStripMenuItem exitItemFileMenu;

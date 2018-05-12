@@ -71,10 +71,6 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void AddForm_Shown(object sender, EventArgs e)
         {
-            if (this.userFile.Servers.Length > 0)
-            {
-                //workerLoad.RunWorkerAsync();
-            }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -155,9 +151,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            //if (workerLoad.IsBusy) workerLoad.CancelAsync();
-            if (workerServer.IsBusy) workerServer.CancelAsync();
-
+            workerServer.CancelAsync();
             this.Close();
         }
 
@@ -192,46 +186,6 @@ namespace Jasarsoft.Launcher.SAMP
             }
 
             this.Close();
-        }
-
-        private void workerLoad_DoWork(object sender, DoWorkEventArgs e)
-        {            
-            BackgroundWorker bw = sender as BackgroundWorker;
-
-            if (bw == null) return;
-
-            if (bw.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            foreach (var us in this.serverItems)
-            {
-                if (bw.CancellationPending)
-                {
-                    e.Cancel = true;
-                    break;
-                }
-
-                if (us.Info()) bw.ReportProgress(0);
-            }
-
-            if (bw.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
-        }
-
-        private void workerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            
-        }
-
-        private void workerLoad_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ListUpdate();
         }
 
         private void workerServer_DoWork(object sender, DoWorkEventArgs e)

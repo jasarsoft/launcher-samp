@@ -119,62 +119,6 @@ namespace Jasarsoft.Launcher.SAMP
                 workerStatus.RunWorkerAsync();
         }
 
-        private void workerPing_DoWork(object sender, DoWorkEventArgs e)
-        {
-            BackgroundWorker worker = sender as BackgroundWorker;
-
-            if (worker == null) return;
-
-            if (worker.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
-
-            while (workerStatus.IsBusy)
-            {
-                if (worker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    return;
-                }
-
-                Thread.Sleep(100);
-            }
-                
-
-            for (int i = 0; i < 3; i++)
-            {
-                if (worker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    return;
-                }
-
-                Thread.Sleep(1000);
-            }
-
-            e.Result = serverPing.Ping();
-        }
-
-        private void workerPing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (!e.Cancelled)
-            {
-                if ((int)e.Result > 0)
-                {
-                    statusBarPing.ForeColor = Color.DarkCyan;
-                    statusBarPing.Text = String.Format("{0:D3}", e.Result);
-                }
-                else
-                {
-                    statusBarPing.ForeColor = Color.DarkOrange;
-                }
-                    
-                workerPing.RunWorkerAsync();
-            }
-        }
-
         private void workerStatus_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
@@ -274,55 +218,6 @@ namespace Jasarsoft.Launcher.SAMP
 
             if (!workerStatus.IsBusy)
                 workerStatus.RunWorkerAsync(0);
-        }
-
-        private void workerLoad_DoWork(object sender, DoWorkEventArgs e)
-        {
-            this.userFile = new UserFile();
-            if (this.userFile.Read())
-            {
-                if(this.userFile.Servers.Length > 0)
-                {
-                    serverIp = new ServerIp(this.userFile.Servers[0].Address, this.userFile.Servers[0].Port);
-
-                    serverPing = new ServerPing(serverIp);
-                    //serverInfo = new ServerInfo(serverIp);
-
-                    workerPing.RunWorkerAsync();
-                    //workerStatus.RunWorkerAsync();
-                }
-                else
-                {
-                    e.Cancel = true;
-                }
-            }
-            else
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void workerLoad_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if(e.Cancelled)
-            {
-                EnterForm ef = new EnterForm();
-
-                ef.ShowDialog();
-
-                if (ef.Server != null)
-                {
-                    serverPing = new ServerPing(serverIp);
-                    //serverInfo = new ServerInfo(serverIp);
-
-                    workerPing.RunWorkerAsync();
-                    //workerStatus.RunWorkerAsync();
-
-                    //this.userFile.Default();
-                }
-            }
-
-            MessageBox.Show(serverIp.Ip + serverIp.Port);
         }
 
         private void exitItemFileMenu_Click(object sender, EventArgs e)
