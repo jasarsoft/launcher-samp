@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using Syncfusion.Windows.Forms;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Jasarsoft.Launcher.SAMP
@@ -70,7 +71,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void AddForm_Shown(object sender, EventArgs e)
         {
-            if(this.userFile.Servers.Length > 0)
+            if (this.userFile.Servers.Length > 0)
             {
                 workerLoad.RunWorkerAsync();
             }
@@ -79,11 +80,11 @@ namespace Jasarsoft.Launcher.SAMP
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
-            if(workerLoad.IsBusy) workerLoad.CancelAsync();
-            if(workerServer.IsBusy) workerServer.CancelAsync();
+            if (workerLoad.IsBusy) workerLoad.CancelAsync();
+            if (workerServer.IsBusy) workerServer.CancelAsync();
 
             serverIp = new ServerIp(textAddress.Text, (int)numericPort.Value);
-            if(serverIp.Address == null)
+            if (serverIp.Address == null)
             {
                 TitleError title = new TitleError();
                 string msg = "Server adresa nije validna, molimo vas unesite ispravan ip i port!";
@@ -94,7 +95,7 @@ namespace Jasarsoft.Launcher.SAMP
 
             serverInfo = new ServerInfo(serverIp);
 
-            if(serverInfo.Info())
+            if (serverInfo.Info())
             {
                 serverItems.Add(new ServerItem(serverIp,
                                                serverInfo.Password,
@@ -102,18 +103,14 @@ namespace Jasarsoft.Launcher.SAMP
                                                serverInfo.MaxPlayers,
                                                serverInfo.Hostname,
                                                serverInfo.Gamemode,
-                                               serverInfo.Language));
-
-                
+                                               serverInfo.Language));  
             }
             else
             {
                 serverItems.Add(new ServerItem(serverIp));
             }
 
-            gridListServers.BeginUpdate();
-            gridListServers.DataSource = serverItems;
-            gridListServers.EndUpdate();
+            ListSoruce();
 
             gridListServers.SelectedIndex = -1;
             buttonDelete.Enabled = false;
@@ -123,31 +120,34 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            this.buttonDelete.Enabled = false;
+
             if (workerLoad.IsBusy) workerLoad.CancelAsync();
             if (workerServer.IsBusy) workerServer.CancelAsync();
 
             if (gridListServers.SelectedIndex != -1)
             {
-                buttonDelete.Enabled = false;
-
                 int index = gridListServers.SelectedIndex;
                 ServerItem item = this.serverItems[index];
+
+                while (workerLoad.IsBusy || workerServer.IsBusy) Thread.Sleep(100);
+
                 this.serverItems.RemoveAt(index);
 
-                gridListServers.BeginUpdate();
-                gridListServers.DataSource = serverItems;
-                gridListServers.EndUpdate();
+                ListSoruce();
 
                 this.userFile.Delete(item.GetAddress(), item.GetPort());
                 this.userFile.Write();
             }
+
+            this.gridListServers.SelectedIndex = -1;
         }
 
         private void gridListServers_SelectedValueChanged(object sender, EventArgs e)
         {
-            if(gridListServers.SelectedIndex != -1)
+            if (gridListServers.SelectedIndex != -1)
             {
-                if(!workerServer.IsBusy && !workerLoad.IsBusy)
+                if (!workerServer.IsBusy && !workerLoad.IsBusy)
                 {
                     ServerItem item = this.serverItems[gridListServers.SelectedIndex];
                     workerServer.RunWorkerAsync(item);
@@ -161,34 +161,38 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            if(workerLoad.IsBusy) workerLoad.CancelAsync();
-            if(workerServer.IsBusy) workerServer.CancelAsync();
+            if (workerLoad.IsBusy) workerLoad.CancelAsync();
+            if (workerServer.IsBusy) workerServer.CancelAsync();
 
             this.Close();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if(workerLoad.IsBusy) workerLoad.CancelAsync();            
-            if(workerServer.IsBusy) workerServer.CancelAsync();
+            if (workerLoad.IsBusy) workerLoad.CancelAsync();            
+            if (workerServer.IsBusy) workerServer.CancelAsync();
 
-            if(gridListServers.SelectedIndex == -1)
+            if (gridListServers.SelectedIndex == -1)
             {
                 TitleError title = new TitleError();
                 string msg = "Za promjenu servera odaberite isti sa liste prije potvrde!";
 
                 MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
             else
             {
                 int index = gridListServers.SelectedIndex;
                 serverIp = serverItems[index].GetServer();
                 var us = this.userFile.ServerList[index];
+
+                while (workerLoad.IsBusy || workerServer.IsBusy) Thread.Sleep(100);
+
                 this.userFile.ServerList.Remove(userFile.ServerList[index]);
                 this.userFile.ServerList.Insert(0, us);
             }
 
-            if(!this.userFile.Write())
+            if (!this.userFile.Write())
             {
                 TitleError title = new TitleError();
                 string msg = "Doslo je do greske prilikom spremanja server liste!";
@@ -205,16 +209,27 @@ namespace Jasarsoft.Launcher.SAMP
 
             if (bw == null) return;
 
+            if (bw.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
+            }
+
             foreach (var us in this.serverItems)
             {
-                if(us.Info()) bw.ReportProgress(0);
-
                 if (bw.CancellationPending)
                 {
                     e.Cancel = true;
                     break;
                 }
-                //System.Threading.Thread.Sleep(3000);
+
+                if (us.Info()) bw.ReportProgress(0);
+            }
+
+            if (bw.CancellationPending)
+            {
+                e.Cancel = true;
+                return;
             }
         }
 
@@ -225,9 +240,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void workerLoad_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            gridListServers.BeginUpdate();
-            gridListServers.Update();
-            gridListServers.EndUpdate();
+            ListUpdate();
         }
 
         private void workerServer_DoWork(object sender, DoWorkEventArgs e)
@@ -248,22 +261,28 @@ namespace Jasarsoft.Launcher.SAMP
             }
 
             item.Info();
-
-            if (worker.CancellationPending)
-            {
-                e.Cancel = true;
-                return;
-            }
         }
 
         private void workerServer_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if(!e.Cancelled)
+            if (!e.Cancelled)
             {
-                gridListServers.BeginUpdate();
-                gridListServers.Update();
-                gridListServers.EndUpdate();
+                ListUpdate();
             }
+        }
+
+        private void ListUpdate()
+        {
+            this.gridListServers.BeginUpdate();
+            this.gridListServers.Update();
+            this.gridListServers.EndUpdate();
+        }
+
+        private void ListSoruce()
+        {
+            this.gridListServers.BeginUpdate();
+            this.gridListServers.DataSource = serverItems;
+            this.gridListServers.EndUpdate();
         }
     }
 }
