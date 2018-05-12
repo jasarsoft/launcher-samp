@@ -220,7 +220,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.BorderColor = System.Drawing.Color.DarkCyan;
-            this.BorderThickness = 4;
+            this.BorderThickness = 6;
             this.CaptionAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.CaptionBarColor = System.Drawing.Color.DarkCyan;
             this.CaptionBarHeight = 24;
