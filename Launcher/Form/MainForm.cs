@@ -22,31 +22,68 @@ namespace Jasarsoft.Launcher.SAMP
 {
     public partial class MainForm : Syncfusion.Windows.Forms.MetroForm
     {
-        private int statusShow;             //trenutni slijed prikaza u statusu
         private ServerPing serverPing;
         private ServerInfo serverInfo;
 
         private ServerIp serverIp;
         private UserFile userFile;
 
-        private Task pingValue;
     
         public MainForm()
         {
             InitializeComponent();
 
-            statusShow = 0;
-            //serverIp = new ServerIp("193.70.72.221", 7777);
-            //serverPing = new ServerPing(serverIp);
-            //serverInfo = new ServerInfo(serverIp);
+            statusBarMain.Text = String.Empty;
+            statusBarPlayers.Text = String.Empty;
+            statusBarPing.Text = String.Empty;
+
+            timerStatus.Enabled = true;
         }
 
         
         private void MainForm_Load(object sender, EventArgs e)
         {
-            workerLoad.RunWorkerAsync();
+            this.userFile = new UserFile();
 
-            
+            if (this.userFile.Read() == false || this.userFile.Servers.Length == 0)
+            {
+                EnterForm enter = new EnterForm();
+
+                enter.ShowDialog();
+
+                if (enter.Server != null)
+                {
+                    serverPing = new ServerPing(serverIp);
+                    serverInfo = new ServerInfo(serverIp);
+
+                    workerStatus.RunWorkerAsync(0);
+                }
+
+                return;
+            }
+
+            this.serverIp = new ServerIp(this.userFile.Servers[0].Address, this.userFile.Servers[0].Port);
+
+            if(this.serverIp.Address == null)
+            {
+                EnterForm enter = new EnterForm();
+
+                enter.ShowDialog();
+
+                if (enter.Server != null)
+                {
+                    serverPing = new ServerPing(serverIp);
+                    serverInfo = new ServerInfo(serverIp);
+
+                    workerStatus.RunWorkerAsync(0);
+                }
+
+                return;
+            }
+
+            serverPing = new ServerPing(serverIp);
+            serverInfo = new ServerInfo(serverIp);
+            workerStatus.RunWorkerAsync(0);
 
             SampRegistry reg = new SampRegistry();
 
@@ -61,12 +98,8 @@ namespace Jasarsoft.Launcher.SAMP
                 this.textboxUser.Text = reg.PlayerName;
             }
 
-            //workerPing.RunWorkerAsync();
-            //workerStatus.RunWorkerAsync();
-
             statusBarInfo.StartAnimation();
-
-            statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
+            
         }
 
         private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,35 +110,38 @@ namespace Jasarsoft.Launcher.SAMP
         
         private void playersToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            workerStatus.CancelAsync();
             PlayersForm pf = new PlayersForm(serverIp);
 
             pf.ShowDialog();
-        }
 
-        private void StatusPing()
-        {
-            int ping = serverPing.Ping();
-
-            if(ping > 0)
-            {
-                statusBarPing.ForeColor = Color.DarkCyan;
-                statusBarPing.Text = String.Format("{0:D3}", ping);
-            }
-            else
-            {
-                statusBarPing.ForeColor = Color.DarkOrange;
-            }            
+            if (!workerStatus.IsBusy)
+                workerStatus.RunWorkerAsync();
         }
 
         private void workerPing_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            if(worker != null && worker.CancellationPending)
+            if (worker == null) return;
+
+            if (worker.CancellationPending)
             {
                 e.Cancel = true;
                 return;
             }
+
+            while (workerStatus.IsBusy)
+            {
+                if (worker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                Thread.Sleep(100);
+            }
+                
 
             for (int i = 0; i < 3; i++)
             {
@@ -119,18 +155,11 @@ namespace Jasarsoft.Launcher.SAMP
             }
 
             e.Result = serverPing.Ping();
-
-            if (worker.CancellationPending)
-            {
-                e.Cancel = true;
-            }
         }
 
         private void workerPing_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Cancelled)
-                return;
-            else
+            if (!e.Cancelled)
             {
                 if ((int)e.Result > 0)
                 {
@@ -150,41 +179,67 @@ namespace Jasarsoft.Launcher.SAMP
         {
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            if (worker != null && worker.CancellationPending)
+            if (worker == null) return;
+
+            if (worker.CancellationPending)
             {
                 e.Cancel = true;
                 return;
             }
 
-            Thread.Sleep(11333);
-            if (serverInfo.Info())
+            if(e.Argument != null)
             {
-                if (statusShow > 3) //reset trenutnog broja prikaza
-                    statusShow = 0;
+                e.Result = serverInfo.Info() ? -1 : -2;
+                return;
+            }
 
-                switch (statusShow++)
+            for (int i = 0; i < 20; i++)
+            {
+                if (worker.CancellationPending)
                 {
-                    case 0:
-                        statusBarMain.Text = String.Format("  Host: {0}", serverInfo.Hostname);
-                        break;
-                    case 1:
-                        statusBarMain.Text = String.Format("  Lang: {0}", serverInfo.Language);
-                        break;
-                    case 2:
-                        statusBarMain.Text = String.Format("  Mode: {0}", serverInfo.Gamemode);
-                        break;
+                    e.Cancel = true;
+                    return;
                 }
 
-                statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
+                Thread.Sleep(500);
             }
+
+            e.Result = serverPing.Ping();
         }
 
         private void workerStatus_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (e.Cancelled)
-                return;
-            else
+            if (e.Cancelled) return;
+            if (e.Result == null) return;
+
+            int result = (int)e.Result;
+
+            if (result == -1)
+            {
+                if (timerStatus.Enabled) timerStatus.Start();
                 workerStatus.RunWorkerAsync();
+                return;
+            }
+
+            if (result == -2)
+            {
+                workerStatus.RunWorkerAsync(0);
+                return;
+            }
+
+            //if (timerStatus.Enabled) timerStatus.Start();
+            
+            if (result == 0)
+            {
+                statusBarPing.ForeColor = Color.DarkOrange;
+            }
+            else
+            {
+                statusBarPing.ForeColor = Color.DarkCyan;
+                statusBarPing.Text = String.Format("{0:D3}", result);
+            }
+
+            workerStatus.RunWorkerAsync();
         }
 
         private void buttonLogin_Click(object sender, EventArgs e)
@@ -208,15 +263,17 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
         {
-#if DEBUG
-            //workerPing.CancelAsync();
-            //workerStatus.CancelAsync();
+            workerStatus.CancelAsync();
+
             AddForm add = new AddForm();
             add.ShowDialog();
             this.serverIp = add.Server;
-            //workerPing.RunWorkerAsync();
-            //workerStatus.RunWorkerAsync();
-#endif
+            //while (workerStatus.IsBusy) Thread.Sleep(10);
+            serverPing = new ServerPing(serverIp);
+            serverInfo = new ServerInfo(serverIp);
+
+            if (!workerStatus.IsBusy)
+                workerStatus.RunWorkerAsync(0);
         }
 
         private void workerLoad_DoWork(object sender, DoWorkEventArgs e)
@@ -270,32 +327,48 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void exitItemFileMenu_Click(object sender, EventArgs e)
         {
-            if (workerPing.IsBusy)
-            {
-                workerPing.CancelAsync();
-            }
+            workerStatus.CancelAsync();
 
             Application.Exit();
         }
 
         private void newItemFileMenu_Click(object sender, EventArgs e)
         {
-            if(workerPing.IsBusy)
-            {
-                workerPing.CancelAsync();
-            }
+            workerStatus.CancelAsync();
 
             EnterForm enter = new EnterForm();
-
             enter.ShowDialog();
 
             if(enter.Server != null)
             {
                 serverPing = new ServerPing(serverIp);
-                //serverInfo = new ServerInfo(serverIp);
+                serverInfo = new ServerInfo(serverIp);
 
-                workerPing.RunWorkerAsync();
+                if (!workerStatus.IsBusy)
+                    workerStatus.RunWorkerAsync();
             }
+        }
+
+        private void timerStatus_Tick(object sender, EventArgs e)
+        {
+            if (this.serverInfo == null || this.serverInfo.Hostname == null) return;
+
+            Random rnd = new Random();
+
+            switch (rnd.Next(3))
+            {
+                case 0:
+                    statusBarMain.Text = String.Format("  [HOST] {0}", serverInfo.Hostname);
+                    break;
+                case 1:
+                    statusBarMain.Text = String.Format("  [LANG] {0}", serverInfo.Language);
+                    break;
+                case 2:
+                    statusBarMain.Text = String.Format("  [MODE] {0}", serverInfo.Gamemode);
+                    break;
+            }
+
+            statusBarPlayers.Text = String.Format("{0}/{1}", serverInfo.CurrentPlayers, serverInfo.MaxPlayers);
         }
     }
 }

@@ -72,6 +72,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.workerPing = new System.ComponentModel.BackgroundWorker();
             this.workerStatus = new System.ComponentModel.BackgroundWorker();
             this.workerLoad = new System.ComponentModel.BackgroundWorker();
+            this.timerStatus = new System.Windows.Forms.Timer(this.components);
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).BeginInit();
@@ -260,7 +261,7 @@ namespace Jasarsoft.Launcher.SAMP
             // textboxUser
             // 
             this.textboxUser.BackColor = System.Drawing.Color.White;
-            this.textboxUser.BeforeTouchSize = new System.Drawing.Size(214, 22);
+            this.textboxUser.BeforeTouchSize = new System.Drawing.Size(320, 96);
             this.textboxUser.BorderColor = System.Drawing.Color.Gainsboro;
             this.textboxUser.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxUser.FocusBorderColor = System.Drawing.Color.DarkCyan;
@@ -298,7 +299,7 @@ namespace Jasarsoft.Launcher.SAMP
             // textboxPassword
             // 
             this.textboxPassword.BackColor = System.Drawing.Color.White;
-            this.textboxPassword.BeforeTouchSize = new System.Drawing.Size(214, 22);
+            this.textboxPassword.BeforeTouchSize = new System.Drawing.Size(320, 96);
             this.textboxPassword.BorderColor = System.Drawing.Color.Gainsboro;
             this.textboxPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textboxPassword.FocusBorderColor = System.Drawing.Color.DarkCyan;
@@ -440,6 +441,11 @@ namespace Jasarsoft.Launcher.SAMP
             this.workerLoad.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerLoad_DoWork);
             this.workerLoad.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerLoad_RunWorkerCompleted);
             // 
+            // timerStatus
+            // 
+            this.timerStatus.Interval = 5000;
+            this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -530,5 +536,6 @@ namespace Jasarsoft.Launcher.SAMP
         private System.Windows.Forms.ToolStripMenuItem newItemFileMenu;
         private System.Windows.Forms.ToolStripSeparator separatorItemFileMenu;
         private System.Windows.Forms.ToolStripMenuItem exitItemFileMenu;
+        private System.Windows.Forms.Timer timerStatus;
     }
 }

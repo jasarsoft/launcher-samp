@@ -46,6 +46,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.buttonOK = new Syncfusion.Windows.Forms.ButtonAdv();
             this.workerLoad = new System.ComponentModel.BackgroundWorker();
             this.workerServer = new System.ComponentModel.BackgroundWorker();
+            this.buttonRefresh = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.gridListServers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textAddress)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericPort)).BeginInit();
@@ -87,7 +88,7 @@ namespace Jasarsoft.Launcher.SAMP
             // 
             // textAddress
             // 
-            this.textAddress.BeforeTouchSize = new System.Drawing.Size(175, 22);
+            this.textAddress.BeforeTouchSize = new System.Drawing.Size(320, 96);
             this.textAddress.BorderColor = System.Drawing.Color.DarkCyan;
             this.textAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textAddress.FocusBorderColor = System.Drawing.Color.Aqua;
@@ -214,6 +215,24 @@ namespace Jasarsoft.Launcher.SAMP
             this.workerServer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.workerServer_DoWork);
             this.workerServer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.workerServer_RunWorkerCompleted);
             // 
+            // buttonRefresh
+            // 
+            this.buttonRefresh.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.buttonRefresh.BackColor = System.Drawing.Color.DarkCyan;
+            this.buttonRefresh.BeforeTouchSize = new System.Drawing.Size(75, 32);
+            this.buttonRefresh.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.buttonRefresh.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.buttonRefresh.IsBackStageButton = false;
+            this.buttonRefresh.Location = new System.Drawing.Point(174, 296);
+            this.buttonRefresh.MetroColor = System.Drawing.Color.DarkCyan;
+            this.buttonRefresh.Name = "buttonRefresh";
+            this.buttonRefresh.Size = new System.Drawing.Size(75, 32);
+            this.buttonRefresh.TabIndex = 12;
+            this.buttonRefresh.Text = "REFRESH";
+            this.buttonRefresh.UseVisualStyle = true;
+            this.buttonRefresh.UseVisualStyleBackColor = true;
+            this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
+            // 
             // AddForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,6 +247,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.CaptionFont = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.CaptionForeColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(593, 340);
+            this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonAdd);
@@ -269,5 +289,6 @@ namespace Jasarsoft.Launcher.SAMP
         private Syncfusion.Windows.Forms.ButtonAdv buttonOK;
         private System.ComponentModel.BackgroundWorker workerLoad;
         private System.ComponentModel.BackgroundWorker workerServer;
+        private Syncfusion.Windows.Forms.ButtonAdv buttonRefresh;
     }
 }

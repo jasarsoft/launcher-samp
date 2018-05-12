@@ -73,15 +73,14 @@ namespace Jasarsoft.Launcher.SAMP
         {
             if (this.userFile.Servers.Length > 0)
             {
-                workerLoad.RunWorkerAsync();
+                //workerLoad.RunWorkerAsync();
             }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             this.Enabled = false;
-            if (workerLoad.IsBusy) workerLoad.CancelAsync();
-            if (workerServer.IsBusy) workerServer.CancelAsync();
+            workerServer.CancelAsync();
 
             serverIp = new ServerIp(textAddress.Text, (int)numericPort.Value);
             if (serverIp.Address == null)
@@ -120,17 +119,13 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
+            workerServer.CancelAsync();
             this.buttonDelete.Enabled = false;
-
-            if (workerLoad.IsBusy) workerLoad.CancelAsync();
-            if (workerServer.IsBusy) workerServer.CancelAsync();
 
             if (gridListServers.SelectedIndex != -1)
             {
                 int index = gridListServers.SelectedIndex;
                 ServerItem item = this.serverItems[index];
-
-                while (workerLoad.IsBusy || workerServer.IsBusy) Thread.Sleep(100);
 
                 this.serverItems.RemoveAt(index);
 
@@ -147,10 +142,9 @@ namespace Jasarsoft.Launcher.SAMP
         {
             if (gridListServers.SelectedIndex != -1)
             {
-                if (!workerServer.IsBusy && !workerLoad.IsBusy)
+                if (!workerServer.IsBusy)
                 {
-                    ServerItem item = this.serverItems[gridListServers.SelectedIndex];
-                    workerServer.RunWorkerAsync(item);
+                    workerServer.RunWorkerAsync(this.serverItems[gridListServers.SelectedIndex]);
                 }
 
                 buttonDelete.Enabled = true;
@@ -161,16 +155,15 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonClose_Click(object sender, EventArgs e)
         {
-            if (workerLoad.IsBusy) workerLoad.CancelAsync();
+            //if (workerLoad.IsBusy) workerLoad.CancelAsync();
             if (workerServer.IsBusy) workerServer.CancelAsync();
 
             this.Close();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
-        {
-            if (workerLoad.IsBusy) workerLoad.CancelAsync();            
-            if (workerServer.IsBusy) workerServer.CancelAsync();
+        {           
+            workerServer.CancelAsync();
 
             if (gridListServers.SelectedIndex == -1)
             {
@@ -185,8 +178,6 @@ namespace Jasarsoft.Launcher.SAMP
                 int index = gridListServers.SelectedIndex;
                 serverIp = serverItems[index].GetServer();
                 var us = this.userFile.ServerList[index];
-
-                while (workerLoad.IsBusy || workerServer.IsBusy) Thread.Sleep(100);
 
                 this.userFile.ServerList.Remove(userFile.ServerList[index]);
                 this.userFile.ServerList.Insert(0, us);
@@ -248,11 +239,7 @@ namespace Jasarsoft.Launcher.SAMP
             ServerItem item = e.Argument as ServerItem;
             BackgroundWorker worker = sender as BackgroundWorker;
 
-            if (item == null || worker == null)
-            {
-                e.Cancel = true;
-                return;
-            }
+            if (item == null || worker == null) return;
 
             if (worker.CancellationPending)
             {
@@ -283,6 +270,21 @@ namespace Jasarsoft.Launcher.SAMP
             this.gridListServers.BeginUpdate();
             this.gridListServers.DataSource = serverItems;
             this.gridListServers.EndUpdate();
+        }
+
+        private void buttonRefresh_Click(object sender, EventArgs e)
+        {
+            this.Enabled = false;
+
+            foreach (var us in this.serverItems)
+            {
+                if (us.Info())
+                {
+                    ListUpdate();
+                }
+            }
+
+            this.Enabled = true;
         }
     }
 }
