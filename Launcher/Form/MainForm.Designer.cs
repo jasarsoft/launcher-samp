@@ -71,6 +71,7 @@ namespace Jasarsoft.Launcher.SAMP
             this.pictureLogo = new System.Windows.Forms.PictureBox();
             this.workerStatus = new System.ComponentModel.BackgroundWorker();
             this.timerStatus = new System.Windows.Forms.Timer(this.components);
+            this.folderDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.menuMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textboxUser)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textboxPassword)).BeginInit();
@@ -432,6 +433,10 @@ namespace Jasarsoft.Launcher.SAMP
             this.timerStatus.Interval = 5000;
             this.timerStatus.Tick += new System.EventHandler(this.timerStatus_Tick);
             // 
+            // folderDialog
+            // 
+            this.folderDialog.RootFolder = System.Environment.SpecialFolder.ProgramFilesX86;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -521,5 +526,6 @@ namespace Jasarsoft.Launcher.SAMP
         private System.Windows.Forms.ToolStripSeparator separatorItemFileMenu;
         private System.Windows.Forms.ToolStripMenuItem exitItemFileMenu;
         private System.Windows.Forms.Timer timerStatus;
+        private System.Windows.Forms.FolderBrowserDialog folderDialog;
     }
 }

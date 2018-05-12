@@ -60,95 +60,106 @@ namespace Jasarsoft.Launcher.SAMP
                     if (rk.GetValue(RegKey.PATH_NAME, null) == null) return false;
                     if (rk.GetValue(RegKey.PLAYER_NAME, null) == null) return false;
                 }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool Valid()
+        {
+            object value;
+
+            try
+            {
+                using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(subKey))
+                {
+                    value = rk.GetValue(RegKey.PATH_NAME, null);
+                    if (value == null) throw new ArgumentNullException();
+                    if (!File.Exists(Convert.ToString(value))) throw new FileNotFoundException();
+
+                    value = rk.GetValue(RegKey.PLAYER_NAME, null);
+                    if (value == null) throw new ArgumentNullException();
+                    if (Convert.ToString(value).Length == 0) throw new ArgumentException();
+                }
+
+                return true;
             }
             catch (Exception)
             {
                 return false;
             }
 
-            return true;
-        }
-
-        public bool Valid()
-        {
-            if (!this.Check()) return false;
-
-            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(subKey))
-            {
-                if (rk != null)
-                {
-                    string path, name;
-
-                    try { path = Convert.ToString(rk.GetValue(RegKey.PATH_NAME, null)); }
-                    catch { return false; }
-                    if (!System.IO.File.Exists(path)) return false;
-
-                    try { name = Convert.ToString(rk.GetValue(RegKey.PLAYER_NAME, null)); }
-                    catch { return false; }
-                    if (!name.Contains("_")) return false;
-
-                    return true;
-                }
-
-                return false;
-            }
         }
 
         public bool Create()
         {
-            using (RegistryKey rk = Registry.CurrentUser.CreateSubKey(subKey))
+            try
             {
-                if (rk != null)
+                using (RegistryKey rk = Registry.CurrentUser.CreateSubKey(subKey))
                 {
                     rk.SetValue(RegKey.PATH_NAME, this.pathName, RegistryValueKind.String);
                     rk.SetValue(RegKey.PLAYER_NAME, this.playerName, RegistryValueKind.String);
-
-                    return true;
                 }
-            }
 
-            return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Read()
         {
-            if (!this.Check()) return false;
+            object value;
 
-            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(subKey))
+            try
             {
-                if (rk != null)
+                using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(subKey))
                 {
-                    this.pathName = Convert.ToString(rk.GetValue(RegKey.PATH_NAME, null));
-                    this.playerName = Convert.ToString(rk.GetValue(RegKey.PLAYER_NAME, null));
-                    return true;
-                }
-            }
+                    value = rk.GetValue(RegKey.PATH_NAME, null);
+                    if (value == null) throw new ArgumentNullException();
+                    this.pathName = Convert.ToString(value);
 
-            return false;
+                    value = rk.GetValue(RegKey.PLAYER_NAME, null);
+                    if (value == null) throw new ArgumentNullException();
+                    this.playerName = Convert.ToString(value);
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Write()
         {
-            if (!this.Check()) return false;
-
-            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(subKey, true))
+            try
             {
-                if (rk != null)
+                using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(subKey, true))
                 {
                     rk.SetValue(RegKey.PATH_NAME, this.pathName, RegistryValueKind.String);
                     rk.SetValue(RegKey.PLAYER_NAME, this.playerName, RegistryValueKind.String);
-
-                    return true;
                 }
-            }
 
-            return false;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void Default()
         {
-            this.PlayerName = "Ime_Prezime";
-            this.pathName = Directory.GetCurrentDirectory() + @"\gta_sa.exe";
+            this.playerName = "Nick";
+            this.pathName = String.Format("C:\\{0}", RegKey.PATH_NAME);
         }
 
         public void SetPath(string path)

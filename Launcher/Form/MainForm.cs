@@ -28,6 +28,7 @@ namespace Jasarsoft.Launcher.SAMP
         private ServerIp serverIp;
         private UserFile userFile;
 
+        private string pathGame;
     
         public MainForm()
         {
@@ -36,13 +37,35 @@ namespace Jasarsoft.Launcher.SAMP
             statusBarMain.Text = String.Empty;
             statusBarPlayers.Text = String.Empty;
             statusBarPing.Text = String.Empty;
-
+            statusBarInfo.StartAnimation();
             timerStatus.Enabled = true;
         }
 
         
         private void MainForm_Load(object sender, EventArgs e)
         {
+            SampRegistry reg = new SampRegistry();
+
+            if (reg.Read())
+            {
+                this.textboxUser.Text = reg.PlayerName;
+                this.pathGame = reg.PathName;
+            }
+            else
+            {
+                reg.Default();
+
+                folderDialog = new FolderBrowserDialog();
+                folderDialog.ShowNewFolderButton = true;
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    reg.SetPath(folderDialog.SelectedPath);
+                    reg.Write();
+                }
+
+                this.textboxUser.Text = reg.PlayerName;
+            }
+
             this.userFile = new UserFile();
 
             if (!this.userFile.Read() || this.userFile.Servers.Length == 0)
@@ -57,47 +80,35 @@ namespace Jasarsoft.Launcher.SAMP
 
                     workerStatus.RunWorkerAsync(0);
                 }
-
-                return;
             }
-
-            this.serverIp = new ServerIp(this.userFile.Servers[0].Address, this.userFile.Servers[0].Port);
-
-            if(this.serverIp.Address == null)
+            else
             {
-                EnterForm enter = new EnterForm();
-                enter.ShowDialog();
+                this.serverIp = new ServerIp(this.userFile.Servers[0].Address, this.userFile.Servers[0].Port);
 
-                if (enter.Server != null)
+                if (this.serverIp.Address == null)
                 {
-                    serverPing = new ServerPing(serverIp);
-                    serverInfo = new ServerInfo(serverIp);
+                    EnterForm enter = new EnterForm();
+                    enter.ShowDialog();
 
-                    workerStatus.RunWorkerAsync(0);
+                    if (enter.Server != null)
+                    {
+                        serverPing = new ServerPing(serverIp);
+                        serverInfo = new ServerInfo(serverIp);
+
+                        workerStatus.RunWorkerAsync(0);
+                    }
                 }
-
-                return;
             }
+
+            
 
             serverPing = new ServerPing(serverIp);
             serverInfo = new ServerInfo(serverIp);
             workerStatus.RunWorkerAsync(0);
 
-            SampRegistry reg = new SampRegistry();
-
-            if(reg.Valid() && reg.Read())
-            {
-                this.textboxUser.Text = reg.PlayerName;
-            }
-            else
-            {
-                reg.Default();
-                reg.Write();
-                this.textboxUser.Text = reg.PlayerName;
-            }
-
-            statusBarInfo.StartAnimation();
             
+
+                      
         }
 
         private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)
