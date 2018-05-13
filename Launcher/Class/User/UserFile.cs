@@ -9,6 +9,7 @@ namespace Jasarsoft.Launcher.SAMP
     class UserFile
     {
         private readonly string filePath;
+        private readonly string fileDir;
         private List<UserServer> fileServers;
 
         private char[] fileHeader;
@@ -23,6 +24,9 @@ namespace Jasarsoft.Launcher.SAMP
             this.fileLength = 0;
             this.filePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + 
                             @"\GTA San Andreas User Files\SAMP\USERDATA.DAT";
+
+            this.fileDir = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +
+                           @"\GTA San Andreas User Files\SAMP";
         }
 
 
@@ -40,6 +44,11 @@ namespace Jasarsoft.Launcher.SAMP
         public string Path
         {
             get { return this.filePath; }
+        }
+
+        public string Dir
+        {
+            get { return this.fileDir; }
         }
 
         public void Delete(UserServer server)
@@ -197,6 +206,8 @@ namespace Jasarsoft.Launcher.SAMP
 
             try
             {
+                if (!Directory.Exists(this.fileDir)) Directory.CreateDirectory(this.fileDir);
+
                 using (BinaryWriter writer = new BinaryWriter(File.Open(this.filePath, FileMode.Create)))
                 {
                     writer.Write(Encoding.Default.GetBytes(header));
