@@ -247,3 +247,10 @@ ModelManifest.xml
 *.pfi
 /info.txt
 /Launcher/Image/icons8-lock-100.bmp
+/Installer/files
+/Installer/support
+/Installer/output
+*.psd
+/Installer/small_image.bmp
+/Installer/image.bmp
+/Installer/readme.rtf
