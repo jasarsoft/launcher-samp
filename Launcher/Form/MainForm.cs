@@ -263,10 +263,13 @@ namespace Jasarsoft.Launcher.SAMP
 
             AddForm add = new AddForm();
             add.ShowDialog();
-            this.serverIp = add.Server;
-            //while (workerStatus.IsBusy) Thread.Sleep(10);
-            serverPing = new ServerPing(serverIp);
-            serverInfo = new ServerInfo(serverIp);
+            if (add.Server != null)
+            {
+                this.serverIp = add.Server;
+                //while (workerStatus.IsBusy) Thread.Sleep(10);
+                serverPing = new ServerPing(serverIp);
+                serverInfo = new ServerInfo(serverIp);
+            }
 
             if (!workerStatus.IsBusy) workerStatus.RunWorkerAsync(0);
         }

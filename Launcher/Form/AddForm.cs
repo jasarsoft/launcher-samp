@@ -50,8 +50,8 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 foreach (var us in this.userFile.Servers)
                 {
-                    this.serverIp = new ServerIp(us.Address, us.Port);
-                    this.serverItems.Add(new ServerItem(serverIp, us.Hostname, us.Password, us.Rcon));
+                    ServerIp ip = new ServerIp(us.Address, us.Port);
+                    this.serverItems.Add(new ServerItem(ip, us.Hostname, us.Password, us.Rcon));
                 }
             }
             else
@@ -75,8 +75,8 @@ namespace Jasarsoft.Launcher.SAMP
             this.Enabled = false;
             workerServer.CancelAsync();
 
-            serverIp = new ServerIp(textAddress.Text, (int)numericPort.Value);
-            if (serverIp.Address == null)
+            ServerIp ip = new ServerIp(textAddress.Text, (int)numericPort.Value);
+            if (ip.Address == null)
             {
                 TitleError title = new TitleError();
                 string msg = "Server adresa nije validna, molimo vas unesite ispravan ip i port!";
@@ -85,11 +85,11 @@ namespace Jasarsoft.Launcher.SAMP
                 return;
             }
 
-            serverInfo = new ServerInfo(serverIp);
+            serverInfo = new ServerInfo(ip);
 
             if (serverInfo.Info())
             {
-                serverItems.Add(new ServerItem(serverIp,
+                serverItems.Add(new ServerItem(ip,
                                                serverInfo.Password,
                                                serverInfo.CurrentPlayers,
                                                serverInfo.MaxPlayers,
@@ -99,7 +99,7 @@ namespace Jasarsoft.Launcher.SAMP
             }
             else
             {
-                serverItems.Add(new ServerItem(serverIp));
+                serverItems.Add(new ServerItem(ip));
             }
 
             ListSoruce();
@@ -150,6 +150,7 @@ namespace Jasarsoft.Launcher.SAMP
         {
             workerServer.CancelAsync();
             this.gridListServers.SelectedIndex = -1;
+            this.serverIp = null;
             this.Close();
         }
 
@@ -168,7 +169,7 @@ namespace Jasarsoft.Launcher.SAMP
             else
             {
                 int index = gridListServers.SelectedIndex;
-                serverIp = serverItems[index].GetServer();
+                this.serverIp = serverItems[index].GetServer();
                 var us = this.userFile.ServerList[index];
 
                 this.userFile.ServerList.Remove(userFile.ServerList[index]);
