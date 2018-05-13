@@ -39,6 +39,23 @@ namespace Jasarsoft.Launcher.SAMP
             statusBarPing.Text = String.Empty;
             statusBarInfo.StartAnimation();
             timerStatus.Enabled = true;
+
+            MessageBoxAdv.MessageBoxStyle = MessageBoxAdv.Style.Metro;
+            MessageBoxAdv.MetroColorTable.OKButtonBackColor = Color.DarkCyan;
+            MessageBoxAdv.MetroColorTable.OKButtonForeColor = Color.WhiteSmoke;
+            MessageBoxAdv.MetroColorTable.NoButtonBackColor = Color.DarkCyan;
+            MessageBoxAdv.MetroColorTable.NoButtonForeColor = Color.WhiteSmoke;
+            MessageBoxAdv.MetroColorTable.YesButtonBackColor = Color.DarkCyan;
+            MessageBoxAdv.MetroColorTable.YesButtonForeColor = Color.WhiteSmoke;
+            MessageBoxAdv.MetroColorTable.CancelButtonBackColor = Color.DarkCyan;
+            MessageBoxAdv.MetroColorTable.CancelButtonForeColor = Color.WhiteSmoke;
+            MessageBoxAdv.MetroColorTable.BackColor = Color.WhiteSmoke;
+            MessageBoxAdv.MetroColorTable.ForeColor = Color.Black;
+            MessageBoxAdv.MetroColorTable.BorderColor = Color.DarkCyan;
+            MessageBoxAdv.MetroColorTable.CaptionForeColor = Color.WhiteSmoke;
+            MessageBoxAdv.MetroColorTable.CaptionBarColor = Color.DarkCyan;
+            MessageBoxAdv.MetroColorTable.CloseButtonColor = Color.WhiteSmoke;
+            MessageBoxAdv.MetroColorTable.CloseButtonHoverColor = Color.LightCyan;
         }
 
         
@@ -46,21 +63,28 @@ namespace Jasarsoft.Launcher.SAMP
         {
             SampRegistry reg = new SampRegistry();
 
-            if (reg.Read())
+            if (reg.Valid() && reg.Read())
             {
                 this.textboxUser.Text = reg.PlayerName;
                 this.pathGame = reg.PathName;
             }
             else
             {
-                reg.Default();
+                TitleWarning title = new TitleWarning();
+                string msg = "Nemate podesen ili instaliran GTA San Andreas i SAMP.\n" + 
+                             "Da li zelite sada odabrati lokaciju instalirane igre?";
 
-                folderDialog = new FolderBrowserDialog();
-                folderDialog.ShowNewFolderButton = true;
-                if (folderDialog.ShowDialog() == DialogResult.OK)
+                DialogResult result = MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.Yes)
                 {
-                    reg.SetPath(folderDialog.SelectedPath);
-                    reg.Write();
+                    reg.Default();
+
+                    if (folderDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        reg.SetPath(folderDialog.SelectedPath);
+                        this.pathGame = reg.PathName;
+                        reg.Write();
+                    }
                 }
 
                 this.textboxUser.Text = reg.PlayerName;
@@ -79,6 +103,7 @@ namespace Jasarsoft.Launcher.SAMP
                     serverInfo = new ServerInfo(serverIp);
 
                     workerStatus.RunWorkerAsync(0);
+                    return;
                 }
             }
             else
@@ -96,19 +121,14 @@ namespace Jasarsoft.Launcher.SAMP
                         serverInfo = new ServerInfo(serverIp);
 
                         workerStatus.RunWorkerAsync(0);
+                        return;
                     }
                 }
             }
 
-            
-
             serverPing = new ServerPing(serverIp);
             serverInfo = new ServerInfo(serverIp);
-            workerStatus.RunWorkerAsync(0);
-
-            
-
-                      
+            workerStatus.RunWorkerAsync(0);                
         }
 
         private void rolePlayToolStripMenuItem_Click(object sender, EventArgs e)

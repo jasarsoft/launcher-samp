@@ -12,7 +12,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private struct RegKey
         {
-            public const string PATH_NAME = "gta_sa_exe";
+            public const string PATH_NAME = "gta_sa.exe";
             public const string PLAYER_NAME = "PlayerName";
         }
 
