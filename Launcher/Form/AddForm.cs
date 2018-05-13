@@ -149,6 +149,7 @@ namespace Jasarsoft.Launcher.SAMP
         private void buttonClose_Click(object sender, EventArgs e)
         {
             workerServer.CancelAsync();
+            this.gridListServers.SelectedIndex = -1;
             this.Close();
         }
 

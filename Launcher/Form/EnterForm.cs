@@ -51,7 +51,7 @@ namespace Jasarsoft.Launcher.SAMP
             ServerPing sp = new ServerPing(serverIp);
             if (sp.Ping() > 0)
             {
-                this.userFile.ServerList.Add(new UserServer(this.textAddress.Text, (int)this.numericPort.Value));
+                this.userFile.ServerList.Insert(0, new UserServer(this.textAddress.Text, (int)this.numericPort.Value));
                 this.userFile.Write();
                 this.Close();
                 return;

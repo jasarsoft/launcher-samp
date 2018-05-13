@@ -12,7 +12,7 @@ namespace Jasarsoft.Launcher.SAMP
 
         private struct RegKey
         {
-            public const string PATH_NAME = "gta_sa.exe";
+            public const string PATH_NAME = "gta_sa_exe";
             public const string PLAYER_NAME = "PlayerName";
         }
 
@@ -159,12 +159,18 @@ namespace Jasarsoft.Launcher.SAMP
         public void Default()
         {
             this.playerName = "Nick";
-            this.pathName = String.Format("C:\\{0}", RegKey.PATH_NAME);
+            this.pathName = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86) +
+                            "\\Rockstart Games\\Grand Theft Auto San Andreas\\gta_sa.exe";
         }
 
         public void SetPath(string path)
         {
-            this.pathName = String.Format("{0}\\{1}", path, RegKey.PATH_NAME);
+            this.pathName = String.Format("{0}\\gta_sa.exe", path);
+        }
+
+        public string GetPath()
+        {
+            return this.pathName.Remove(this.pathName.Length - (RegKey.PATH_NAME.Length + 1));
         }
     }
 }

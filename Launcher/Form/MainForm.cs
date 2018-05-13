@@ -28,6 +28,8 @@ namespace Jasarsoft.Launcher.SAMP
         private ServerIp serverIp;
         private UserFile userFile;
 
+        private SampRegistry sampRegistry;
+
         private string pathGame;
     
         public MainForm()
@@ -61,12 +63,12 @@ namespace Jasarsoft.Launcher.SAMP
         
         private void MainForm_Load(object sender, EventArgs e)
         {
-            SampRegistry reg = new SampRegistry();
+            this.sampRegistry = new SampRegistry();
 
-            if (reg.Valid() && reg.Read())
+            if (this.sampRegistry.Valid() && this.sampRegistry.Read())
             {
-                this.textboxUser.Text = reg.PlayerName;
-                this.pathGame = reg.PathName;
+                this.textboxUser.Text = this.sampRegistry.PlayerName;
+                this.pathGame = this.sampRegistry.GetPath();
             }
             else
             {
@@ -77,17 +79,17 @@ namespace Jasarsoft.Launcher.SAMP
                 DialogResult result = MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.Yes)
                 {
-                    reg.Default();
+                    this.sampRegistry.Default();
 
                     if (folderDialog.ShowDialog() == DialogResult.OK)
                     {
-                        reg.SetPath(folderDialog.SelectedPath);
-                        this.pathGame = reg.PathName;
-                        reg.Write();
+                        this.sampRegistry.SetPath(folderDialog.SelectedPath);
+                        this.pathGame = folderDialog.SelectedPath;
+                        this.sampRegistry.Write();
                     }
                 }
 
-                this.textboxUser.Text = reg.PlayerName;
+                this.textboxUser.Text = this.sampRegistry.PlayerName;
             }
 
             this.userFile = new UserFile();
@@ -217,21 +219,42 @@ namespace Jasarsoft.Launcher.SAMP
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            //UserFile uf = new UserFile();
-            //uf.Read();
-            //UserXml uxml = new UserXml();
-            //uxml.Servers = uf.ServerList;
-            //uxml.Write2();
-            //uxml.Read();
-
-            /*if (this.textboxUser.Text.Length > 0)
+            if (this.serverInfo.Password)
             {
+                if (this.textboxPassword.Text.Length > 0)
+                {
+                    ProcessStartInfo processInfo = new ProcessStartInfo();
+                    processInfo.FileName = "samp.exe";
+                    processInfo.WorkingDirectory = this.pathGame;
+                    processInfo.Arguments = String.Format("{0} {1}", this.serverInfo.Server.ToString(), this.textboxPassword.Text);
+                    Process.Start(processInfo);
+                }
+                else
+                {
+                    TitleWarning title = new TitleWarning();
+                    string msg = "Server zahtjeva lozinku pristupa, molimo vas unesite je!";
+
+                    MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            else
+            {
+                if (this.textboxUser.Text.Length == 0)
+                {
+                    TitleWarning title = new TitleWarning();
+                    string msg = "Molimo vas unesite Nick prije prijave na server.";
+
+                    MessageBoxAdv.Show(msg, title.Caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
                 ProcessStartInfo processInfo = new ProcessStartInfo();
                 processInfo.FileName = "samp.exe";
-                processInfo.WorkingDirectory = @".\";
-                processInfo.Arguments = String.Format("{0} {1}", "IP", "PASSWORD");
+                processInfo.WorkingDirectory = this.pathGame;
+                processInfo.Arguments = String.Format("{0}", this.serverInfo.Server.ToString());
                 Process.Start(processInfo);
-            }*/
+            }
         }
 
         private void addToolStripMenuItem_Click(object sender, EventArgs e)
@@ -245,8 +268,7 @@ namespace Jasarsoft.Launcher.SAMP
             serverPing = new ServerPing(serverIp);
             serverInfo = new ServerInfo(serverIp);
 
-            if (!workerStatus.IsBusy)
-                workerStatus.RunWorkerAsync(0);
+            if (!workerStatus.IsBusy) workerStatus.RunWorkerAsync(0);
         }
 
         private void exitItemFileMenu_Click(object sender, EventArgs e)
@@ -267,10 +289,9 @@ namespace Jasarsoft.Launcher.SAMP
             {
                 serverPing = new ServerPing(serverIp);
                 serverInfo = new ServerInfo(serverIp);
-
-                if (!workerStatus.IsBusy)
-                    workerStatus.RunWorkerAsync();
             }
+
+            if (!workerStatus.IsBusy) workerStatus.RunWorkerAsync(0);
         }
 
         private void timerStatus_Tick(object sender, EventArgs e)

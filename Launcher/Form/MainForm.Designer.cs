@@ -436,7 +436,7 @@ namespace Jasarsoft.Launcher.SAMP
             // folderDialog
             // 
             this.folderDialog.Description = "Select a path of GTA San Andreas";
-            this.folderDialog.RootFolder = System.Environment.SpecialFolder.ProgramFilesX86;
+            this.folderDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.folderDialog.ShowNewFolderButton = false;
             // 
             // MainForm
